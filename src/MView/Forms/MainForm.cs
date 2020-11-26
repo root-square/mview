@@ -115,7 +115,7 @@ namespace MView.Forms
             dialog.Multiselect = true;
             dialog.CheckFileExists = true;
             dialog.ValidateNames = true;
-            dialog.InitialDirectory =
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dialog.FileName = string.Empty; // Default file name
             dialog.Filter = "Supported Files (*.txt, *.json, *.rpgsave, *.rpgmvo, *.rpgmvm, *.rpgmvw, *.rpgmvp, *.ogg, *.m4a, *.wav, *.png)|*.txt;*.json;*.rpgsave;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.rpgmvp;*.ogg;*.m4a;*.wav;*.png"; // Filter files by extension
 

@@ -29,57 +29,60 @@ namespace MView.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.encryptButton = new System.Windows.Forms.Button();
+            this.decryptButton = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.saveDirectoryBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.saveDirectoryButton = new System.Windows.Forms.Button();
+            this.verifyCheckBox = new System.Windows.Forms.CheckBox();
+            this.codeCheckBox = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.codeButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.codeBox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button3
+            // encryptButton
             // 
-            this.button3.Location = new System.Drawing.Point(417, 183);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 24);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "Encrypt";
-            this.button3.UseVisualStyleBackColor = true;
+            this.encryptButton.Location = new System.Drawing.Point(417, 183);
+            this.encryptButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.encryptButton.Name = "encryptButton";
+            this.encryptButton.Size = new System.Drawing.Size(75, 24);
+            this.encryptButton.TabIndex = 1;
+            this.encryptButton.Text = "Encrypt";
+            this.encryptButton.UseVisualStyleBackColor = true;
+            this.encryptButton.Click += new System.EventHandler(this.encryptButton_Click);
             // 
-            // button4
+            // decryptButton
             // 
-            this.button4.Location = new System.Drawing.Point(498, 183);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 24);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "Decrypt";
-            this.button4.UseVisualStyleBackColor = true;
+            this.decryptButton.Location = new System.Drawing.Point(498, 183);
+            this.decryptButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.decryptButton.Name = "decryptButton";
+            this.decryptButton.Size = new System.Drawing.Size(75, 24);
+            this.decryptButton.TabIndex = 2;
+            this.decryptButton.Text = "Decrypt";
+            this.decryptButton.UseVisualStyleBackColor = true;
+            this.decryptButton.Click += new System.EventHandler(this.decryptButton_Click);
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 183);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(399, 24);
-            this.progressBar1.TabIndex = 3;
+            this.progressBar.Location = new System.Drawing.Point(12, 183);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(399, 24);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar.TabIndex = 3;
             // 
-            // textBox1
+            // saveDirectoryBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(114, 23);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(379, 23);
-            this.textBox1.TabIndex = 0;
+            this.saveDirectoryBox.Location = new System.Drawing.Point(114, 23);
+            this.saveDirectoryBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.saveDirectoryBox.Name = "saveDirectoryBox";
+            this.saveDirectoryBox.Size = new System.Drawing.Size(379, 23);
+            this.saveDirectoryBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -90,38 +93,41 @@ namespace MView.Forms
             this.label1.TabIndex = 1;
             this.label1.Text = "Save directory";
             // 
-            // button1
+            // saveDirectoryButton
             // 
-            this.button1.Location = new System.Drawing.Point(499, 22);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 25);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.saveDirectoryButton.Location = new System.Drawing.Point(499, 22);
+            this.saveDirectoryButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.saveDirectoryButton.Name = "saveDirectoryButton";
+            this.saveDirectoryButton.Size = new System.Drawing.Size(50, 25);
+            this.saveDirectoryButton.TabIndex = 2;
+            this.saveDirectoryButton.Text = "...";
+            this.saveDirectoryButton.UseVisualStyleBackColor = true;
+            this.saveDirectoryButton.Click += new System.EventHandler(this.saveDirectoryButton_Click);
             // 
-            // checkBox1
+            // verifyCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(13, 106);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(451, 19);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Verify fake header (To check for correct RPG Maker MV encryption resource files.)" +
+            this.verifyCheckBox.AutoSize = true;
+            this.verifyCheckBox.Location = new System.Drawing.Point(13, 106);
+            this.verifyCheckBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.verifyCheckBox.Name = "verifyCheckBox";
+            this.verifyCheckBox.Size = new System.Drawing.Size(451, 19);
+            this.verifyCheckBox.TabIndex = 3;
+            this.verifyCheckBox.Text = "Verify fake header (To check for correct RPG Maker MV encryption resource files.)" +
     "\r\n";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.verifyCheckBox.UseVisualStyleBackColor = true;
+            this.verifyCheckBox.CheckedChanged += new System.EventHandler(this.verifyCheckBox_CheckedChanged);
             // 
-            // checkBox2
+            // codeCheckBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(13, 130);
-            this.checkBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(328, 19);
-            this.checkBox2.TabIndex = 7;
-            this.checkBox2.Text = "Use encryption code for encryption/decryption operation";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.codeCheckBox.AutoSize = true;
+            this.codeCheckBox.Location = new System.Drawing.Point(13, 130);
+            this.codeCheckBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.codeCheckBox.Name = "codeCheckBox";
+            this.codeCheckBox.Size = new System.Drawing.Size(266, 19);
+            this.codeCheckBox.TabIndex = 7;
+            this.codeCheckBox.Text = "Use encryption code for decryption operation";
+            this.codeCheckBox.UseVisualStyleBackColor = true;
+            this.codeCheckBox.CheckedChanged += new System.EventHandler(this.codeCheckBox_CheckedChanged);
             // 
             // label3
             // 
@@ -135,15 +141,15 @@ namespace MView.Forms
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.codeButton);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.codeBox);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.codeCheckBox);
+            this.groupBox1.Controls.Add(this.verifyCheckBox);
+            this.groupBox1.Controls.Add(this.saveDirectoryButton);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.saveDirectoryBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 15);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
@@ -153,15 +159,16 @@ namespace MView.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Controller";
             // 
-            // button2
+            // codeButton
             // 
-            this.button2.Location = new System.Drawing.Point(499, 53);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 25);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.codeButton.Location = new System.Drawing.Point(499, 53);
+            this.codeButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.codeButton.Name = "codeButton";
+            this.codeButton.Size = new System.Drawing.Size(50, 25);
+            this.codeButton.TabIndex = 11;
+            this.codeButton.Text = "...";
+            this.codeButton.UseVisualStyleBackColor = true;
+            this.codeButton.Click += new System.EventHandler(this.codeButton_Click);
             // 
             // label2
             // 
@@ -172,22 +179,22 @@ namespace MView.Forms
             this.label2.TabIndex = 10;
             this.label2.Text = "Encryption code";
             // 
-            // textBox2
+            // codeBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(114, 54);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(379, 23);
-            this.textBox2.TabIndex = 9;
+            this.codeBox.Location = new System.Drawing.Point(114, 54);
+            this.codeBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.codeBox.Name = "codeBox";
+            this.codeBox.Size = new System.Drawing.Size(379, 23);
+            this.codeBox.TabIndex = 9;
             // 
             // CryptographyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 221);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.decryptButton);
+            this.Controls.Add(this.encryptButton);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -202,18 +209,18 @@ namespace MView.Forms
         }
 
         #endregion
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button encryptButton;
+        private System.Windows.Forms.Button decryptButton;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.TextBox saveDirectoryBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Button saveDirectoryButton;
+        private System.Windows.Forms.CheckBox verifyCheckBox;
+        private System.Windows.Forms.CheckBox codeCheckBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button codeButton;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox codeBox;
     }
 }

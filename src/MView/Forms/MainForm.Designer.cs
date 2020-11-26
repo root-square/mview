@@ -103,7 +103,7 @@ namespace MView.Forms
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(628, 21);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(597, 21);
             this.toolStripStatusLabel2.Spring = true;
             // 
             // statusBar
@@ -514,14 +514,10 @@ namespace MView.Forms
         private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configureCToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.ToolStripProgressBar statusBar;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView fileList;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox ReportBox;
         private System.Windows.Forms.ColumnHeader formatHeader;
         private System.Windows.Forms.ColumnHeader nameHeader;
         private System.Windows.Forms.ColumnHeader sizeHeader;
@@ -530,5 +526,9 @@ namespace MView.Forms
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deselectAllAToolStripMenuItem;
+        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        public System.Windows.Forms.ToolStripProgressBar statusBar;
+        public System.Windows.Forms.ListView fileList;
+        public System.Windows.Forms.TextBox ReportBox;
     }
 }

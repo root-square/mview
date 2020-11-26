@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MView
 {
@@ -27,17 +29,37 @@ namespace MView
             }
         }
 
+        public Settings()
+        {
+            BackupPath = Path.Combine(Application.StartupPath, "backup");
+
+            VerifyFakeHeaderFlag = true;
+            UseEncryptionCodeFlag = true;
+            CreateCryptoBackupFlag = true;
+            CryptoSavePath = string.Empty;
+
+            CreateCryptoBackupFlag = true;
+            RpgsaveSavePath = string.Empty;
+
+            CreateTranslationBackupFlag = true;
+            TranslationSavePath = string.Empty;
+        }
+
+        #region ::General::
+
+        public string BackupPath { get; set; }
+
+        #endregion
+
         #region ::Cryptography::
 
         public bool VerifyFakeHeaderFlag { get; set; }
 
-        public bool KeepCryptoKeyFlag { get; set; }
+        public bool UseEncryptionCodeFlag { get; set; }
 
         public bool CreateCryptoBackupFlag { get; set; }
 
         public string CryptoSavePath { get; set; }
-
-        public string CryptoBackupPath { get; set; }
 
         #endregion
 
@@ -47,8 +69,6 @@ namespace MView
 
         public string RpgsaveSavePath { get; set; }
 
-        public string RpgsaveBackupPath { get; set; }
-
         #endregion
 
         #region ::Translation::
@@ -56,8 +76,6 @@ namespace MView
         public bool CreateTranslationBackupFlag { get; set; }
 
         public string TranslationSavePath { get; set; }
-
-        public string TranslationBackupPath { get; set; }
 
         #endregion
     }

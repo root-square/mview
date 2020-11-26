@@ -95,6 +95,11 @@ namespace MView.Utilities
                     throw new FileNotFoundException("The file you are trying to encrypt header does not exist.");
                 }
 
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
+
                 // Checks extension.
                 string extension = Path.GetExtension(filePath).ToLower();
 
@@ -153,6 +158,11 @@ namespace MView.Utilities
                     throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
                 }
 
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
+
                 // Checks extension.
                 string extension = Path.GetExtension(filePath).ToLower();
 
@@ -202,6 +212,11 @@ namespace MView.Utilities
                     throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
                 }
 
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
+
                 // Checks extension.
                 string extension = Path.GetExtension(filePath).ToLower();
 
@@ -224,6 +239,10 @@ namespace MView.Utilities
                 else if (extension == ".rpgmvp")
                 {
                     headerHexArray = HEADER_PNG;
+                }
+                else
+                {
+                    throw new NotSupportedException("Not supported file extension.");
                 }
 
                 // Writes a header as byte array.

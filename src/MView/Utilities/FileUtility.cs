@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.AccessControl;
 using System.Text;
 
 namespace MView.Utilities
@@ -8,6 +11,58 @@ namespace MView.Utilities
     /// </summary>
     public static class FileUtility
     {
+        public static List<string> GetFiles(string directory, List<string> extensions = null)
+        {
+            if (string.IsNullOrEmpty(directory))
+            {
+                throw new ArgumentNullException("Directory cannot be null or empty.");
+            }
+
+            if (Directory.GetDirectoryRoot(directory).ToLower() == directory.ToLower())
+            {
+                throw new InvalidOperationException("The list of files in the root directory cannot be imported.");
+            }
+
+            try
+            {
+                List<string> files = new List<string>();
+                DirectoryInfo dir = new DirectoryInfo(directory);
+
+                // Indexing files in current directory.
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    if (file.IsReadOnly)
+                    {
+                        continue;
+                    }
+
+                    if (extensions == null)
+                    {
+                        files.Add(file.FullName);
+                    }
+                    else
+                    {
+                        if (extensions.Contains(file.Extension.ToLower()))
+                        {
+                            files.Add(file.FullName);
+                        }
+                    }
+                }
+
+                // Re-indexing files in sub-directory.
+                foreach (DirectoryInfo subdir in dir.GetDirectories())
+                {
+                    GetFiles(subdir.FullName);
+                }
+
+                return files;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// Writes a text file in the specified path.
         /// </summary>
