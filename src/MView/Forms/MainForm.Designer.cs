@@ -41,6 +41,10 @@ namespace MView.Forms
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deselectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cryptographyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rPGSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,10 +70,6 @@ namespace MView.Forms
             this.pathHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ReportBox = new System.Windows.Forms.TextBox();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deselectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -86,29 +86,30 @@ namespace MView.Forms
             this.statusLabel,
             this.toolStripStatusLabel2,
             this.statusBar});
-            this.statusStrip.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip.Location = new System.Drawing.Point(0, 435);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip.Size = new System.Drawing.Size(784, 26);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
             // 
             // statusLabel
             // 
+            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(40, 17);
+            this.statusLabel.Size = new System.Drawing.Size(39, 21);
             this.statusLabel.Text = "Status";
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(627, 17);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(628, 21);
             this.toolStripStatusLabel2.Spring = true;
             // 
             // statusBar
             // 
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(100, 16);
+            this.statusBar.Size = new System.Drawing.Size(100, 20);
             // 
             // menuStrip
             // 
@@ -185,6 +186,40 @@ namespace MView.Forms
             this.listLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.listLToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.listLToolStripMenuItem.Text = "List(&L)";
+            // 
+            // selectAllAToolStripMenuItem
+            // 
+            this.selectAllAToolStripMenuItem.Name = "selectAllAToolStripMenuItem";
+            this.selectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllAToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.selectAllAToolStripMenuItem.Text = "Select All(&A)";
+            this.selectAllAToolStripMenuItem.Click += new System.EventHandler(this.selectAllAToolStripMenuItem_Click);
+            // 
+            // deselectAllAToolStripMenuItem
+            // 
+            this.deselectAllAToolStripMenuItem.Name = "deselectAllAToolStripMenuItem";
+            this.deselectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.deselectAllAToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.deselectAllAToolStripMenuItem.Text = "Deselect All(&A)";
+            this.deselectAllAToolStripMenuItem.Click += new System.EventHandler(this.deselectAllAToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.deleteToolStripMenuItem.Text = "Delete(&D)";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // deleteAllToolStripMenuItem
+            // 
+            this.deleteAllToolStripMenuItem.Name = "deleteAllToolStripMenuItem";
+            this.deleteAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+            this.deleteAllToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.deleteAllToolStripMenuItem.Text = "Delete All(&D)";
+            this.deleteAllToolStripMenuItem.Click += new System.EventHandler(this.deleteAllToolStripMenuItem_Click);
             // 
             // toolsTToolStripMenuItem
             // 
@@ -321,31 +356,35 @@ namespace MView.Forms
             this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
-            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.splitContainer1.Panel1MinSize = 200;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5);
+            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(784, 415);
-            this.splitContainer1.SplitterDistance = 311;
+            this.splitContainer1.Size = new System.Drawing.Size(784, 411);
+            this.splitContainer1.SplitterDistance = 306;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.fileList);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(5, 5);
+            this.groupBox1.Location = new System.Drawing.Point(5, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(774, 301);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Size = new System.Drawing.Size(774, 294);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Files";
@@ -364,9 +403,10 @@ namespace MView.Forms
             this.fileList.FullRowSelect = true;
             this.fileList.GridLines = true;
             this.fileList.HideSelection = false;
-            this.fileList.Location = new System.Drawing.Point(3, 17);
+            this.fileList.Location = new System.Drawing.Point(3, 20);
+            this.fileList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(768, 281);
+            this.fileList.Size = new System.Drawing.Size(768, 270);
             this.fileList.TabIndex = 0;
             this.fileList.UseCompatibleStateImageBehavior = false;
             this.fileList.View = System.Windows.Forms.View.Details;
@@ -395,9 +435,11 @@ namespace MView.Forms
             // 
             this.groupBox2.Controls.Add(this.ReportBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(5, 5);
+            this.groupBox2.Location = new System.Drawing.Point(5, 6);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(774, 90);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Size = new System.Drawing.Size(774, 88);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Reports";
@@ -407,59 +449,28 @@ namespace MView.Forms
             this.ReportBox.BackColor = System.Drawing.SystemColors.Window;
             this.ReportBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ReportBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReportBox.Location = new System.Drawing.Point(3, 17);
+            this.ReportBox.Location = new System.Drawing.Point(3, 20);
+            this.ReportBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ReportBox.Multiline = true;
             this.ReportBox.Name = "ReportBox";
             this.ReportBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ReportBox.Size = new System.Drawing.Size(768, 70);
+            this.ReportBox.Size = new System.Drawing.Size(768, 64);
             this.ReportBox.TabIndex = 0;
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.deleteToolStripMenuItem.Text = "Delete(&D)";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // deleteAllToolStripMenuItem
-            // 
-            this.deleteAllToolStripMenuItem.Name = "deleteAllToolStripMenuItem";
-            this.deleteAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.D)));
-            this.deleteAllToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.deleteAllToolStripMenuItem.Text = "Delete All(&D)";
-            this.deleteAllToolStripMenuItem.Click += new System.EventHandler(this.deleteAllToolStripMenuItem_Click);
-            // 
-            // selectAllAToolStripMenuItem
-            // 
-            this.selectAllAToolStripMenuItem.Name = "selectAllAToolStripMenuItem";
-            this.selectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.selectAllAToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.selectAllAToolStripMenuItem.Text = "Select All(&A)";
-            this.selectAllAToolStripMenuItem.Click += new System.EventHandler(this.selectAllAToolStripMenuItem_Click);
-            // 
-            // deselectAllAToolStripMenuItem
-            // 
-            this.deselectAllAToolStripMenuItem.Name = "deselectAllAToolStripMenuItem";
-            this.deselectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.A)));
-            this.deselectAllAToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.deselectAllAToolStripMenuItem.Text = "Deselect All(&A)";
-            this.deselectAllAToolStripMenuItem.Click += new System.EventHandler(this.deselectAllAToolStripMenuItem_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MainForm";
+            this.Text = "MView";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
