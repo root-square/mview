@@ -30,8 +30,16 @@ namespace MView.Forms
         private void InitializeComponent()
         {
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cryptographyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,32 +48,28 @@ namespace MView.Forms
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.translationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.informationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importExportTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.verifyVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.migrateMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.configureCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.informationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.fileList = new System.Windows.Forms.ListView();
-            this.ReportBox = new System.Windows.Forms.TextBox();
             this.formatHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.nameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.sizeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pathHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ReportBox = new System.Windows.Forms.TextBox();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deselectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -88,6 +92,23 @@ namespace MView.Forms
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(40, 17);
+            this.statusLabel.Text = "Status";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(627, 17);
+            this.toolStripStatusLabel2.Spring = true;
+            // 
+            // statusBar
+            // 
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(100, 16);
             // 
             // menuStrip
             // 
@@ -113,8 +134,53 @@ namespace MView.Forms
             this.fileFToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.fileFToolStripMenuItem.Text = "File(&F)";
             // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filesToolStripMenuItem,
+            this.folderToolStripMenuItem});
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.openToolStripMenuItem.Text = "Open(&O)";
+            // 
+            // filesToolStripMenuItem
+            // 
+            this.filesToolStripMenuItem.Name = "filesToolStripMenuItem";
+            this.filesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.filesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.filesToolStripMenuItem.Text = "Files(&F)";
+            this.filesToolStripMenuItem.Click += new System.EventHandler(this.filesToolStripMenuItem_Click);
+            // 
+            // folderToolStripMenuItem
+            // 
+            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
+            this.folderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.folderToolStripMenuItem.Text = "Folder(&D)";
+            this.folderToolStripMenuItem.Click += new System.EventHandler(this.folderToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            // 
+            // exitEToolStripMenuItem
+            // 
+            this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
+            this.exitEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.exitEToolStripMenuItem.Text = "Exit(&E)";
+            this.exitEToolStripMenuItem.Click += new System.EventHandler(this.exitEToolStripMenuItem_Click);
+            // 
             // listLToolStripMenuItem
             // 
+            this.listLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllAToolStripMenuItem,
+            this.deselectAllAToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.deleteAllToolStripMenuItem});
             this.listLToolStripMenuItem.Name = "listLToolStripMenuItem";
             this.listLToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
             this.listLToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
@@ -137,6 +203,7 @@ namespace MView.Forms
             | System.Windows.Forms.Keys.C)));
             this.cryptographyToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.cryptographyToolStripMenuItem.Text = "Cryptography(&C)";
+            this.cryptographyToolStripMenuItem.Click += new System.EventHandler(this.cryptographyToolStripMenuItem_Click);
             // 
             // rPGSaveToolStripMenuItem
             // 
@@ -154,6 +221,7 @@ namespace MView.Forms
             this.packageUnpackageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
             this.packageUnpackageToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.packageUnpackageToolStripMenuItem.Text = "Package/Unpackage(&R)";
+            this.packageUnpackageToolStripMenuItem.Click += new System.EventHandler(this.packageUnpackageToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -166,6 +234,7 @@ namespace MView.Forms
             this.editEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.editEToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.editEToolStripMenuItem.Text = "Edit(&E)";
+            this.editEToolStripMenuItem.Click += new System.EventHandler(this.editEToolStripMenuItem_Click);
             // 
             // translationToolStripMenuItem
             // 
@@ -177,6 +246,44 @@ namespace MView.Forms
             this.translationToolStripMenuItem.Name = "translationToolStripMenuItem";
             this.translationToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.translationToolStripMenuItem.Text = "Translation";
+            // 
+            // importExportTToolStripMenuItem
+            // 
+            this.importExportTToolStripMenuItem.Name = "importExportTToolStripMenuItem";
+            this.importExportTToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.importExportTToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.importExportTToolStripMenuItem.Text = "Import/Export(&T)";
+            this.importExportTToolStripMenuItem.Click += new System.EventHandler(this.importExportTToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+            // 
+            // verifyVToolStripMenuItem
+            // 
+            this.verifyVToolStripMenuItem.Name = "verifyVToolStripMenuItem";
+            this.verifyVToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
+            this.verifyVToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.verifyVToolStripMenuItem.Text = "Verify(&V)";
+            this.verifyVToolStripMenuItem.Click += new System.EventHandler(this.verifyVToolStripMenuItem_Click);
+            // 
+            // migrateMToolStripMenuItem
+            // 
+            this.migrateMToolStripMenuItem.Name = "migrateMToolStripMenuItem";
+            this.migrateMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.migrateMToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.migrateMToolStripMenuItem.Text = "Migrate(&M)";
+            this.migrateMToolStripMenuItem.Click += new System.EventHandler(this.migrateMToolStripMenuItem_Click);
+            // 
+            // configureCToolStripMenuItem
+            // 
+            this.configureCToolStripMenuItem.Name = "configureCToolStripMenuItem";
+            this.configureCToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.configureCToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.configureCToolStripMenuItem.Text = "Configure(&C)";
+            this.configureCToolStripMenuItem.Click += new System.EventHandler(this.configureCToolStripMenuItem_Click);
             // 
             // helpHToolStripMenuItem
             // 
@@ -194,6 +301,12 @@ namespace MView.Forms
             this.manualToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
             this.manualToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.manualToolStripMenuItem.Text = "Manual(&M)";
+            this.manualToolStripMenuItem.Click += new System.EventHandler(this.manualToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(182, 6);
             // 
             // informationToolStripMenuItem
             // 
@@ -201,99 +314,7 @@ namespace MView.Forms
             this.informationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.informationToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.informationToolStripMenuItem.Text = "Information(&I)";
-            // 
-            // importExportTToolStripMenuItem
-            // 
-            this.importExportTToolStripMenuItem.Name = "importExportTToolStripMenuItem";
-            this.importExportTToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.importExportTToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.importExportTToolStripMenuItem.Text = "Import/Export(&T)";
-            // 
-            // verifyVToolStripMenuItem
-            // 
-            this.verifyVToolStripMenuItem.Name = "verifyVToolStripMenuItem";
-            this.verifyVToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.V)));
-            this.verifyVToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.verifyVToolStripMenuItem.Text = "Verify(&V)";
-            // 
-            // migrateMToolStripMenuItem
-            // 
-            this.migrateMToolStripMenuItem.Name = "migrateMToolStripMenuItem";
-            this.migrateMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.migrateMToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.migrateMToolStripMenuItem.Text = "Migrate(&M)";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesToolStripMenuItem,
-            this.folderToolStripMenuItem});
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open(&O)";
-            // 
-            // filesToolStripMenuItem
-            // 
-            this.filesToolStripMenuItem.Name = "filesToolStripMenuItem";
-            this.filesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.filesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.filesToolStripMenuItem.Text = "Files(&F)";
-            // 
-            // folderToolStripMenuItem
-            // 
-            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
-            this.folderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.O)));
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.folderToolStripMenuItem.Text = "Folder(&D)";
-            // 
-            // exitEToolStripMenuItem
-            // 
-            this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
-            this.exitEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitEToolStripMenuItem.Text = "Exit(&E)";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(182, 6);
-            // 
-            // configureCToolStripMenuItem
-            // 
-            this.configureCToolStripMenuItem.Name = "configureCToolStripMenuItem";
-            this.configureCToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.configureCToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.configureCToolStripMenuItem.Text = "Configure(&C)";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(40, 17);
-            this.statusLabel.Text = "Status";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(627, 17);
-            this.toolStripStatusLabel2.Spring = true;
-            // 
-            // statusBar
-            // 
-            this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(100, 16);
+            this.informationToolStripMenuItem.Click += new System.EventHandler(this.informationToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -329,21 +350,11 @@ namespace MView.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Files";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.ReportBox);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(5, 5);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(774, 90);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Reports";
-            // 
             // fileList
             // 
             this.fileList.BackColor = System.Drawing.SystemColors.Window;
             this.fileList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.fileList.CheckBoxes = true;
             this.fileList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.formatHeader,
             this.nameHeader,
@@ -359,18 +370,6 @@ namespace MView.Forms
             this.fileList.TabIndex = 0;
             this.fileList.UseCompatibleStateImageBehavior = false;
             this.fileList.View = System.Windows.Forms.View.Details;
-            // 
-            // ReportBox
-            // 
-            this.ReportBox.BackColor = System.Drawing.SystemColors.Window;
-            this.ReportBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ReportBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReportBox.Location = new System.Drawing.Point(3, 17);
-            this.ReportBox.Multiline = true;
-            this.ReportBox.Name = "ReportBox";
-            this.ReportBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ReportBox.Size = new System.Drawing.Size(768, 70);
-            this.ReportBox.TabIndex = 0;
             // 
             // formatHeader
             // 
@@ -392,6 +391,63 @@ namespace MView.Forms
             this.pathHeader.Text = "Path";
             this.pathHeader.Width = 400;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.ReportBox);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(5, 5);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(774, 90);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Reports";
+            // 
+            // ReportBox
+            // 
+            this.ReportBox.BackColor = System.Drawing.SystemColors.Window;
+            this.ReportBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ReportBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReportBox.Location = new System.Drawing.Point(3, 17);
+            this.ReportBox.Multiline = true;
+            this.ReportBox.Name = "ReportBox";
+            this.ReportBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ReportBox.Size = new System.Drawing.Size(768, 70);
+            this.ReportBox.TabIndex = 0;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.deleteToolStripMenuItem.Text = "Delete(&D)";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // deleteAllToolStripMenuItem
+            // 
+            this.deleteAllToolStripMenuItem.Name = "deleteAllToolStripMenuItem";
+            this.deleteAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.D)));
+            this.deleteAllToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.deleteAllToolStripMenuItem.Text = "Delete All(&D)";
+            this.deleteAllToolStripMenuItem.Click += new System.EventHandler(this.deleteAllToolStripMenuItem_Click);
+            // 
+            // selectAllAToolStripMenuItem
+            // 
+            this.selectAllAToolStripMenuItem.Name = "selectAllAToolStripMenuItem";
+            this.selectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+            this.selectAllAToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.selectAllAToolStripMenuItem.Text = "Select All(&A)";
+            this.selectAllAToolStripMenuItem.Click += new System.EventHandler(this.selectAllAToolStripMenuItem_Click);
+            // 
+            // deselectAllAToolStripMenuItem
+            // 
+            this.deselectAllAToolStripMenuItem.Name = "deselectAllAToolStripMenuItem";
+            this.deselectAllAToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.A)));
+            this.deselectAllAToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.deselectAllAToolStripMenuItem.Text = "Deselect All(&A)";
+            this.deselectAllAToolStripMenuItem.Click += new System.EventHandler(this.deselectAllAToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -402,6 +458,7 @@ namespace MView.Forms
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainForm";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -458,5 +515,9 @@ namespace MView.Forms
         private System.Windows.Forms.ColumnHeader nameHeader;
         private System.Windows.Forms.ColumnHeader sizeHeader;
         private System.Windows.Forms.ColumnHeader pathHeader;
+        private System.Windows.Forms.ToolStripMenuItem selectAllAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deselectAllAToolStripMenuItem;
     }
 }

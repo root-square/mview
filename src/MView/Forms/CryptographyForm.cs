@@ -12,9 +12,13 @@ namespace MView.Forms
 {
     public partial class CryptographyForm : Form
     {
-        public CryptographyForm()
+        MainForm main;
+
+        public CryptographyForm(MainForm main)
         {
             InitializeComponent();
+
+            this.main = main;
         }
     }
 }

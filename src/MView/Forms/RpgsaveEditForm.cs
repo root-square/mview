@@ -12,9 +12,13 @@ namespace MView.Forms
 {
     public partial class RpgsaveEditForm : Form
     {
-        public RpgsaveEditForm()
+        MainForm main;
+
+        public RpgsaveEditForm(MainForm main)
         {
             InitializeComponent();
+
+            this.main = main;
         }
     }
 }

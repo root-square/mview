@@ -12,9 +12,13 @@ namespace MView.Forms
 {
     public partial class TranslationVerifyForm : Form
     {
-        public TranslationVerifyForm()
+        MainForm main;
+
+        public TranslationVerifyForm(MainForm main)
         {
             InitializeComponent();
+
+            this.main = main;
         }
     }
 }
