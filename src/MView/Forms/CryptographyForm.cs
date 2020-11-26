@@ -203,7 +203,6 @@ namespace MView.Forms
 
         private Dictionary<string, string> IndexFromList(string[] originalExtensions, string[] modifiedExtensions)
         {
-            // Indexing.
             _main.AddReport(ReportType.Information, "Indexing started.");
             _main.SetStatusLabelText("Indexing");
             _main.SetStatusBarStyle(ProgressBarStyle.Marquee);
@@ -229,27 +228,30 @@ namespace MView.Forms
 
                     if (type == "DIRECTORY") // Directory indexing.
                     {
-                        string parentPath = Directory.GetParent(path).FullName;
+                        _main.AddReport(ReportType.Information, $"Catched a directory. => '{path}'");
+
                         List<string> tempList = FileUtility.GetFiles(path, new List<string>(originalExtensions));
 
                         foreach (string temp in tempList)
                         {
                             // Create expected save path.
-                            string relativePath = temp.Replace(parentPath, string.Empty);
-                            string savePath = Path.Combine(saveDirectoryBox.Text, relativePath);
+                            string relativePath = temp.Replace(Path.GetDirectoryName(path) + @"\", string.Empty);
+                            string savePath = Path.Combine(saveDirectoryBox.Text, saveDirectoryBox.Text, relativePath);
+                            savePath = GetModifiedPath(savePath);
 
-                            _main.AddReport(ReportType.Information, $"Indexed '{temp}'.");
-                            files.Add(temp, GetModifiedPath(savePath));
+                            _main.AddReport(ReportType.Information, $"Indexed '{temp}' -> '{savePath}'.");
+                            files.Add(temp, savePath);
                         }
                     }
-                    else
+                    else // Files indexing.
                     {
                         if (originalExtensions.Contains(Path.GetExtension(path)))
                         {
                             string savePath = Path.Combine(saveDirectoryBox.Text, Path.GetFileName(path));
+                            savePath = GetModifiedPath(savePath);
 
-                            _main.AddReport(ReportType.Information, $"Indexed '{path}'.");
-                            files.Add(path, GetModifiedPath(savePath));
+                            _main.AddReport(ReportType.Information, $"Indexed '{path}' -> '{savePath}'.");
+                            files.Add(path, savePath);
                         }
                     }
                 }
@@ -267,7 +269,6 @@ namespace MView.Forms
 
         private void EncryptService(Dictionary<string, string> files)
         {
-            // Encrypting.
             _main.AddReport(ReportType.Information, "Encrypting started.");
             _main.SetStatusLabelText("Working");
             _main.SetStatusBarStyle(ProgressBarStyle.Marquee);
@@ -301,7 +302,6 @@ namespace MView.Forms
 
         private void DecryptService(Dictionary<string, string> files)
         {
-            // Decrypting.
             _main.AddReport(ReportType.Information, "Decrypting started.");
             _main.SetStatusLabelText("Working");
             _main.SetStatusBarStyle(ProgressBarStyle.Marquee);

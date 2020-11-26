@@ -52,7 +52,7 @@ namespace MView.Utilities
                 // Re-indexing files in sub-directory.
                 foreach (DirectoryInfo subdir in dir.GetDirectories())
                 {
-                    GetFiles(subdir.FullName);
+                    files.AddRange(GetFiles(subdir.FullName, extensions));
                 }
 
                 return files;
