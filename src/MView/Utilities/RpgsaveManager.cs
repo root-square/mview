@@ -29,7 +29,7 @@ namespace MView.Utilities
         public void Package(string source)
         {
             string result = LZString.CompressToBase64(source);
-            FileUtility.WriteTextFile(_filePath, result, _encoding);
+            FileManager.WriteTextFile(_filePath, result, _encoding);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace MView.Utilities
         /// <returns></returns>
         public string Unpackage()
         {
-            string source = FileUtility.ReadTextFile(_filePath, _encoding);
+            string source = FileManager.ReadTextFile(_filePath, _encoding);
             return LZString.DecompressFromBase64(source);
         }
     }

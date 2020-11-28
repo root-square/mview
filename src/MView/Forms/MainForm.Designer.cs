@@ -4,14 +4,14 @@ namespace MView.Forms
     partial class MainForm
     {
         /// <summary>
-        /// Required designer variable.
+        /// 필수 디자이너 변수입니다.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
+        /// 사용 중인 모든 리소스를 정리합니다.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">관리되는 리소스를 삭제해야 하면 true이고, 그렇지 않으면 false입니다.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,18 +21,14 @@ namespace MView.Forms
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Windows Form 디자이너에서 생성한 코드
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// 디자이너 지원에 필요한 메서드입니다. 
+        /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,22 +41,8 @@ namespace MView.Forms
             this.deselectAllAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cryptographyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rPGSaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.packageUnpackageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.editEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.translationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importExportTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.verifyVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.migrateMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.informationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.fileList = new System.Windows.Forms.ListView();
@@ -70,8 +52,10 @@ namespace MView.Forms
             this.pathHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ReportBox = new System.Windows.Forms.TextBox();
-            this.statusStrip.SuspendLayout();
+            this.taskTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -80,49 +64,17 @@ namespace MView.Forms
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel,
-            this.toolStripStatusLabel2,
-            this.statusBar});
-            this.statusStrip.Location = new System.Drawing.Point(0, 435);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(784, 26);
-            this.statusStrip.SizingGrip = false;
-            this.statusStrip.TabIndex = 0;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(39, 21);
-            this.statusLabel.Text = "Status";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(597, 21);
-            this.toolStripStatusLabel2.Spring = true;
-            // 
-            // statusBar
-            // 
-            this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(100, 20);
-            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileFToolStripMenuItem,
             this.listLToolStripMenuItem,
-            this.toolsTToolStripMenuItem,
-            this.configureCToolStripMenuItem,
-            this.helpHToolStripMenuItem});
+            this.taskTToolStripMenuItem,
+            this.informationToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(784, 24);
-            this.menuStrip.TabIndex = 1;
+            this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip1";
             // 
             // fileFToolStripMenuItem
@@ -142,7 +94,7 @@ namespace MView.Forms
             this.folderToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open(&O)";
             // 
             // filesToolStripMenuItem
@@ -158,20 +110,20 @@ namespace MView.Forms
             this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
             this.folderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.folderToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.folderToolStripMenuItem.Text = "Folder(&D)";
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.folderToolStripMenuItem.Text = "Folders(&D)";
             this.folderToolStripMenuItem.Click += new System.EventHandler(this.folderToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // exitEToolStripMenuItem
             // 
             this.exitEToolStripMenuItem.Name = "exitEToolStripMenuItem";
             this.exitEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.exitEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitEToolStripMenuItem.Text = "Exit(&E)";
             this.exitEToolStripMenuItem.Click += new System.EventHandler(this.exitEToolStripMenuItem_Click);
             // 
@@ -221,170 +173,56 @@ namespace MView.Forms
             this.deleteAllToolStripMenuItem.Text = "Delete All(&D)";
             this.deleteAllToolStripMenuItem.Click += new System.EventHandler(this.deleteAllToolStripMenuItem_Click);
             // 
-            // toolsTToolStripMenuItem
+            // statusStrip1
             // 
-            this.toolsTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cryptographyToolStripMenuItem,
-            this.rPGSaveToolStripMenuItem,
-            this.translationToolStripMenuItem});
-            this.toolsTToolStripMenuItem.Name = "toolsTToolStripMenuItem";
-            this.toolsTToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.toolsTToolStripMenuItem.Text = "Tools(&T)";
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip1.TabIndex = 4;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // cryptographyToolStripMenuItem
+            // statusLabel
             // 
-            this.cryptographyToolStripMenuItem.Name = "cryptographyToolStripMenuItem";
-            this.cryptographyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.C)));
-            this.cryptographyToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.cryptographyToolStripMenuItem.Text = "Cryptography(&C)";
-            this.cryptographyToolStripMenuItem.Click += new System.EventHandler(this.cryptographyToolStripMenuItem_Click);
-            // 
-            // rPGSaveToolStripMenuItem
-            // 
-            this.rPGSaveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.packageUnpackageToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.editEToolStripMenuItem});
-            this.rPGSaveToolStripMenuItem.Name = "rPGSaveToolStripMenuItem";
-            this.rPGSaveToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.rPGSaveToolStripMenuItem.Text = "RPG Save";
-            // 
-            // packageUnpackageToolStripMenuItem
-            // 
-            this.packageUnpackageToolStripMenuItem.Name = "packageUnpackageToolStripMenuItem";
-            this.packageUnpackageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.packageUnpackageToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.packageUnpackageToolStripMenuItem.Text = "Package/Unpackage(&R)";
-            this.packageUnpackageToolStripMenuItem.Click += new System.EventHandler(this.packageUnpackageToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(235, 6);
-            // 
-            // editEToolStripMenuItem
-            // 
-            this.editEToolStripMenuItem.Name = "editEToolStripMenuItem";
-            this.editEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.editEToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.editEToolStripMenuItem.Text = "Edit(&E)";
-            this.editEToolStripMenuItem.Click += new System.EventHandler(this.editEToolStripMenuItem_Click);
-            // 
-            // translationToolStripMenuItem
-            // 
-            this.translationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importExportTToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.verifyVToolStripMenuItem,
-            this.migrateMToolStripMenuItem});
-            this.translationToolStripMenuItem.Name = "translationToolStripMenuItem";
-            this.translationToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.translationToolStripMenuItem.Text = "Translation";
-            // 
-            // importExportTToolStripMenuItem
-            // 
-            this.importExportTToolStripMenuItem.Name = "importExportTToolStripMenuItem";
-            this.importExportTToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.importExportTToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.importExportTToolStripMenuItem.Text = "Import/Export(&T)";
-            this.importExportTToolStripMenuItem.Click += new System.EventHandler(this.importExportTToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
-            // 
-            // verifyVToolStripMenuItem
-            // 
-            this.verifyVToolStripMenuItem.Name = "verifyVToolStripMenuItem";
-            this.verifyVToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.V)));
-            this.verifyVToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.verifyVToolStripMenuItem.Text = "Verify(&V)";
-            this.verifyVToolStripMenuItem.Click += new System.EventHandler(this.verifyVToolStripMenuItem_Click);
-            // 
-            // migrateMToolStripMenuItem
-            // 
-            this.migrateMToolStripMenuItem.Name = "migrateMToolStripMenuItem";
-            this.migrateMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.migrateMToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-            this.migrateMToolStripMenuItem.Text = "Migrate(&M)";
-            this.migrateMToolStripMenuItem.Click += new System.EventHandler(this.migrateMToolStripMenuItem_Click);
-            // 
-            // configureCToolStripMenuItem
-            // 
-            this.configureCToolStripMenuItem.Name = "configureCToolStripMenuItem";
-            this.configureCToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.configureCToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
-            this.configureCToolStripMenuItem.Text = "Configure(&C)";
-            this.configureCToolStripMenuItem.Click += new System.EventHandler(this.configureCToolStripMenuItem_Click);
-            // 
-            // helpHToolStripMenuItem
-            // 
-            this.helpHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manualToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.informationToolStripMenuItem});
-            this.helpHToolStripMenuItem.Name = "helpHToolStripMenuItem";
-            this.helpHToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.helpHToolStripMenuItem.Text = "Help(&H)";
-            // 
-            // manualToolStripMenuItem
-            // 
-            this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
-            this.manualToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.manualToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.manualToolStripMenuItem.Text = "Manual(&M)";
-            this.manualToolStripMenuItem.Click += new System.EventHandler(this.manualToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(182, 6);
-            // 
-            // informationToolStripMenuItem
-            // 
-            this.informationToolStripMenuItem.Name = "informationToolStripMenuItem";
-            this.informationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.informationToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.informationToolStripMenuItem.Text = "Information(&I)";
-            this.informationToolStripMenuItem.Click += new System.EventHandler(this.informationToolStripMenuItem_Click);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(40, 17);
+            this.statusLabel.Text = "Status";
             // 
             // splitContainer1
             // 
             this.splitContainer1.BackColor = System.Drawing.SystemColors.Window;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
-            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
             this.splitContainer1.Panel1MinSize = 200;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(5, 8, 5, 8);
             this.splitContainer1.Panel2MinSize = 100;
-            this.splitContainer1.Size = new System.Drawing.Size(784, 411);
-            this.splitContainer1.SplitterDistance = 306;
-            this.splitContainer1.SplitterWidth = 5;
-            this.splitContainer1.TabIndex = 2;
+            this.splitContainer1.Size = new System.Drawing.Size(784, 415);
+            this.splitContainer1.SplitterDistance = 308;
+            this.splitContainer1.SplitterWidth = 6;
+            this.splitContainer1.TabIndex = 5;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.fileList);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(5, 6);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox1.Location = new System.Drawing.Point(5, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox1.Size = new System.Drawing.Size(774, 294);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.groupBox1.Size = new System.Drawing.Size(774, 292);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Files";
@@ -403,10 +241,10 @@ namespace MView.Forms
             this.fileList.FullRowSelect = true;
             this.fileList.GridLines = true;
             this.fileList.HideSelection = false;
-            this.fileList.Location = new System.Drawing.Point(3, 20);
-            this.fileList.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.fileList.Location = new System.Drawing.Point(3, 21);
+            this.fileList.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(768, 270);
+            this.fileList.Size = new System.Drawing.Size(768, 266);
             this.fileList.TabIndex = 0;
             this.fileList.UseCompatibleStateImageBehavior = false;
             this.fileList.View = System.Windows.Forms.View.Details;
@@ -435,11 +273,11 @@ namespace MView.Forms
             // 
             this.groupBox2.Controls.Add(this.ReportBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(5, 6);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Location = new System.Drawing.Point(5, 8);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox2.Size = new System.Drawing.Size(774, 88);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.groupBox2.Size = new System.Drawing.Size(774, 85);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Reports";
@@ -449,13 +287,27 @@ namespace MView.Forms
             this.ReportBox.BackColor = System.Drawing.SystemColors.Window;
             this.ReportBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ReportBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReportBox.Location = new System.Drawing.Point(3, 20);
-            this.ReportBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ReportBox.Location = new System.Drawing.Point(3, 21);
+            this.ReportBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.ReportBox.Multiline = true;
             this.ReportBox.Name = "ReportBox";
             this.ReportBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ReportBox.Size = new System.Drawing.Size(768, 64);
+            this.ReportBox.Size = new System.Drawing.Size(768, 59);
             this.ReportBox.TabIndex = 0;
+            // 
+            // taskTToolStripMenuItem
+            // 
+            this.taskTToolStripMenuItem.Name = "taskTToolStripMenuItem";
+            this.taskTToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.taskTToolStripMenuItem.Text = "Task(&T)";
+            this.taskTToolStripMenuItem.Click += new System.EventHandler(this.taskTToolStripMenuItem_Click);
+            // 
+            // informationToolStripMenuItem
+            // 
+            this.informationToolStripMenuItem.Name = "informationToolStripMenuItem";
+            this.informationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+            this.informationToolStripMenuItem.Text = "Information(&I)";
+            this.informationToolStripMenuItem.Click += new System.EventHandler(this.informationToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -463,18 +315,17 @@ namespace MView.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MView";
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -489,46 +340,31 @@ namespace MView.Forms
 
         #endregion
 
-        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem listLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsTToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cryptographyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rPGSaveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem packageUnpackageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem editEToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem translationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpHToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem informationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importExportTToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem verifyVToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem migrateMToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem exitEToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configureCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripMenuItem listLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectAllAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deselectAllAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteAllToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.ListView fileList;
         private System.Windows.Forms.ColumnHeader formatHeader;
         private System.Windows.Forms.ColumnHeader nameHeader;
         private System.Windows.Forms.ColumnHeader sizeHeader;
         private System.Windows.Forms.ColumnHeader pathHeader;
-        private System.Windows.Forms.ToolStripMenuItem selectAllAToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deselectAllAToolStripMenuItem;
-        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        public System.Windows.Forms.ToolStripProgressBar statusBar;
-        public System.Windows.Forms.ListView fileList;
+        private System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.TextBox ReportBox;
+        private System.Windows.Forms.ToolStripMenuItem taskTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem informationToolStripMenuItem;
     }
 }
+

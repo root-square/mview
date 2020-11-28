@@ -458,7 +458,7 @@ namespace MView.Utilities
             int transIndex = 0;
 
             // Load and Parse JSON File.
-            string source = FileUtility.ReadTextFile(filePath, Encoding.UTF8);
+            string source = FileManager.ReadTextFile(filePath, Encoding.UTF8);
             JToken json = JToken.Parse(source);
 
             JToken[] jTokenArray = new JToken[6];
@@ -508,7 +508,7 @@ namespace MView.Utilities
                 }
             }
 
-            FileUtility.WriteTextFile(savePath, result, Encoding.UTF8);
+            FileManager.WriteTextFile(savePath, result, Encoding.UTF8);
         }
 
         /// <summary>
@@ -534,11 +534,11 @@ namespace MView.Utilities
             // Initialize variables.
             string result = string.Empty;
 
-            string[] transArray = FileUtility.ReadTextFile(filePath, Encoding.UTF8).SplitByString("\r\n");
+            string[] transArray = FileManager.ReadTextFile(filePath, Encoding.UTF8).SplitByString("\r\n");
             int transIndex = 0;
 
             // Load and Parse Original JSON File.
-            string source = FileUtility.ReadTextFile(jsonPath, Encoding.UTF8);
+            string source = FileManager.ReadTextFile(jsonPath, Encoding.UTF8);
             JToken json = JToken.Parse(source);
 
             JToken[] jTokenArray = new JToken[6];
@@ -581,7 +581,7 @@ namespace MView.Utilities
                     }
                     jArray.Add(field);
                 }
-                FileUtility.WriteTextFile(savePath, jArray.ToString(), Encoding.UTF8);
+                FileManager.WriteTextFile(savePath, jArray.ToString(), Encoding.UTF8);
             }
             else // Part of JObject parsing.
             {
@@ -616,7 +616,7 @@ namespace MView.Utilities
                     }
                     jObject = (JObject)json;
                 }
-                FileUtility.WriteTextFile(savePath, jObject.ToString(), Encoding.UTF8);
+                FileManager.WriteTextFile(savePath, jObject.ToString(), Encoding.UTF8);
             }
         }
 

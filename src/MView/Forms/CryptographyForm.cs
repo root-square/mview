@@ -1,16 +1,12 @@
-﻿using MView.Entities;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using MView.Entities;
 using MView.Utilities;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MView.Forms
@@ -19,33 +15,40 @@ namespace MView.Forms
     {
         MainForm _main;
 
-        Settings _settings = Settings.Instance;
-
         public CryptographyForm(MainForm main)
         {
             InitializeComponent();
 
             _main = main;
-
-            codeBox.Enabled = _settings.UseEncryptionCodeFlag;
-            codeButton.Enabled = _settings.UseEncryptionCodeFlag;
-            saveDirectoryBox.Text = _settings.CryptoSavePath;
-            verifyCheckBox.Checked = _settings.VerifyFakeHeaderFlag;
-            codeCheckBox.Checked = _settings.UseEncryptionCodeFlag;
         }
 
         #region ::UI::
 
         private void saveDirectoryButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.Description = "Please select the folder where the datas will be stored.";
-            dialog.ShowNewFolderButton = true;
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.Title = "Open folder...";
+            dialog.Multiselect = false;
+            dialog.IsFolderPicker = true;
+            dialog.Multiselect = true;
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dialog.DefaultFileName = string.Empty; // Default file name
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                _main.AddReport(ReportType.Information, $"Crypto save directory selected. => '{dialog.SelectedPath}'");
-                saveDirectoryBox.Text = dialog.SelectedPath;
+                if (!Directory.Exists(dialog.FileName))
+                {
+                    MessageBox.Show("Directory not found.", "MView", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                saveDirectoryBox.Text = dialog.FileName;
+
+                _main.AddReport(ReportType.Completed, "Open-Folder operation completed.");
+            }
+            else
+            {
+                _main.AddReport(ReportType.Caution, "Open-Folder operation aborted.");
             }
         }
 
@@ -66,8 +69,8 @@ namespace MView.Forms
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 // Get encryption code.
-                JObject system = JObject.Parse(FileUtility.ReadTextFile(dialog.FileName, Encoding.UTF8));
-                
+                JObject system = JObject.Parse(FileManager.ReadTextFile(dialog.FileName, Encoding.UTF8));
+
                 if (system.ContainsKey("encryptionKey"))
                 {
                     _main.AddReport(ReportType.Information, $"Catched encryption code. => '{system["encryptionKey"]}");
@@ -81,16 +84,10 @@ namespace MView.Forms
             }
         }
 
-        private void verifyCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            _settings.VerifyFakeHeaderFlag = verifyCheckBox.Checked;
-        }
-
         private void codeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             codeBox.Enabled = codeCheckBox.Checked;
             codeButton.Enabled = codeCheckBox.Checked;
-            _settings.UseEncryptionCodeFlag = codeCheckBox.Checked;
         }
 
         private void encryptButton_Click(object sender, EventArgs e)
@@ -123,8 +120,25 @@ namespace MView.Forms
                 return;
             }
 
-            // Run crypto task with encrypt service.
-            EncryptService(IndexFromList(CryptographyUtility.DecryptedExtensions, CryptographyUtility.EncryptedExtensions));
+            saveDirectoryBox.Enabled = false;
+            saveDirectoryButton.Enabled = false;
+            codeBox.Enabled = false;
+            codeButton.Enabled = false;
+            verifyCheckBox.Enabled = false;
+            codeCheckBox.Enabled = false;
+            encryptButton.Enabled = false;
+            decryptButton.Enabled = false;
+
+            Encrypt(_main.IndexFromList(saveDirectoryBox.Text, CryptographyProvider.DecryptedExtensions));
+
+            saveDirectoryBox.Enabled = true;
+            saveDirectoryButton.Enabled = true;
+            codeBox.Enabled = true;
+            codeButton.Enabled = true;
+            verifyCheckBox.Enabled = true;
+            codeCheckBox.Enabled = true;
+            encryptButton.Enabled = true;
+            decryptButton.Enabled = true;
         }
 
         private void decryptButton_Click(object sender, EventArgs e)
@@ -150,130 +164,35 @@ namespace MView.Forms
                 return;
             }
 
-            // Run crypto task with decrypt service.
-            DecryptService(IndexFromList(CryptographyUtility.EncryptedExtensions, CryptographyUtility.DecryptedExtensions));
+            saveDirectoryBox.Enabled = false;
+            saveDirectoryButton.Enabled = false;
+            codeBox.Enabled = false;
+            codeButton.Enabled = false;
+            verifyCheckBox.Enabled = false;
+            codeCheckBox.Enabled = false;
+            encryptButton.Enabled = false;
+            decryptButton.Enabled = false;
+
+            Decrypt(_main.IndexFromList(saveDirectoryBox.Text, CryptographyProvider.EncryptedExtensions));
+
+            saveDirectoryBox.Enabled = true;
+            saveDirectoryButton.Enabled = true;
+            codeBox.Enabled = true;
+            codeButton.Enabled = true;
+            verifyCheckBox.Enabled = true;
+            codeCheckBox.Enabled = true;
+            encryptButton.Enabled = true;
+            decryptButton.Enabled = true;
         }
 
         #endregion
 
-        private string GetModifiedExtension(string extension)
-        {
-            string result = string.Empty;
+        #region ::Encrypt/Decrypt::
 
-            switch (extension.ToLower())
-            {
-                case ".ogg":
-                    result = ".rpgmvo";
-                    break;
-                case ".m4a":
-                    result = ".rpgmvm";
-                    break;
-                case ".wav":
-                    result = ".rpgmvw";
-                    break;
-                case ".png":
-                    result = ".rpgmvp";
-                    break;
-                case ".rpgmvo":
-                    result = ".ogg";
-                    break;
-                case ".rpgmvm":
-                    result = ".m4a";
-                    break;
-                case ".rpgmvw":
-                    result = ".wav";
-                    break;
-                case ".rpgmvp":
-                    result = ".png";
-                    break;
-            }
-
-            return result;
-        }
-
-        private string GetModifiedPath(string filePath)
-        {
-            string directory = Path.GetDirectoryName(filePath);
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            string extension = Path.GetExtension(filePath);
-            string modifiedExtension = GetModifiedExtension(extension);
-
-            return Path.Combine(directory, fileName + modifiedExtension);
-        }
-
-        private Dictionary<string, string> IndexFromList(string[] originalExtensions, string[] modifiedExtensions)
-        {
-            _main.AddReport(ReportType.Information, "Indexing started.");
-            _main.SetStatusLabelText("Indexing");
-            _main.SetStatusBarStyle(ProgressBarStyle.Marquee);
-
-            List<ListViewItem> items = new List<ListViewItem>();
-            Dictionary<string, string> files = new Dictionary<string, string>();
-
-            // Get checked items.
-            foreach (ListViewItem item in _main.fileList.Items)
-            {
-                if (item.Checked)
-                {
-                    items.Add(item);
-                }
-            }
-
-            foreach (ListViewItem item in items)
-            {
-                try
-                {
-                    string type = item.SubItems[0].Text;
-                    string path = item.SubItems[3].Text;
-
-                    if (type == "DIRECTORY") // Directory indexing.
-                    {
-                        _main.AddReport(ReportType.Information, $"Catched a directory. => '{path}'");
-
-                        List<string> tempList = FileUtility.GetFiles(path, new List<string>(originalExtensions));
-
-                        foreach (string temp in tempList)
-                        {
-                            // Create expected save path.
-                            string relativePath = temp.Replace(Path.GetDirectoryName(path) + @"\", string.Empty);
-                            string savePath = Path.Combine(saveDirectoryBox.Text, saveDirectoryBox.Text, relativePath);
-                            savePath = GetModifiedPath(savePath);
-
-                            _main.AddReport(ReportType.Information, $"Indexed '{temp}' -> '{savePath}'.");
-                            files.Add(temp, savePath);
-                        }
-                    }
-                    else // Files indexing.
-                    {
-                        if (originalExtensions.Contains(Path.GetExtension(path)))
-                        {
-                            string savePath = Path.Combine(saveDirectoryBox.Text, Path.GetFileName(path));
-                            savePath = GetModifiedPath(savePath);
-
-                            _main.AddReport(ReportType.Information, $"Indexed '{path}' -> '{savePath}'.");
-                            files.Add(path, savePath);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _main.AddReport(ReportType.Warning, $"{ex.Message}, {ex.StackTrace}");
-                }
-            }
-
-            _main.AddReport(ReportType.Completed, "Indexing completed.");
-            _main.SetStatusBarStyle(ProgressBarStyle.Blocks);
-
-            return files;
-        }
-
-        private void EncryptService(Dictionary<string, string> files)
+        private void Encrypt(Dictionary<string, string> files)
         {
             _main.AddReport(ReportType.Information, "Encrypting started.");
             _main.SetStatusLabelText("Working");
-            _main.SetStatusBarStyle(ProgressBarStyle.Marquee);
-
-            progressBar.Value = 0;
 
             int processedCount = 0;
 
@@ -282,31 +201,25 @@ namespace MView.Forms
                 try
                 {
                     int progressValue = (processedCount / files.Count) * 100;
-                    _main.SetStatusLabelText($"Working ({processedCount}, {files.Count})");
-                    progressBar.Value = progressValue;
                     processedCount++;
 
-                    CryptographyUtility.EncryptHeader(pair.Key, pair.Value, codeBox.Text);
-                    _main.AddReport(ReportType.Information, $"Encrypted '{pair.Key}'.");
+                    CryptographyProvider.EncryptHeader(pair.Key, pair.Value, codeBox.Text);
+                    _main.AddReport(ReportType.Information, $"({processedCount}/{files.Count}) Encrypted '{pair.Key}'.");
                 }
                 catch (Exception ex)
                 {
-                    _main.AddReport(ReportType.Warning, $"{ex.Message}, {ex.StackTrace}");
+                    _main.AddReport(ReportType.Warning, $"{pair.Key}, {ex.Message}, {ex.StackTrace}");
                 }
             }
 
             _main.AddReport(ReportType.Completed, "Encrypting completed.");
             _main.SetStatusLabelText("Completed");
-            _main.SetStatusBarStyle(ProgressBarStyle.Blocks);
         }
 
-        private void DecryptService(Dictionary<string, string> files)
+        private void Decrypt(Dictionary<string, string> files)
         {
             _main.AddReport(ReportType.Information, "Decrypting started.");
             _main.SetStatusLabelText("Working");
-            _main.SetStatusBarStyle(ProgressBarStyle.Marquee);
-
-            progressBar.Value = 0;
 
             int processedCount = 0;
 
@@ -315,14 +228,12 @@ namespace MView.Forms
                 try
                 {
                     int progressValue = (processedCount / files.Count) * 100;
-                    _main.SetStatusLabelText($"Working ({processedCount}, {files.Count})");
-                    progressBar.Value = progressValue;
                     processedCount++;
 
                     // Verify fake header.
                     if (verifyCheckBox.Checked)
                     {
-                        if (!CryptographyUtility.VerifyFakeHeader(pair.Key))
+                        if (!CryptographyProvider.VerifyFakeHeader(pair.Key))
                         {
                             _main.AddReport(ReportType.Caution, $"Ignored '{pair.Key}'.");
                             continue;
@@ -332,27 +243,28 @@ namespace MView.Forms
                     // Decrypt or restore.
                     if (codeCheckBox.Checked)
                     {
-                        CryptographyUtility.DecryptHeader(pair.Key, pair.Value, codeBox.Text);
-                        _main.AddReport(ReportType.Information, $"Decrypted '{pair.Key}'.");
+                        CryptographyProvider.DecryptHeader(pair.Key, pair.Value, codeBox.Text);
+                        _main.AddReport(ReportType.Information, $"({processedCount}/{files.Count}) Decrypted '{pair.Key}'.");
                     }
                     else
                     {
                         if (Path.GetExtension(pair.Key).ToLower() != ".rpgmvo")
                         {
-                            CryptographyUtility.RestoreHeader(pair.Key, pair.Value);
-                            _main.AddReport(ReportType.Information, $"Decrypted '{pair.Key}'.");
+                            CryptographyProvider.RestoreHeader(pair.Key, pair.Value);
+                            _main.AddReport(ReportType.Information, $"({processedCount}/{files.Count}) Decrypted '{pair.Key}'.");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    _main.AddReport(ReportType.Warning, $"{ex.Message}, {ex.StackTrace}");
+                    _main.AddReport(ReportType.Warning, $"{pair.Key}, {ex.Message}, {ex.StackTrace}");
                 }
             }
 
             _main.AddReport(ReportType.Completed, "Decrypting completed.");
             _main.SetStatusLabelText("Completed");
-            _main.SetStatusBarStyle(ProgressBarStyle.Blocks);
         }
+
+        #endregion
     }
 }

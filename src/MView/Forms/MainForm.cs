@@ -1,9 +1,10 @@
-﻿using MView.Entities;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using MView.Entities;
+using MView.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -40,16 +41,6 @@ namespace MView.Forms
         public void SetStatusLabelText(string text)
         {
             statusLabel.Text = text;
-        }
-
-        public void SetStatusBarValue(int value)
-        {
-            statusBar.Value = value;
-        }
-
-        public void SetStatusBarStyle(ProgressBarStyle style)
-        {
-            statusBar.Style = style;
         }
 
         #endregion
@@ -117,7 +108,7 @@ namespace MView.Forms
             dialog.ValidateNames = true;
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dialog.FileName = string.Empty; // Default file name
-            dialog.Filter = "Supported Files (*.txt, *.json, *.rpgsave, *.rpgmvo, *.rpgmvm, *.rpgmvw, *.rpgmvp, *.ogg, *.m4a, *.wav, *.png)|*.txt;*.json;*.rpgsave;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.rpgmvp;*.ogg;*.m4a;*.wav;*.png"; // Filter files by extension
+            dialog.Filter = "Supported Files (*.rpgmvo, *.rpgmvm, *.rpgmvw, *.rpgmvp, *.ogg, *.m4a, *.wav, *.png)|*.rpgmvo;*.rpgmvm;*.rpgmvw;*.rpgmvp;*.ogg;*.m4a;*.wav;*.png"; // Filter files by extension
 
 
             // Process open file dialog box results
@@ -131,12 +122,6 @@ namespace MView.Forms
                     {
                         case "":
                             type = DocumentType.DIRECTORY;
-                            break;
-                        case ".txt":
-                            type = DocumentType.TXT;
-                            break;
-                        case ".json":
-                            type = DocumentType.JSON;
                             break;
                         case ".rpgsave":
                             type = DocumentType.RPGSAVE;
@@ -170,6 +155,7 @@ namespace MView.Forms
                             break;
                     }
 
+                    // Add file to list.
                     ListViewItem item = new ListViewItem(type.ToString());
                     item.SubItems.Add(Path.GetFileName(path));
                     item.SubItems.Add(GetFileSize(path));
@@ -190,28 +176,35 @@ namespace MView.Forms
 
         private void folderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddReport(ReportType.Information, "Open-Folder operation started.");
+            AddReport(ReportType.Information, "Open-Folders operation started.");
 
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.Description = "Please select the folder where the data you want to use is stored.";
-            dialog.ShowNewFolderButton = true;
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.Title = "Open folders...";
+            dialog.Multiselect = true;
+            dialog.IsFolderPicker = true;
+            dialog.Multiselect = true;
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dialog.DefaultFileName = string.Empty; // Default file name
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                ListViewItem item = new ListViewItem(DocumentType.DIRECTORY.ToString());
-                item.SubItems.Add(Path.GetFileName(dialog.SelectedPath));
-                item.SubItems.Add(GetDirectorySize(dialog.SelectedPath));
-                item.SubItems.Add(dialog.SelectedPath);
+                foreach (string path in dialog.FileNames)
+                {
+                    ListViewItem item = new ListViewItem(DocumentType.DIRECTORY.ToString());
+                    item.SubItems.Add(Path.GetFileName(path));
+                    item.SubItems.Add(GetDirectorySize(path));
+                    item.SubItems.Add(path);
 
-                item.Checked = true;
+                    item.Checked = true;
 
-                fileList.Items.Add(item);
+                    fileList.Items.Add(item);
+                }
 
-                AddReport(ReportType.Completed, "Open-Folder operation completed.");
+                AddReport(ReportType.Completed, "Open-Folders operation completed.");
             }
             else
             {
-                AddReport(ReportType.Caution, "Open-Folder operation aborted.");
+                AddReport(ReportType.Caution, "Open-Folders operation aborted.");
             }
         }
 
@@ -261,57 +254,133 @@ namespace MView.Forms
             AddReport(ReportType.Information, "List-Delete All operation performed.");
         }
 
-        private void cryptographyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void taskTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form form = new CryptographyForm(this);
             form.ShowDialog();
-        }
-
-        private void packageUnpackageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new RpgsaveForm(this);
-            form.ShowDialog();
-        }
-
-        private void editEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new RpgsaveEditForm(this);
-            form.ShowDialog();
-        }
-
-        private void importExportTToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new TranslationForm(this);
-            form.ShowDialog();
-        }
-
-        private void verifyVToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new TranslationVerifyForm(this);
-            form.ShowDialog();
-        }
-
-        private void migrateMToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new TranslationMigrateForm(this);
-            form.ShowDialog();
-        }
-
-        private void configureCToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form form = new ConfigureForm();
-            form.ShowDialog();
-        }
-
-        private void manualToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://github.com/junimiso04/MView");
         }
 
         private void informationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form form = new InformationForm();
             form.ShowDialog();
+        }
+        
+        #endregion
+
+        #region ::File Indexer::
+
+        private string GetModifiedExtension(string extension)
+        {
+            string result = string.Empty;
+
+            switch (extension.ToLower())
+            {
+                // Cryptography section.
+                case ".ogg":
+                    result = ".rpgmvo";
+                    break;
+                case ".m4a":
+                    result = ".rpgmvm";
+                    break;
+                case ".wav":
+                    result = ".rpgmvw";
+                    break;
+                case ".png":
+                    result = ".rpgmvp";
+                    break;
+                case ".rpgmvo":
+                    result = ".ogg";
+                    break;
+                case ".rpgmvm":
+                    result = ".m4a";
+                    break;
+                case ".rpgmvw":
+                    result = ".wav";
+                    break;
+                case ".rpgmvp":
+                    result = ".png";
+                    break;
+                default:
+                    result = ".dat";
+                    break;
+            }
+
+            return result;
+        }
+
+        private string GetModifiedPath(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            string extension = Path.GetExtension(filePath);
+            string modifiedExtension = GetModifiedExtension(extension);
+
+            return Path.Combine(directory, fileName + modifiedExtension);
+        }
+
+        public Dictionary<string, string> IndexFromList(string saveDirectory, string[] extensions)
+        {
+            AddReport(ReportType.Information, "Indexing started.");
+            SetStatusLabelText("Indexing");
+
+            List<ListViewItem> items = new List<ListViewItem>();
+            Dictionary<string, string> files = new Dictionary<string, string>();
+
+            // Get checked items.
+            foreach (ListViewItem item in fileList.Items)
+            {
+                if (item.Checked)
+                {
+                    items.Add(item);
+                }
+            }
+
+            foreach (ListViewItem item in items)
+            {
+                try
+                {
+                    string fileType = item.SubItems[0].Text;
+                    string path = item.SubItems[3].Text;
+
+                    if (fileType == "DIRECTORY") // Directory indexing.
+                    {
+                        AddReport(ReportType.Information, $"Catched a directory. => '{path}'");
+
+                        List<string> tempList = FileManager.GetFiles(path, new List<string>(extensions));
+
+                        foreach (string temp in tempList)
+                        {
+                            // Create expected save path.
+                            string relativePath = temp.Replace(Path.GetDirectoryName(path) + @"\", string.Empty);
+                            string savePath = Path.Combine(saveDirectory, relativePath);
+                            savePath = GetModifiedPath(savePath);
+
+                            AddReport(ReportType.Information, $"Indexed '{temp}' -> '{savePath}'.");
+                            files.Add(temp, savePath);
+                        }
+                    }
+                    else // Files indexing.
+                    {
+                        if (extensions.Contains(Path.GetExtension(path)))
+                        {
+                            string savePath = Path.Combine(saveDirectory, saveDirectory, Path.GetFileName(path));
+                            savePath = GetModifiedPath(savePath);
+
+                            AddReport(ReportType.Information, $"Indexed '{path}' -> '{savePath}'.");
+                            files.Add(path, savePath);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AddReport(ReportType.Warning, $"{ex.Message}, {ex.StackTrace}");
+                }
+            }
+
+            AddReport(ReportType.Completed, "Indexing completed.");
+
+            return files;
         }
 
         #endregion
