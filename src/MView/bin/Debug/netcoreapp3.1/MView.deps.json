@@ -1,0 +1,156 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "MView/1.0.0": {
+        "dependencies": {
+          "Dirkster.AvalonDock": "4.50.0",
+          "HandyControls": "3.0.0",
+          "MahApps.Metro.IconPacks.Material": "4.8.0"
+        },
+        "runtime": {
+          "MView.dll": {}
+        }
+      },
+      "Dirkster.AvalonDock/4.50.0": {
+        "runtime": {
+          "lib/netcoreapp3.0/AvalonDock.dll": {
+            "assemblyVersion": "4.50.0.0",
+            "fileVersion": "4.50.0.0"
+          }
+        },
+        "resources": {
+          "lib/netcoreapp3.0/ca-ES/AvalonDock.resources.dll": {
+            "locale": "ca-ES"
+          },
+          "lib/netcoreapp3.0/cs-CZ/AvalonDock.resources.dll": {
+            "locale": "cs-CZ"
+          },
+          "lib/netcoreapp3.0/de/AvalonDock.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netcoreapp3.0/es/AvalonDock.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netcoreapp3.0/fr/AvalonDock.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netcoreapp3.0/hu/AvalonDock.resources.dll": {
+            "locale": "hu"
+          },
+          "lib/netcoreapp3.0/it/AvalonDock.resources.dll": {
+            "locale": "it"
+          },
+          "lib/netcoreapp3.0/ja/AvalonDock.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/netcoreapp3.0/ko/AvalonDock.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/netcoreapp3.0/nl-BE/AvalonDock.resources.dll": {
+            "locale": "nl-BE"
+          },
+          "lib/netcoreapp3.0/pl/AvalonDock.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/netcoreapp3.0/pt-BR/AvalonDock.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netcoreapp3.0/ro/AvalonDock.resources.dll": {
+            "locale": "ro"
+          },
+          "lib/netcoreapp3.0/ru/AvalonDock.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/netcoreapp3.0/sv/AvalonDock.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/netcoreapp3.0/zh-Hans/AvalonDock.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/netcoreapp3.0/zh-Hant/AvalonDock.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
+      "HandyControls/3.0.0": {
+        "runtime": {
+          "lib/netcoreapp3.1/HandyControl.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        },
+        "resources": {
+          "lib/netcoreapp3.1/ca-ES/HandyControl.resources.dll": {
+            "locale": "ca-ES"
+          },
+          "lib/netcoreapp3.1/en/HandyControl.resources.dll": {
+            "locale": "en"
+          },
+          "lib/netcoreapp3.1/fa/HandyControl.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/netcoreapp3.1/fr/HandyControl.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netcoreapp3.1/ko-KR/HandyControl.resources.dll": {
+            "locale": "ko-KR"
+          },
+          "lib/netcoreapp3.1/pt-BR/HandyControl.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netcoreapp3.1/ru/HandyControl.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/netcoreapp3.1/tr/HandyControl.resources.dll": {
+            "locale": "tr"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.Material/4.8.0": {
+        "runtime": {
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.6"
+          },
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Material.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.6"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MView/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Dirkster.AvalonDock/4.50.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6TMxHGUWzqJ9+DkokoFF6uEnw10ZXKSZc9R8T3vt9b1E+00jun10xELsicuMonC5TNzGhl4FF/OjXKVPY7BXeQ==",
+      "path": "dirkster.avalondock/4.50.0",
+      "hashPath": "dirkster.avalondock.4.50.0.nupkg.sha512"
+    },
+    "HandyControls/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HjTRNxMvo3aQml95ias/hLg+aibAxdgdcC5uXfJVUmQORyurN8zy8eAeeDTKLBrQ+RobwjLb555PJoz4CyIdfA==",
+      "path": "handycontrols/3.0.0",
+      "hashPath": "handycontrols.3.0.0.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.Material/4.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KZ6BRhXtFlcKuuh5n13ezexZSuyVOo7O+tQwacLRvzfl421P+/rWfRO1rcsHimvo2Bpm4cG8uTj7KXagsioJyg==",
+      "path": "mahapps.metro.iconpacks.material/4.8.0",
+      "hashPath": "mahapps.metro.iconpacks.material.4.8.0.nupkg.sha512"
+    }
+  }
+}

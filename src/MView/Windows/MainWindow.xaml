@@ -1,0 +1,136 @@
+﻿<hc:Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:converters="clr-namespace:MView.Converters" x:Class="MView.Windows.MainWindow"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:entities="clr-namespace:MView.Entities"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:local="clr-namespace:MView"
+           mc:Ignorable="d"
+           Title="MView"
+           ShowTitle="False"
+           Background="{DynamicResource RegionBrush}"
+           ResizeMode="CanResize"
+           WindowStartupLocation="CenterScreen"
+           Height="600" Width="900" MinHeight="550" MinWidth="850">
+    <hc:Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </hc:Window.Resources>
+
+    <hc:Window.Visibility>
+        <Binding Path="WindowVisibility" Converter="{StaticResource BooleanToVisibilityConverter}"/>
+    </hc:Window.Visibility>
+    
+    <hc:Window.IsEnabled>
+        <Binding Path="WindowVisibility"/>
+    </hc:Window.IsEnabled>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="530*"/>
+            <ColumnDefinition Width="370"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Title-->
+        <Grid Grid.ColumnSpan="2" Grid.Row="0" Margin="50 0 0 0" VerticalAlignment="Center">
+            <TextBlock VerticalAlignment="Center" FontSize="32" Opacity=".80" Text="MView"/>
+        </Grid>
+
+        <!--Recent works list-->
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical" Margin="50 0 10 100" >
+            <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".68" Text="Recent Tasks"/>
+
+            <hc:ScrollViewer Margin="0 8 0 8" Height="300" VerticalScrollBarVisibility="Visible">
+                <!--TreeView Data Templates-->
+                <TreeView BorderThickness="0" VerticalAlignment="Stretch" ItemsSource="{Binding TaskHistory}">
+                    <TreeView.Resources>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="True"/>
+                        </Style>
+
+                        <HierarchicalDataTemplate DataType="{x:Type entities:TaskRecordGroup}" ItemsSource="{Binding Group}">
+                            <TextBlock Margin="0 4 0 4" Text="{Binding Header}"/>
+                        </HierarchicalDataTemplate>
+                        
+                        <HierarchicalDataTemplate DataType="{x:Type entities:TaskRecord}">
+                            <Grid Height="50" Margin="10 8 10 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="300*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Icon-->
+                                <iconPacks:PackIconMaterial Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="24" Height="24"
+                                                            Foreground="{DynamicResource DarkPrimaryBrush}" Kind="{Binding IconKind}"/>
+
+                                <!--Contents-->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" Margin="6 0 0 0">
+                                    <TextBlock FontSize="12" FontWeight="Bold" Opacity=".80"  Text="{Binding Details}"/>
+                                    <TextBlock Grid.Column="2" HorizontalAlignment="Left" Margin="0 2 0 0" Opacity=".50" Text="{Binding DateTime}"/>
+                                </StackPanel>
+                            </Grid>
+                        </HierarchicalDataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+            </hc:ScrollViewer>
+        </StackPanel>
+
+        <!--Menu-->
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="0 0 50 100">
+            <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".68" Text="Menu"/>
+
+            <Button Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource SecondaryRegionBrush}"
+                    Height="70" Margin="0 8 0 0" HorizontalAlignment="Stretch" hc:BorderElement.CornerRadius="0"
+                    Command="{Binding WorkspaceCommand}">
+                <StackPanel Orientation="Horizontal" Width="280" Margin="0 4 0 4">
+                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Width="30" Height="30" Opacity=".68" Kind="FileDocumentEdit"/>
+                    <StackPanel Orientation="Vertical" Margin="8 0 0 0">
+                        <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".80" Text="Workspace"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" Opacity=".68" Text="Provides complete functional tools."/>
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+
+            <Button Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource SecondaryRegionBrush}"
+                    Height="70" Margin="0 8 0 0" HorizontalAlignment="Stretch" hc:BorderElement.CornerRadius="0"
+                    Command="{Binding ToolboxCommand}">
+                <StackPanel Orientation="Horizontal" Width="280" Margin="0 4 0 4">
+                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Width="30" Height="30" Opacity=".68" Kind="Toolbox"/>
+                    <StackPanel Orientation="Vertical" Margin="8 0 0 0">
+                        <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".80" Text="Toolbox"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" Opacity=".68" Text="Provides simplified tools"/>
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+
+            <Button Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource SecondaryRegionBrush}"
+                    Height="70" Margin="0 8 0 0" HorizontalAlignment="Stretch" hc:BorderElement.CornerRadius="0"
+                    Command="{Binding SettingsCommand}">
+                <StackPanel Orientation="Horizontal" Width="280" Margin="0 4 0 4">
+                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Width="30" Height="30" Opacity=".68" Kind="Cog"/>
+                    <StackPanel Orientation="Vertical" Margin="8 0 0 0">
+                        <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".80" Text="Settings"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" Opacity=".68" Text="Change the application settings"/>
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+
+            <Button Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource SecondaryRegionBrush}"
+                    Height="70" Margin="0 8 0 0" HorizontalAlignment="Stretch" hc:BorderElement.CornerRadius="0"
+                    Command="{Binding InformationCommand}">
+                <StackPanel Orientation="Horizontal" Width="280" Margin="0 4 0 4">
+                    <iconPacks:PackIconMaterial VerticalAlignment="Center" Width="30" Height="30" Opacity=".68" Kind="InformationOutline"/>
+                    <StackPanel Orientation="Vertical" Margin="8 0 0 0">
+                        <TextBlock VerticalAlignment="Center" FontSize="18" Opacity=".80" Text="Information"/>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" Opacity=".68" Text="View the application information"/>
+                    </StackPanel>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</hc:Window>

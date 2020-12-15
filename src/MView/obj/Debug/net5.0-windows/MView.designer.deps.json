@@ -1,0 +1,73 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "HandyControl/3.0.0": {
+        "runtime": {
+          "lib/net5.0-windows/HandyControl.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.0.0"
+          }
+        },
+        "resources": {
+          "lib/net5.0-windows/ca-ES/HandyControl.resources.dll": {
+            "locale": "ca-ES"
+          },
+          "lib/net5.0-windows/en/HandyControl.resources.dll": {
+            "locale": "en"
+          },
+          "lib/net5.0-windows/fa/HandyControl.resources.dll": {
+            "locale": "fa"
+          },
+          "lib/net5.0-windows/fr/HandyControl.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net5.0-windows/ko-KR/HandyControl.resources.dll": {
+            "locale": "ko-KR"
+          },
+          "lib/net5.0-windows/pt-BR/HandyControl.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/net5.0-windows/ru/HandyControl.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net5.0-windows/tr/HandyControl.resources.dll": {
+            "locale": "tr"
+          }
+        }
+      },
+      "MahApps.Metro.IconPacks.Material/4.8.0": {
+        "runtime": {
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.6"
+          },
+          "lib/netcoreapp3.1/MahApps.Metro.IconPacks.Material.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.8.0.6"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HandyControl/3.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zvcf9WSdvcD9NbZyNmVqN4HHZczM14DdC3HgQdjaj0WQ9nIR1m5ToDf1qq0fHtQnCwZBm2PJEh+9K5Nox0AEFA==",
+      "path": "handycontrol/3.0.0",
+      "hashPath": "handycontrol.3.0.0.nupkg.sha512"
+    },
+    "MahApps.Metro.IconPacks.Material/4.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KZ6BRhXtFlcKuuh5n13ezexZSuyVOo7O+tQwacLRvzfl421P+/rWfRO1rcsHimvo2Bpm4cG8uTj7KXagsioJyg==",
+      "path": "mahapps.metro.iconpacks.material/4.8.0",
+      "hashPath": "mahapps.metro.iconpacks.material.4.8.0.nupkg.sha512"
+    }
+  }
+}
