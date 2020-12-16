@@ -1,4 +1,4 @@
-![Title](./image/title.png)
+![Title](./data/image/title.png)
 
 ## Overview
 MView is a RPG Maker MV resource editor.
@@ -16,7 +16,7 @@ This project just provides several solutions for RPG Maker MV(MZ). The user is r
 The source code of MView is freely available under the MIT license. However, for the third-party libraries used for this, the licenses for each library are followed.
 
 ## Contributors
-**Main developer and maintainer** - June
+**Main developer&Maintainer** - June
 
 ## Contact
 If you have any questions about this repository, please use GitHub Issues.
