@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MView.Core.Extension;
+using System;
 using System.IO;
 using System.Linq;
 

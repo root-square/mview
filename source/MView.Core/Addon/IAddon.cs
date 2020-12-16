@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.Core.Extension
+namespace MView.Core.Addon
 {
-    class IToolExtension
+    public interface IAddon
     {
     }
 }

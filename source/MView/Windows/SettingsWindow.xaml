@@ -61,7 +61,7 @@
             <hc:TabItem Header="Extensions">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
-                        <GroupBox Background="{DynamicResource RegionBrush}" VerticalAlignment="Top" Header="Extensions">
+                        <GroupBox Background="{DynamicResource RegionBrush}" VerticalAlignment="Top" Header="Add-on">
                             <Button>sadfsdaf</Button>
                         </GroupBox>
                     </StackPanel>

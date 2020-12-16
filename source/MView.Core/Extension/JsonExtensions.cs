@@ -1,9 +1,9 @@
-﻿using MView.Core.Script;
+﻿using MView.Core.Script.Entities;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace MView.Core
+namespace MView.Core.Extension
 {
     internal static class JsonExtensions
     {

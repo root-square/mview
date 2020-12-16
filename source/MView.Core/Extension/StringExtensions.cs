@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MView.Core
+namespace MView.Core.Extension
 {
     internal static class StringExtensions
     {

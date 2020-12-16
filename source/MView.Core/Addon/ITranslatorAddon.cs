@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.Core.Extension
+namespace MView.Core.Addon
 {
-    public interface ITranslatorExtension :IExtension
+    public interface ITranslatorAddon :IAddon
     {
     }
 }

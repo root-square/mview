@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MView.Core.Script
+namespace MView.Core.Script.Entities
 {
     public class JPathCollection
     {

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.Core.Data
+namespace MView.Core.Extension
 {
+    // Cloned from https://github.com/jawa-the-hutt/lz-string-csharp/blob/master/src/LZString.cs
+
     /// <summary>
     /// Provides LZString compressing features.
-    /// Cloned from https://github.com/jawa-the-hutt/lz-string-csharp/blob/master/src/LZString.cs
     /// </summary>
-    public class LZString
+    internal static class LZStringExtensions
     {
         private const string KeyStrBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
         private const string KeyStrUriSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$";
@@ -25,7 +26,7 @@ namespace MView.Core.Data
             return dict;
         }
 
-        public static string CompressToBase64(string input)
+        internal static string CompressToBase64(this string input)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
@@ -40,33 +41,33 @@ namespace MView.Core.Data
             }
         }
 
-        public static string DecompressFromBase64(string input)
+        internal static string DecompressFromBase64(this string input)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
             return Decompress(input.Length, 32, index => KeyStrBase64Dict[input[index]]);
         }
 
-        public static string CompressToUTF16(string input)
+        internal static string CompressToUTF16(this string input)
         {
             return Compress(input, 15, code => (char)(code + 32));
         }
 
-        public static string DecompressFromUTF16(string input)
+        internal static string DecompressFromUTF16(this string input)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
             return Decompress(input.Length, 16384, index => (char)(input[index] - 32));
         }
 
-        public static string CompressToEncodedURIComponent(string input)
+        internal static string CompressToEncodedURIComponent(this string input)
         {
             if (input == null) return "";
 
             return Compress(input, 6, code => KeyStrUriSafe[code]);
         }
 
-        public static string DecompressFromEncodedURIComponent(string input)
+        internal static string DecompressFromEncodedURIComponent(this string input)
         {
             if (input == null) throw new ArgumentNullException(nameof(input));
 
@@ -74,7 +75,7 @@ namespace MView.Core.Data
             return Decompress(input.Length, 32, index => KeyStrUriSafeDict[input[index]]);
         }
 
-        public static byte[] CompressToUint8Array(string uncompressed)
+        internal static byte[] CompressToUint8Array(this string uncompressed)
         {
             string compressed = Compress(uncompressed);
             byte[] buf = new byte[compressed.Length * 2];
@@ -88,7 +89,7 @@ namespace MView.Core.Data
             return buf;
         }
 
-        public static string DecompressFromUint8Array(byte[] compressed)
+        internal static string DecompressFromUint8Array(this byte[] compressed)
         {
             if (compressed == null) throw new ArgumentNullException(nameof(compressed));
 
@@ -101,12 +102,12 @@ namespace MView.Core.Data
             return Decompress(new string(result));
         }
 
-        public static string Compress(string uncompressed)
+        internal static string Compress(this string uncompressed)
         {
             return Compress(uncompressed, 16, code => (char)code);
         }
 
-        private static string Compress(string uncompressed, int bitsPerChar, Func<int, char> getCharFromInt)
+        private static string Compress(this string uncompressed, int bitsPerChar, Func<int, char> getCharFromInt)
         {
             if (uncompressed == null) throw new ArgumentNullException(nameof(uncompressed));
 
@@ -390,7 +391,7 @@ namespace MView.Core.Data
             return context_data.ToString();
         }
 
-        public static string Decompress(string compressed)
+        internal static string Decompress(this string compressed)
         {
             if (compressed == null) throw new ArgumentNullException(nameof(compressed));
 
