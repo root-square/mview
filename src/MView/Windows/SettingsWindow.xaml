@@ -1,0 +1,112 @@
+﻿<hc:Window x:Class="MView.Windows.SettingsWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:local="clr-namespace:MView.Windows"
+           mc:Ignorable="d"
+           Title="Settings"
+           Background="{DynamicResource RegionBrush}"
+           ResizeMode="NoResize"
+           WindowStartupLocation="CenterScreen"
+           Height="500" Width="800">
+    
+    <Grid>
+        <hc:TabControl TabItemHeight="50" IsAnimationEnabled="True" IsTabFillEnabled="False" IsUWPStyle="True">
+            <hc:TabItem IsSelected="True" Header="General">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Header="Theme">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton BorderThickness="1" Style="{StaticResource RadioButtonIcon}" Content="Light Theme(Default)"/>
+                                <hc:Divider LineStrokeThickness="2" LineStroke="{DynamicResource DarkPrimaryBrush}" Orientation="Vertical" MaxHeight="16"/>
+                                <RadioButton BorderThickness="1" Style="{StaticResource RadioButtonIcon}" Content="Dark Theme"/>
+                                <hc:Divider LineStrokeThickness="2" LineStroke="{DynamicResource DarkPrimaryBrush}" Orientation="Vertical" MaxHeight="16"/>
+                                <RadioButton BorderThickness="1" Style="{StaticResource RadioButtonIcon}" Content="Violet Theme"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Backup">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <hc:TextBox HorizontalAlignment="Left" Width="400"
+                                            hc:InfoElement.Placeholder="Enter your backup directory" hc:InfoElement.Title="Backup directory" hc:InfoElement.TitlePlacement="Left"/>
+                                    <Button Margin="6 0 0 0" Content="..."/>
+                                </StackPanel>
+
+                                <CheckBox HorizontalAlignment="Left" Margin="0 6 0 0" Content="Backup files before application starts working"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Language">
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox Style="{StaticResource ComboBoxExtend}" Width="400"
+                                          hc:InfoElement.TitleWidth="120" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Title="Language" 
+                                          ItemsSource="{Binding DataList}" SelectedIndex="0"/>
+                                <Button Margin="6 0 0 0" Content="Apply"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Reset">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="6 0 0 0" Content="Restore settings to default"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+
+            <hc:TabItem Header="Extensions">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" VerticalAlignment="Top" Header="Extensions">
+                            <Button>sadfsdaf</Button>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+            
+            <hc:TabItem Header="Cryptography">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
+                            <Button>sadfsdaf</Button>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+            
+            <hc:TabItem Header="Data Editor">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
+                            <Button>sadfsdaf</Button>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+            
+            <hc:TabItem Header="Save Editor">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
+                            <Button>sadfsdaf</Button>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+            
+            <hc:TabItem Header="Translator">
+                <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <StackPanel Margin="20">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
+                            <Button>sadfsdaf</Button>
+                        </GroupBox>
+                    </StackPanel>
+                </hc:ScrollViewer>
+            </hc:TabItem>
+        </hc:TabControl>
+    </Grid>
+</hc:Window>

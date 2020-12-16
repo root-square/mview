@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "y0fe2iND4ghnVAIgarBq7clfCP7Lck2XmkHJ8EfiaZB1hUVQdq0w0zQCNRFpWmGEbrLguujBzF7RlENsOYEUgw==",
+  "success": true,
+  "projectFilePath": "E:\\Keep-Project\\MView\\src\\MView\\MView.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\dirkster.avalondock\\4.50.0\\dirkster.avalondock.4.50.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\handycontrols\\3.0.0\\handycontrols.3.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mahapps.metro.iconpacks.material\\4.8.0\\mahapps.metro.iconpacks.material.4.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}
