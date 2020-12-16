@@ -1,4 +1,4 @@
-![Title](./img/title.png)
+![Title](./image/title.png)
 
 ## Overview
 MView is a RPG Maker MV resource editor.
