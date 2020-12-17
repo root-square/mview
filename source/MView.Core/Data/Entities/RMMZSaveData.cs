@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MView.Core.Data.Entities
 {
-    class SaveDataMV
+    class RMMZSaveData
     {
     }
 }
