@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MView", "MView\MView.csproj", "{BF3B9AC1-D4EB-405C-8BB5-755D27A5C3C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D63169F9-E644-4908-BDF6-F7EA42FE97FF} = {D63169F9-E644-4908-BDF6-F7EA42FE97FF}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MView.Core", "MView.Core\MView.Core.csproj", "{D63169F9-E644-4908-BDF6-F7EA42FE97FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MView.Core", "MView.Core\MView.Core.csproj", "{D63169F9-E644-4908-BDF6-F7EA42FE97FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

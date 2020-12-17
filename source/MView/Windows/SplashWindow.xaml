@@ -13,7 +13,5 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/splash.png" Stretch="UniformToFill"/>
         </Grid.Background>
-
-        <TextBlock Foreground="WhiteSmoke" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Text="Loading..."/>
     </Grid>
 </Window>

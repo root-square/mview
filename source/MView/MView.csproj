@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MView.Core\MView.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\mview_favicon_16.png" />
     <Resource Include="Resources\mview_favicon_32.png" />
     <Resource Include="Resources\mview_favicon_64.png" />

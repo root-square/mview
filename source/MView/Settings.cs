@@ -10,6 +10,7 @@ namespace MView
     {
         #region ::Singleton Members::
 
+        [NonSerialized]
         private static Settings _instance;
 
         public static Settings Instance
@@ -28,6 +29,14 @@ namespace MView
                 _instance = value;
             }
         }
+
+        #endregion
+
+        #region ::Consts::
+
+        public const string SettingsPath = "./MView/settings.json";
+
+        public const string HistoryPath = "./MView/history.json";
 
         #endregion
     }

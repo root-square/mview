@@ -58,7 +58,7 @@
                 </hc:ScrollViewer>
             </hc:TabItem>
 
-            <hc:TabItem Header="Extensions">
+            <hc:TabItem Header="Add-on">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
                         <GroupBox Background="{DynamicResource RegionBrush}" VerticalAlignment="Top" Header="Add-on">
