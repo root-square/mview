@@ -5,17 +5,17 @@ using System.Text;
 
 namespace MView.ViewModels.Tool
 {
-    public class FileExplorerViewModel : ToolViewModelBase
+    public class SaveDataManagerViewModel : ToolViewModelBase
     {
         #region ::Fields::
 
-        public const string ToolContentId = "FileExplorer";
+        public const string ToolContentId = "SaveDataManager";
 
         #endregion
 
         #region ::Constructors::
 
-        public FileExplorerViewModel() : base("File Explorer")
+        public SaveDataManagerViewModel() : base("Save Data Manager")
         {
             ContentId = ToolContentId;
         }

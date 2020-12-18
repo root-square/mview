@@ -17,10 +17,14 @@ namespace MView.ViewModels
         #region ::Fields::
 
         private History _history = History.Instance;
+        private ObservableCollection<TaskRecordGroup> _taskHistory;
 
         private bool _windowVisibility = true;
 
-        private ObservableCollection<TaskRecordGroup> _taskHistory;
+        private ICommand _workspaceCommand;
+        private ICommand _toolboxCommand;
+        private ICommand _settingsCommand;
+        private ICommand _informationCommand;
 
         #endregion
 
@@ -60,6 +64,38 @@ namespace MView.ViewModels
                 _taskHistory = value;
                 RefreshTaskHistoryItems();
                 RaisePropertyChanged();
+            }
+        }
+
+        public ICommand WorkspaceCommand
+        {
+            get
+            {
+                return (_workspaceCommand) ?? (_workspaceCommand = new DelegateCommand(Workspace));
+            }
+        }
+
+        public ICommand ToolboxCommand
+        {
+            get
+            {
+                return (_toolboxCommand) ?? (_toolboxCommand = new DelegateCommand(Toolbox));
+            }
+        }
+
+        public ICommand SettingsCommand
+        {
+            get
+            {
+                return (_settingsCommand) ?? (_settingsCommand = new DelegateCommand(Settings));
+            }
+        }
+
+        public ICommand InformationCommand
+        {
+            get
+            {
+                return (_informationCommand) ?? (_informationCommand = new DelegateCommand(Information));
             }
         }
 
@@ -133,50 +169,6 @@ namespace MView.ViewModels
             if (old.Group.Count > 0)
             {
                 _taskHistory.Add(old);
-            }
-        }
-
-        #endregion
-
-        #region ::Commands::
-
-        private ICommand _workspaceCommand;
-
-        public ICommand WorkspaceCommand
-        {
-            get
-            {
-                return (_workspaceCommand) ?? (_workspaceCommand = new DelegateCommand(Workspace));
-            }
-        }
-
-        private ICommand _toolboxCommand;
-
-        public ICommand ToolboxCommand
-        {
-            get
-            {
-                return (_toolboxCommand) ?? (_toolboxCommand = new DelegateCommand(Toolbox));
-            }
-        }
-
-        private ICommand _settingsCommand;
-
-        public ICommand SettingsCommand
-        {
-            get
-            {
-                return (_settingsCommand) ?? (_settingsCommand = new DelegateCommand(Settings));
-            }
-        }
-
-        private ICommand _informationCommand;
-
-        public ICommand InformationCommand
-        {
-            get
-            {
-                return (_informationCommand) ?? (_informationCommand = new DelegateCommand(Information));
             }
         }
 

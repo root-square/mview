@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MView.Bases;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -15,7 +16,7 @@ namespace MView.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //if (value is FileViewModel)
+            if (value is FileViewModelBase)
                 return value;
 
             return Binding.DoNothing;
@@ -23,7 +24,7 @@ namespace MView.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //if (value is FileViewModel)
+            if (value is FileViewModelBase)
                 return value;
 
             return Binding.DoNothing;

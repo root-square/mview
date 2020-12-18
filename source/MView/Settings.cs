@@ -38,6 +38,8 @@ namespace MView
 
         public const string HistoryPath = "./MView/history.json";
 
+        public const string LayoutPath = "./MView/layout.config";
+
         #endregion
     }
 }

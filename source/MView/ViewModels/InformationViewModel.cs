@@ -12,6 +12,9 @@ namespace MView.ViewModels
 
         private string _versionText = string.Empty;
 
+        private ICommand _gitHubRepositoryCommand;
+        private ICommand _opensourceLicensesCommand;
+
         #endregion
 
         #region ::Constructors::
@@ -38,12 +41,6 @@ namespace MView.ViewModels
             }
         }
 
-        #endregion
-
-        #region ::Commands::
-
-        private ICommand _gitHubRepositoryCommand;
-
         public ICommand GitHubRepositoryCommand
         {
             get
@@ -51,8 +48,6 @@ namespace MView.ViewModels
                 return (_gitHubRepositoryCommand) ?? (_gitHubRepositoryCommand = new DelegateCommand(GitHubRepository));
             }
         }
-
-        private ICommand _opensourceLicensesCommand;
 
         public ICommand OpensourceLicensesCommand
         {

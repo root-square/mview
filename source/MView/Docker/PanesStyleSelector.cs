@@ -1,28 +1,21 @@
-﻿using System.Windows;
+﻿using MView.Bases;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MView.Docker
 {
 	public class PanesStyleSelector : StyleSelector
 	{
-		public Style ToolStyle
-		{
-			get;
-			set;
-		}
+		public Style ToolStyle { get; set; }
 
-		public Style FileStyle
-		{
-			get;
-			set;
-		}
+		public Style FileStyle { get; set; }
 
 		public override Style SelectStyle(object item, DependencyObject container)
 		{
-			//if (item is ToolViewModelBase)
+			if (item is ToolViewModelBase)
 				return ToolStyle;
 
-			//if (item is FileViewModel)
+			if (item is FileViewModelBase)
 				return FileStyle;
 
 			return base.SelectStyle(item, container);

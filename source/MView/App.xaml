@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:MView">
     <Application.Resources>
         <ResourceDictionary>
-            <!--Handy Control Resources-->
             <ResourceDictionary.MergedDictionaries>
+                <!--Handy Control Resources-->
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>

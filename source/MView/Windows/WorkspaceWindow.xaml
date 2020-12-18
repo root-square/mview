@@ -12,23 +12,24 @@
            mc:Ignorable="d"
            Title="Workspace"
            ShowTitle="False"
-           Background="{DynamicResource RegionBrush}"
+           Background="{DynamicResource SecondaryRegionBrush}"
+           NonClientAreaBackground="{DynamicResource SecondaryRegionBrush}"
            ResizeMode="CanResize"
            WindowStartupLocation="CenterScreen"
            Height="700" Width="1000"
-           Icon="/MView;component/Resources/mview_favicon_grayscale_16.png"
-           UseLayoutRounding="True">
+           Icon="/MView;component/Resources/mview_favicon_16.png"
+           UseLayoutRounding="True" WindowState="Maximized">
     <Window.Resources>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <runtime:Boolean x:Key="TRUE">True</runtime:Boolean>
         <runtime:Boolean x:Key="FALSE">False</runtime:Boolean>
     </Window.Resources>
-    
+
     <!--Menu Area-->
     <hc:Window.NonClientAreaContent>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="8 0 0 0">
-            <Menu>
+            <Menu Background="{DynamicResource SecondaryRegionBrush}">
                 <MenuItem Header="File(F)">
                     <MenuItem Header="Open">
                         <MenuItem.Icon>
@@ -61,22 +62,21 @@
                     <MenuItem Header="Exit(E)"/>
                 </MenuItem>
 
-                <MenuItem Header="List(L)">
-                    <MenuItem Header="Select All(S)"/>
-
-                    <MenuItem Header="Deselect All(S)"/>
-
-                    <Separator/>
-
-                    <MenuItem Header="Inverse(I)"/>
-
-                    <Separator/>
-
-                    <MenuItem Header="Remove(R)"/>
-                </MenuItem>
-
                 <MenuItem Header="View(V)">
-
+                    <MenuItem Header="Cryptography Manager" IsCheckable="True"
+						      IsChecked="{Binding CryptographyManager.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Data Manager" IsCheckable="True"
+						      IsChecked="{Binding DataManager.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="File Attributes" IsCheckable="True"
+						      IsChecked="{Binding FileAttributes.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="File Explorer" IsCheckable="True"
+						      IsChecked="{Binding FileExplorer.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Report" IsCheckable="True"
+						      IsChecked="{Binding Report.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Save Data Manager" IsCheckable="True"
+						      IsChecked="{Binding SaveDataManager.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Script Manager" IsCheckable="True"
+						      IsChecked="{Binding ScriptManager.IsVisible, Mode=TwoWay}" />
                 </MenuItem>
 
                 <MenuItem Header="Help(H)">
@@ -88,35 +88,82 @@
 
     <!--Workspace Components-->
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--Toolbar-->
+        <ToolBar Grid.Row="0" Margin="0" Padding="10 6" VerticalAlignment="Center">
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="8 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="#FFD7AC6A" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14"  Kind="FolderOpen"/>
+            </Button>
+            
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="ContentSave"/>
+            </Button>
+            
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="ContentSaveAll"/>
+            </Button>
+
+
+            <Separator Margin="6 0 6 0"/>
+
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="UndoVariant"/>
+            </Button>
+
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="RedoVariant"/>
+            </Button>
+        </ToolBar>
+
+        <!--AvalonDock Docking Manager-->
         <DockingManager
+            Grid.Row="1"
             x:Name="dockManager"
 			ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
-			AnchorablesSource="{Binding Tools}"
-			DocumentsSource="{Binding Files}"
-			Theme="{Binding SelectedTheme.Item2}">
+            AnchorablesSource="{Binding Tools}" DocumentsSource="{Binding Files}"
+			Theme="{Binding SelectedTheme.Item2}" Grid.RowSpan="2">
             <!--Pane Style Templates-->
             <DockingManager.LayoutItemTemplateSelector>
                 <docker:PanesTemplateSelector>
-                    <docker:PanesTemplateSelector.FileViewTemplate>
+                    <docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
                         <DataTemplate>
-                            <TextBox
-								Background="Transparent"
-								BorderThickness="0"
-								Text="{Binding TextContent, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Background="Transparent" BorderThickness="0" Text="Cryptography manager"/>
                         </DataTemplate>
-                    </docker:PanesTemplateSelector.FileViewTemplate>
-                    <docker:PanesTemplateSelector.FileStatsViewTemplate>
+                    </docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
+                    <docker:PanesTemplateSelector.DataManagerViewTemplate>
                         <DataTemplate>
-                            <Border Padding="5">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding FileSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Text="{Binding LastModified, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBox IsReadOnly="True" Text="{Binding FilePath, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBox IsReadOnly="True" Text="{Binding FileName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel>
-                            </Border>
+                            <TextBlock Foreground="Black" Text="Data manager"/>
                         </DataTemplate>
-                    </docker:PanesTemplateSelector.FileStatsViewTemplate>
+                    </docker:PanesTemplateSelector.DataManagerViewTemplate>
+                    <docker:PanesTemplateSelector.FileAttributesViewTemplate>
+                        <DataTemplate>
+                            <hc:PropertyGrid Background="Transparent" SelectedObject="{Binding DemoModel}"/>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.FileAttributesViewTemplate>
+                    <docker:PanesTemplateSelector.FileExplorerViewTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="Black" Text="File Explorer"/>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.FileExplorerViewTemplate>
+                    <docker:PanesTemplateSelector.ReportViewTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="Black" Text="Report"/>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.ReportViewTemplate>
+                    <docker:PanesTemplateSelector.SaveDataManagerViewTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="Black" Text="SaveDataManager"/>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.SaveDataManagerViewTemplate>
+                    <docker:PanesTemplateSelector.ScriptManagerViewTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="Black" Text="ScriptManager"/>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.ScriptManagerViewTemplate>
                 </docker:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 
@@ -133,6 +180,7 @@
                             <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
                         </Style>
                     </docker:PanesStyleSelector.ToolStyle>
+
                     <docker:PanesStyleSelector.FileStyle>
                         <Style TargetType="{x:Type LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
@@ -144,16 +192,10 @@
                     </docker:PanesStyleSelector.FileStyle>
                 </docker:PanesStyleSelector>
             </DockingManager.LayoutItemContainerStyleSelector>
+
             <DockingManager.LayoutUpdateStrategy>
                 <docker:LayoutInitializer />
             </DockingManager.LayoutUpdateStrategy>
-
-            <LayoutRoot>
-                <LayoutPanel Orientation="Vertical">
-                    <LayoutDocumentPane />
-                    <LayoutAnchorablePane Name="ToolsPane" DockHeight="150" />
-                </LayoutPanel>
-            </LayoutRoot>
         </DockingManager>
     </Grid>
 </hc:Window>

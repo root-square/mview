@@ -1,10 +1,16 @@
-﻿using System;
+﻿using MView.Bases;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MView.ViewModels.Data
 {
-    class AudioDataViewModel
+    public class AudioDataViewModel : FileViewModelBase
     {
+        public AudioDataViewModel(string filePath)
+        {
+            FilePath = filePath;
+            Title = FileName;
+        }
     }
 }
