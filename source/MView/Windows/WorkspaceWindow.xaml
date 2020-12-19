@@ -133,9 +133,53 @@
                     <!--Cryptography Manager Style-->
                     <docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                
-                            </StackPanel>
+                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <StackPanel Orientation="Vertical" Margin="8">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="Encryption key" />
+                                        <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
+                                    </Grid>
+
+                                    <Grid Margin="0 8 0 8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="50"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="Save directory" />
+                                        <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
+                                    </Grid>
+
+                                    <Separator/>
+
+                                    <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Use encrytion key for decryption" IsChecked="True"/>
+
+                                    <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ The *.ogg file cannot be decrypted without using the encryption key."/>
+
+                                    <Separator/>
+
+                                    <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Verify fake header" IsChecked="True"/>
+
+                                    <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Verify that the RPG Maker MV/MZ encrypted resource files are valid."/>
+
+                                    <Separator/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                                        <RadioButton Content="Current File" IsChecked="True"/>
+                                        <RadioButton Margin="4 0 0 0" Content="Selected Files"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                                        <Button Content="Encrypt"/>
+                                        <Button Margin="4 0 0 0" Content="Decrypt"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </hc:ScrollViewer>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
                     
