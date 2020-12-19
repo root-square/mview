@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using MView.Bases;
 using MView.Commands;
+using MView.Entities;
 using MView.ViewModels.Data;
 using MView.ViewModels.Tool;
 using System;
@@ -54,8 +55,8 @@ namespace MView
         private FileViewModelBase _activeDocument = null;
         private CryptographyManagerViewModel _cryptographyManager = null;
         private DataManagerViewModel _dataManager = null;
-        private FileAttributesViewModel _fileAttributes = null;
         private FileExplorerViewModel _fileExplorer = null;
+        private FilePropertiesViewModel _fileProperties = null;
         private ReportViewModel _report = null;
         private SaveDataManagerViewModel _saveDataManager = null;
         private ScriptManagerViewModel _scriptManager = null;
@@ -101,7 +102,7 @@ namespace MView
             get
             {
                 if (_tools == null)
-                    _tools = new ToolViewModelBase[] { CryptographyManager, DataManager, FileAttributes, FileExplorer, Report, SaveDataManager, ScriptManager };
+                    _tools = new ToolViewModelBase[] { CryptographyManager, DataManager, FileExplorer, FileProperties, Report, SaveDataManager, ScriptManager };
                 return _tools;
             }
         }
@@ -128,14 +129,14 @@ namespace MView
             }
         }
 
-        public FileAttributesViewModel FileAttributes
+        public FilePropertiesViewModel FileProperties
         {
             get
             {
-                if (_fileAttributes == null)
-                    _fileAttributes = new FileAttributesViewModel();
+                if (_fileProperties == null)
+                    _fileProperties = new FilePropertiesViewModel();
 
-                return _fileAttributes;
+                return _fileProperties;
             }
         }
 

@@ -62,7 +62,7 @@ namespace MView.Docker
 			set;
 		}
 
-		public DataTemplate FileAttributesViewTemplate
+		public DataTemplate FilePropertiesViewTemplate
 		{
 			get;
 			set;
@@ -120,8 +120,8 @@ namespace MView.Docker
 			if (item is DataManagerViewModel)
 				return DataManagerViewTemplate;
 
-			if (item is FileAttributesViewModel)
-				return FileAttributesViewTemplate;
+			if (item is FilePropertiesViewModel)
+				return FilePropertiesViewTemplate;
 
 			if (item is FileExplorerViewModel)
 				return FileExplorerViewTemplate;

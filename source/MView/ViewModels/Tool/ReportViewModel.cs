@@ -2,6 +2,7 @@
 using MView.Entities;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace MView.ViewModels.Tool
@@ -12,7 +13,7 @@ namespace MView.ViewModels.Tool
 
         public const string ToolContentId = "Report";
 
-        private string _report = string.Empty;
+        private string _report = $"MView Version {Assembly.GetExecutingAssembly().GetName().Version}\r\n";
 
         #endregion
 
