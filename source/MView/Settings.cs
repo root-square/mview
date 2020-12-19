@@ -41,5 +41,44 @@ namespace MView
         public const string LayoutPath = "./MView/layout.config";
 
         #endregion
+
+        #region ::Constructors::
+
+        public Settings()
+        {
+            IsSkipUpdates = false;
+        }
+
+        #endregion
+
+        #region ::Application Flags::
+
+        public bool IsSkipUpdates { get; set; }
+
+        #endregion
+
+        #region ::General::
+
+        #endregion
+
+        #region ::Add-on::
+
+        #endregion
+
+        #region ::Cryptography Manager::
+
+        #endregion
+
+        #region ::Data Manager::
+
+        #endregion
+
+        #region ::Save Data Manager::
+
+        #endregion
+
+        #region ::Script Manager::
+
+        #endregion
     }
 }

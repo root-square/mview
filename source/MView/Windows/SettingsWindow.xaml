@@ -36,22 +36,13 @@
                                     <Button Margin="6 0 0 0" Content="..."/>
                                 </StackPanel>
 
-                                <CheckBox HorizontalAlignment="Left" Margin="0 6 0 0" Content="Backup files before application starts working"/>
+                                <CheckBox HorizontalAlignment="Left" Margin="0 6 0 0" Content="Backup files before the task starts"/>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Language">
+                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Settings">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox Style="{StaticResource ComboBoxExtend}" Width="400"
-                                          hc:InfoElement.TitleWidth="120" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.Title="Language" 
-                                          ItemsSource="{Binding DataList}" SelectedIndex="0"/>
-                                <Button Margin="6 0 0 0" Content="Apply"/>
-                            </StackPanel>
-                        </GroupBox>
-
-                        <GroupBox Background="{DynamicResource RegionBrush}" Margin="0 20 0 0" Header="Reset">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Margin="6 0 0 0" Content="Restore settings to default"/>
+                                <Button Content="Reset all settings"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -68,7 +59,7 @@
                 </hc:ScrollViewer>
             </hc:TabItem>
             
-            <hc:TabItem Header="Cryptography">
+            <hc:TabItem Header="Cryptography Manager">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
                         <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
@@ -78,7 +69,7 @@
                 </hc:ScrollViewer>
             </hc:TabItem>
             
-            <hc:TabItem Header="Data Editor">
+            <hc:TabItem Header="Data Manager">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
                         <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
@@ -88,7 +79,7 @@
                 </hc:ScrollViewer>
             </hc:TabItem>
             
-            <hc:TabItem Header="Save Editor">
+            <hc:TabItem Header="Save Data Manager">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
                         <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">
@@ -98,7 +89,7 @@
                 </hc:ScrollViewer>
             </hc:TabItem>
             
-            <hc:TabItem Header="Translator">
+            <hc:TabItem Header="Script Manager">
                 <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
                     <StackPanel Margin="20">
                         <GroupBox Background="{DynamicResource RegionBrush}" Header="Language">

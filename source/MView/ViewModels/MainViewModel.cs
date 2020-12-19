@@ -16,6 +16,7 @@ namespace MView.ViewModels
     {
         #region ::Fields::
 
+        private Settings _settings = MView.Settings.Instance;
         private History _history = History.Instance;
         private ObservableCollection<TaskRecordGroup> _taskHistory;
 
@@ -32,6 +33,7 @@ namespace MView.ViewModels
 
         public MainViewModel()
         {
+            // Load task history.
             _taskHistory = new ObservableCollection<TaskRecordGroup>();
             RefreshTaskHistoryItems();
         }
@@ -119,18 +121,14 @@ namespace MView.ViewModels
 
             foreach (TaskRecord record in _history.TaskRecordList)
             {
-                Debug.WriteLine("Record Catched.");
-
                 TimeSpan timeDifference = currentTime - record.DateTime;
                 if (timeDifference.Days < 1)
                 {
                     today.Group.Add(record);
-                    Debug.WriteLine("Input Today.");
                 }
                 else if (timeDifference.Days == 1)
                 {
                     yesterday.Group.Add(record);
-                    Debug.WriteLine("Input Yesterday.");
                 }
                 else if (timeDifference.Days > 7)
                 {
