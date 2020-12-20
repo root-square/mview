@@ -49,7 +49,7 @@ namespace MView.ViewModels.Tool
 
 		private void OnActiveDocumentChanged(object sender, EventArgs e)
 		{
-			if (Workspace.Instance.ActiveDocument != null && Workspace.Instance.ActiveDocument.FilePath != null && File.Exists(Workspace.Instance.ActiveDocument.FilePath))
+			if (Workspace.Instance.ActiveDocument != null && Workspace.Instance.ActiveDocument.FilePath != null && System.IO.File.Exists(Workspace.Instance.ActiveDocument.FilePath))
 			{
 				FileProperties = new FileProperties(Workspace.Instance.ActiveDocument.FilePath);
 			}

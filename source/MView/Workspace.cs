@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using MView.Bases;
 using MView.Commands;
 using MView.Entities;
-using MView.ViewModels.Data;
+using MView.ViewModels.File;
 using MView.ViewModels.Tool;
 using System;
 using System.Collections.Generic;
@@ -62,8 +62,6 @@ namespace MView
         private ScriptManagerViewModel _scriptManager = null;
 
         private RelayCommand _openCommand = null;
-
-        private string _status = "Status";
 
         #endregion
 
@@ -160,6 +158,11 @@ namespace MView
 
                 return _report;
             }
+            set
+            {
+                _report = value;
+                RaisePropertyChanged();
+            }
         }
 
         public SaveDataManagerViewModel SaveDataManager
@@ -230,19 +233,6 @@ namespace MView
             }
         }
 
-        public string Status
-        {
-            get
-            {
-                return _status;
-            }
-            set
-            {
-                _status = value;
-                RaisePropertyChanged();
-            }
-        }
-
         #endregion
 
         #region ::Methods::
@@ -277,27 +267,27 @@ namespace MView
                 return;
             }
 
-            if (fileToSave is AudioDataViewModel)
+            if (fileToSave is AudioFileViewModel)
             {
                 // TODO : Save action
             }
-            else if (fileToSave is GeneralDataViewModel)
+            else if (fileToSave is GeneralFileViewModel)
             {
                 // TODO : Save action
             }
-            else if (fileToSave is ImageDataViewModel)
+            else if (fileToSave is ImageFileViewModel)
             {
                 // TODO : Save action
             }
-            else if (fileToSave is JsonDataViewModel)
+            else if (fileToSave is JsonFileViewModel)
             {
                 // TODO : Save action
             }
-            else if (fileToSave is SaveDataViewModel)
+            else if (fileToSave is SaveFileViewModel)
             {
                 // TODO : Save action
             }
-            else if (fileToSave is ScriptDataViewModel)
+            else if (fileToSave is ScriptFileViewModel)
             {
                 // TODO : Save action
             }
@@ -316,35 +306,35 @@ namespace MView
             switch (extension)
             {
                 case ".ogg":
-                    fileViewModel = new AudioDataViewModel(filePath);
+                    fileViewModel = new AudioFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".m4a":
-                    fileViewModel = new AudioDataViewModel(filePath);
+                    fileViewModel = new AudioFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".wav":
-                    fileViewModel = new AudioDataViewModel(filePath);
+                    fileViewModel = new AudioFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".png":
-                    fileViewModel = new ImageDataViewModel(filePath);
+                    fileViewModel = new ImageFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".json":
-                    fileViewModel = new JsonDataViewModel(filePath);
+                    fileViewModel = new JsonFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".rpgsave":
-                    fileViewModel = new SaveDataViewModel(filePath);
+                    fileViewModel = new SaveFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".script":
-                    fileViewModel = new ScriptDataViewModel(filePath);
+                    fileViewModel = new ScriptFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 default:
-                    fileViewModel = new GeneralDataViewModel(filePath);
+                    fileViewModel = new GeneralFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
             }

@@ -40,6 +40,8 @@ namespace MView
 
         public const string LayoutPath = "./MView/layout.config";
 
+        public static readonly string[] AvailableExtensions = new string[] { ".rpgmvo", ".rpgmvm", ".rpgmvw", ".rpgmvp", ".ogg_", ".m4a_", ".wav_", ".png_", ".ogg", ".m4a", ".wav", ".png", ".json", ".rpgsave", ".script" }; 
+
         #endregion
 
         #region ::Constructors::

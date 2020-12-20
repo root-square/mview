@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.ViewModels.Data
+namespace MView.ViewModels.File
 {
-    public class JsonDataViewModel : FileViewModelBase
+    public class ScriptFileViewModel : FileViewModelBase
     {
-        public JsonDataViewModel(string filePath)
+        public ScriptFileViewModel(string filePath)
         {
             FilePath = filePath;
             Title = FileName;

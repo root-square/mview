@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.ViewModels.Data
+namespace MView.ViewModels.File
 {
-    public class ScriptDataViewModel : FileViewModelBase
+    public class SaveFileViewModel : FileViewModelBase
     {
-        public ScriptDataViewModel(string filePath)
+        public SaveFileViewModel(string filePath)
         {
             FilePath = filePath;
             Title = FileName;

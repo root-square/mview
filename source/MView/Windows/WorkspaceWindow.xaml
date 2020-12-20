@@ -4,6 +4,7 @@
            xmlns:behaviours="clr-namespace:MView.Behaviours"
            xmlns:converters="clr-namespace:MView.Converters"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:entities="clr-namespace:MView.Entities"
            xmlns:docker="clr-namespace:MView.Docker"
            xmlns:hc="https://handyorg.github.io/handycontrol"
            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -218,7 +219,30 @@
                     <!--File Explorer Style-->
                     <docker:PanesTemplateSelector.FileExplorerViewTemplate>
                         <DataTemplate>
-                            <TextBlock Foreground="Black" Text="File Explorer"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Border Grid.Row="0" Grid.RowSpan="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
+                                    <StackPanel Orientation="Vertical" Background="{DynamicResource RegionBrush}">
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <hc:SearchBar Grid.Row="1" Margin="4" hc:InfoElement.Placeholder="Search"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!--TreeView Data Templates-->
+                                <TreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch">
+
+                                </TreeView>
+                            </Grid>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.FileExplorerViewTemplate>
 

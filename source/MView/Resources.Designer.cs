@@ -73,5 +73,75 @@ namespace MView {
                 return ResourceManager.GetString("avalondock_layout", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_audiofile {
+            get {
+                object obj = ResourceManager.GetObject("icon_audiofile", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_code {
+            get {
+                object obj = ResourceManager.GetObject("icon_code", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_drive {
+            get {
+                object obj = ResourceManager.GetObject("icon_drive", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_file {
+            get {
+                object obj = ResourceManager.GetObject("icon_file", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_folder {
+            get {
+                object obj = ResourceManager.GetObject("icon_folder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_image {
+            get {
+                object obj = ResourceManager.GetObject("icon_image", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_savedata {
+            get {
+                object obj = ResourceManager.GetObject("icon_savedata", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

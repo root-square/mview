@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MView.ViewModels.Data
+namespace MView.ViewModels.File
 {
-    public class SaveDataViewModel : FileViewModelBase
+    public class AudioFileViewModel : FileViewModelBase
     {
-        public SaveDataViewModel(string filePath)
+        public AudioFileViewModel(string filePath)
         {
             FilePath = filePath;
             Title = FileName;

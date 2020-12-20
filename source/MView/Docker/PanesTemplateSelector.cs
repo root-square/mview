@@ -1,5 +1,5 @@
 ﻿using AvalonDock.Layout;
-using MView.ViewModels.Data;
+using MView.ViewModels.File;
 using MView.ViewModels.Tool;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,37 +14,37 @@ namespace MView.Docker
 		}
 
 
-		public DataTemplate AudioDataViewTemplate
+		public DataTemplate AudioFileViewTemplate
 		{
 			get;
 			set;
 		}
 
-		public DataTemplate GeneralDataViewTemplate
+		public DataTemplate GeneralFileViewTemplate
 		{
 			get;
 			set;
 		}
 
-		public DataTemplate ImageDataViewTemplate
+		public DataTemplate ImageFileViewTemplate
 		{
 			get;
 			set;
 		}
 
-		public DataTemplate JsonDataViewTemplate
+		public DataTemplate JsonFileViewTemplate
 		{
 			get;
 			set;
 		}
 
-		public DataTemplate SaveDataViewTemplate
+		public DataTemplate SaveFileViewTemplate
 		{
 			get;
 			set;
 		}
 
-		public DataTemplate ScriptDataViewTemplate
+		public DataTemplate ScriptFileViewTemplate
 		{
 			get;
 			set;
@@ -96,23 +96,23 @@ namespace MView.Docker
 		{
 			var itemAsLayoutContent = item as LayoutContent;
 
-			if (item is AudioDataViewModel)
-				return AudioDataViewTemplate;
+			if (item is AudioFileViewModel)
+				return AudioFileViewTemplate;
 
-			if (item is GeneralDataViewModel)
-				return GeneralDataViewTemplate;
+			if (item is GeneralFileViewModel)
+				return GeneralFileViewTemplate;
 
-			if (item is ImageDataViewModel)
-				return ImageDataViewTemplate;
+			if (item is ImageFileViewModel)
+				return ImageFileViewTemplate;
 
-			if (item is JsonDataViewModel)
-				return JsonDataViewTemplate;
+			if (item is JsonFileViewModel)
+				return JsonFileViewTemplate;
 
-			if (item is SaveDataViewModel)
-				return SaveDataViewTemplate;
+			if (item is SaveFileViewModel)
+				return SaveFileViewTemplate;
 
-			if (item is ScriptDataViewModel)
-				return ScriptDataViewTemplate;
+			if (item is ScriptFileViewModel)
+				return ScriptFileViewTemplate;
 
 			if (item is CryptographyManagerViewModel)
 				return CryptographyManagerViewTemplate;
