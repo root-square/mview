@@ -1,5 +1,10 @@
 ﻿
+using AvalonDock.Themes;
+using HandyControl.Data;
+using HandyControl.Themes;
+using HandyControl.Tools;
 using MView.Core;
+using MView.Entities;
 using MView.Windows;
 using System;
 using System.Collections.Generic;
@@ -19,6 +24,20 @@ namespace MView
     /// </summary>
     public partial class App : Application
     {
+        private void UpdateSkin(SkinType skin)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                SharedResourceDictionary.SharedDictionaries.Clear();
+                Resources.MergedDictionaries.Add(ResourceHelper.GetSkin(skin));
+                Resources.MergedDictionaries.Add(new ResourceDictionary
+                {
+                    Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
+                });
+                Current.MainWindow?.OnApplyTemplate();
+            });
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -31,7 +50,7 @@ namespace MView
             // In order to ensure the UI stays responsive, we need to do the work on a different thread.
             Task.Factory.StartNew(() =>
             {
-                // Load settings
+                // Load settings.
                 string settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.SettingsPath);
 
                 if (File.Exists(settingsPath))
@@ -40,13 +59,28 @@ namespace MView
                     Settings.Instance = JsonSerializer.Deserialize<Settings>(settingsJson);
                 }
 
-                // Load history
+                // Load history.
                 string historyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.HistoryPath);
 
                 if (File.Exists(settingsPath))
                 {
                     string historyJson = FileManager.ReadTextFile(historyPath, Encoding.UTF8);
                     Settings.Instance = JsonSerializer.Deserialize<Settings>(historyJson);
+                }
+
+                // Load Workspace.
+                Workspace.Instance = new Workspace();
+
+                // Load theme.
+                if (Settings.Instance.ThemeStyle == ThemeStyle.Light)
+                {
+                    UpdateSkin(SkinType.Default);
+                    Workspace.Instance.SelectedTheme = new Vs2013LightTheme();
+                }
+                else
+                {
+                    UpdateSkin(SkinType.Dark);
+                    Workspace.Instance.SelectedTheme = new Vs2013DarkTheme();
                 }
 
                 // Since we're not on the UI thread once we're done we need to use the Dispatcher to create and show the main window.

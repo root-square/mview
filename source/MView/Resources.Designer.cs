@@ -77,6 +77,26 @@ namespace MView {
         /// <summary>
         ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static byte[] icon_add_file {
+            get {
+                object obj = ResourceManager.GetObject("icon_add_file", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_add_folder {
+            get {
+                object obj = ResourceManager.GetObject("icon_add_folder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static byte[] icon_audiofile {
             get {
                 object obj = ResourceManager.GetObject("icon_audiofile", resourceCulture);
@@ -100,6 +120,16 @@ namespace MView {
         internal static byte[] icon_code {
             get {
                 object obj = ResourceManager.GetObject("icon_code", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_delete {
+            get {
+                object obj = ResourceManager.GetObject("icon_delete", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -147,9 +177,59 @@ namespace MView {
         /// <summary>
         ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static byte[] icon_redo {
+            get {
+                object obj = ResourceManager.GetObject("icon_redo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_refresh {
+            get {
+                object obj = ResourceManager.GetObject("icon_refresh", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_save {
+            get {
+                object obj = ResourceManager.GetObject("icon_save", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_saveall {
+            get {
+                object obj = ResourceManager.GetObject("icon_saveall", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static byte[] icon_savedata {
             get {
                 object obj = ResourceManager.GetObject("icon_savedata", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_undo {
+            get {
+                object obj = ResourceManager.GetObject("icon_undo", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MView.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +50,8 @@ namespace MView
         public Settings()
         {
             IsSkipUpdates = false;
+
+            ThemeStyle = ThemeStyle.Dark;
         }
 
         #endregion
@@ -60,6 +63,8 @@ namespace MView
         #endregion
 
         #region ::General::
+
+        public ThemeStyle ThemeStyle { get; set; }
 
         #endregion
 

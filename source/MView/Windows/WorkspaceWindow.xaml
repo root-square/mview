@@ -99,26 +99,29 @@
         <!--Toolbar-->
         <ToolBar Grid.Row="0" Margin="0" Padding="10 6" VerticalAlignment="Center">
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="8 0 0 0" Padding="4 0 4 0">
-                <iconPacks:PackIconMaterial Foreground="#FFD7AC6A" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14"  Kind="FolderOpen"/>
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_add_file.png"/>
             </Button>
             
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="ContentSave"/>
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_add_folder.png"/>
             </Button>
             
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="ContentSaveAll"/>
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_save.png"/>
             </Button>
 
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_saveall.png"/>
+            </Button>
 
             <Separator Margin="6 0 6 0"/>
 
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
-                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="UndoVariant"/>
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_undo.png"/>
             </Button>
 
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="14" Height="14" Kind="RedoVariant"/>
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_redo.png"/>
             </Button>
         </ToolBar>
 
@@ -128,7 +131,7 @@
             x:Name="dockManager"
 			ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
             AnchorablesSource="{Binding Tools}" DocumentsSource="{Binding Files}"
-			Theme="{Binding SelectedTheme.Item2}" Grid.RowSpan="2">
+			Theme="{Binding SelectedTheme}">
             <!--Pane Style Templates-->
             <DockingManager.LayoutItemTemplateSelector>
                 <docker:PanesTemplateSelector>
@@ -222,30 +225,35 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="32"/>
+                                    <RowDefinition Height="32"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
+                                <Border Grid.Row="0" Grid.RowSpan="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
                                     <StackPanel Orientation="Vertical" Background="{DynamicResource RegionBrush}">
-                                        <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
-                                            </Button>
-                                            
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
-                                            </Button>
-                                            
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FFFF2828" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
-                                            </Button>
+                                        <StackPanel Grid.Row="0" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal" Margin="8 0 8 0">
+                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
+                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
+                                                </Button>
+
+                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
+                                                </Button>
+
+                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
+                                                </Button>
+                                            </StackPanel>
                                         </StackPanel>
+
+                                        <hc:SearchBar Grid.Row="1" Margin="2 1 2 2" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
                                     </StackPanel>
                                 </Border>
 
                                 <!--TreeView Data Templates-->
-                                <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" ItemsSource="{Binding Items}">
+                                <TreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" ItemsSource="{Binding Items}">
                                     <TreeView.Resources>
                                         <HierarchicalDataTemplate DataType="{x:Type entities:DirectoryItem}" ItemsSource="{Binding SubItems}">
                                             <StackPanel Orientation="Horizontal">

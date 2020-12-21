@@ -44,7 +44,8 @@ namespace MView
 
         #region ::Fields::
 
-        private Tuple<string, Theme> selectedTheme;
+        [NonSerialized]
+        private Theme _selectedTheme = new Vs2013LightTheme();
 
         public event EventHandler ActiveDocumentChanged;
 
@@ -69,15 +70,7 @@ namespace MView
 
         public Workspace()
         {
-            Themes = new List<Tuple<string, Theme>>
-            {
-                new Tuple<string, Theme>(nameof(GenericTheme), new GenericTheme()),
-                new Tuple<string, Theme>(nameof(Vs2013BlueTheme),new Vs2013BlueTheme()),
-                new Tuple<string, Theme>(nameof(Vs2013DarkTheme),new Vs2013DarkTheme()),
-                new Tuple<string, Theme>(nameof(Vs2013LightTheme),new Vs2013LightTheme()),
-            };
 
-            SelectedTheme = Themes[3];
         }
 
         #endregion
@@ -218,17 +211,15 @@ namespace MView
             }
         }
 
-        public List<Tuple<string, Theme>> Themes { get; set; }
-
-        public Tuple<string, Theme> SelectedTheme
+        public Theme SelectedTheme
         {
             get 
             {
-                return selectedTheme;
+                return _selectedTheme;
             }
             set
             {
-                selectedTheme = value;
+                _selectedTheme = value;
                 RaisePropertyChanged();
             }
         }
