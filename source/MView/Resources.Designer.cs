@@ -87,6 +87,16 @@ namespace MView {
         /// <summary>
         ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static byte[] icon_basedirectory {
+            get {
+                object obj = ResourceManager.GetObject("icon_basedirectory", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static byte[] icon_code {
             get {
                 object obj = ResourceManager.GetObject("icon_code", resourceCulture);
@@ -97,9 +107,19 @@ namespace MView {
         /// <summary>
         ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static byte[] icon_drive {
+        internal static byte[] icon_directory {
             get {
-                object obj = ResourceManager.GetObject("icon_drive", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_directory", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static byte[] icon_encrypted {
+            get {
+                object obj = ResourceManager.GetObject("icon_encrypted", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -110,16 +130,6 @@ namespace MView {
         internal static byte[] icon_file {
             get {
                 object obj = ResourceManager.GetObject("icon_file", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   System.Byte[] 형식의 지역화된 리소스를 찾습니다.
-        /// </summary>
-        internal static byte[] icon_folder {
-            get {
-                object obj = ResourceManager.GetObject("icon_folder", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -10,10 +10,10 @@
   <ItemGroup>
     <None Remove="Resources\avalondock_layout.config" />
     <None Remove="Resources\icon_audiofile.png" />
+    <None Remove="Resources\icon_basedirectory.png" />
     <None Remove="Resources\icon_code.png" />
-    <None Remove="Resources\icon_drive.png" />
+    <None Remove="Resources\icon_directory.png" />
     <None Remove="Resources\icon_file.png" />
-    <None Remove="Resources\icon_folder.png" />
     <None Remove="Resources\icon_image.png" />
     <None Remove="Resources\icon_savedata.png" />
     <None Remove="Resources\mview_favicon_16.png" />
@@ -39,10 +39,10 @@
   <ItemGroup>
     <Resource Include="Resources\avalondock_layout.config" />
     <Resource Include="Resources\icon_audiofile.png" />
+    <Resource Include="Resources\icon_basedirectory.png" />
     <Resource Include="Resources\icon_code.png" />
-    <Resource Include="Resources\icon_drive.png" />
+    <Resource Include="Resources\icon_directory.png" />
     <Resource Include="Resources\icon_file.png" />
-    <Resource Include="Resources\icon_folder.png" />
     <Resource Include="Resources\icon_image.png" />
     <Resource Include="Resources\icon_savedata.png" />
     <Resource Include="Resources\mview_favicon_16.png" />

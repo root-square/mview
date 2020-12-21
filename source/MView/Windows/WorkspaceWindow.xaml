@@ -24,6 +24,7 @@
     <Window.Resources>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:TypeToImageConverter x:Key="TypeToImageConverter" />
         <runtime:Boolean x:Key="TRUE">True</runtime:Boolean>
         <runtime:Boolean x:Key="FALSE">False</runtime:Boolean>
     </Window.Resources>
@@ -222,25 +223,37 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="40"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0" Grid.RowSpan="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
+                                <Border Grid.Row="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
                                     <StackPanel Orientation="Vertical" Background="{DynamicResource RegionBrush}">
-                                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" Margin="10 0 10 0">
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
+                                            </Button>
+                                            
                                             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
                                                 <iconPacks:PackIconMaterial Foreground="#FF007ACC" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
                                             </Button>
+                                            
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FFFF2828" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
+                                            </Button>
                                         </StackPanel>
-
-                                        <hc:SearchBar Grid.Row="1" Margin="4" hc:InfoElement.Placeholder="Search"/>
                                     </StackPanel>
                                 </Border>
 
                                 <!--TreeView Data Templates-->
-                                <TreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch">
-
+                                <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch" ItemsSource="{Binding Items}">
+                                    <TreeView.Resources>
+                                        <HierarchicalDataTemplate DataType="{x:Type entities:DirectoryItem}" ItemsSource="{Binding SubItems}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Height="16" VerticalAlignment="Center" Source="{Binding Icon}"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>
                                 </TreeView>
                             </Grid>
                         </DataTemplate>

@@ -124,17 +124,20 @@
   <data name="icon_audiofile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_audiofile.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="icon_basedirectory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\icon_basedirectory.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="icon_code" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_code.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="icon_drive" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_drive.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="icon_directory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\icon_directory.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="icon_encrypted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\icon_encrypted.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="icon_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_file.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_folder.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="icon_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_image.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

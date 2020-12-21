@@ -16,6 +16,8 @@ namespace MView.ViewModels.Tool
 
         public const string ToolContentId = "FileExplorer";
 
+        private ObservableCollection<DirectoryItem> _items = new ObservableCollection<DirectoryItem>();
+
         #endregion
 
         #region ::Constructors::
@@ -24,6 +26,27 @@ namespace MView.ViewModels.Tool
         {
             ContentId = ToolContentId;
         }
+
+        #endregion
+
+        #region ::Properties::
+
+        public ObservableCollection<DirectoryItem> Items
+        {
+            get
+            {
+                return _items;
+            }
+            set
+            {
+                _items = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region ::Methods::
 
         #endregion
     }
