@@ -49,7 +49,7 @@ namespace MView.ViewModels.Tool
 
         public void AddReportWithIdentifier(string text, ReportType type = ReportType.Information)
         {
-            Report += $"{DateTime.Now.ToString("HH:mm:ss")} [{type}] {text}";
+            Report += $"{DateTime.Now.ToString("HH:mm:ss")} [{type}] {text}\r\n";
         }
 
         #endregion

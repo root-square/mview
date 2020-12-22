@@ -2,6 +2,8 @@
 using MView.Entities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,7 @@ namespace MView.ViewModels.Tool
         {
             ContentId = ToolContentId;
 
-            Workspace.Instance.FileExplorer.SelectedItemChanged += new EventHandler(OnSelectedItemChanged);
+            Workspace.Instance.FileExplorer.SelectedNodes.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
         }
 
 		#endregion
@@ -46,19 +48,19 @@ namespace MView.ViewModels.Tool
 
 		#endregion
 
-		#region ::SelectedItemChanged Event Subscriber::
+		#region ::CollectionChanged Event Subscriber::
 
-		private async void OnSelectedItemChanged(object sender, EventArgs e)
+		private async void OnCollectionChanged(object sender, EventArgs e)
 		{
 			var task = Task.Run(() =>
 			{
-				DirectoryItem item = Workspace.Instance.FileExplorer.SelectedItem;
+				ObservableCollection<DirectoryItem> item = Workspace.Instance.FileExplorer.SelectedNodes;
 
-				if (item != null)
+				if (item.Count == 1)
 				{
-					if (item.Type == DirectoryItemType.File)
+					if (item[0].Type == DirectoryItemType.File)
 					{
-						FileProperties = new FileProperties(item.FullName);
+						FileProperties = new FileProperties(item[0].FullName);
 					}
 				}
 				else

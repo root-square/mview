@@ -2,7 +2,10 @@
 ## Open-source software licenses
 
  * #### Dirkster99/AvalonDock @ MS-PL License
+ * #### ghost1372/HandyControls @ MIT License
  * #### jawa-the-hutt/lz-string-csharp @ Unlicense
+ * #### MahApps/MahApps.Metro.IconPacks @ MIT License
+ * #### cmyksvoll/MultiSelectTreeView @ MIT License
  * #### JamesNK/Newtonsoft.Json @ MIT License
  
 ### Microsoft Public License (Ms-PL)

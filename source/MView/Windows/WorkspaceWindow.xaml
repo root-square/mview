@@ -254,13 +254,19 @@
                                 </Border>
 
                                 <!--TreeView Data Templates-->
-                                <controls:ExtendedTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
+                                <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
                                           VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
-                                          ItemsSource="{Binding Items}" SelectedDirectoryItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                          ItemsSource="{Binding Nodes}" SelectedItems="{Binding SelectedNodes, Mode=TwoWay}">
                                     <TreeView.ItemContainerStyle>
                                         <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
                                             <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-                                            <Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                                            <Setter Property="controls:MultiSelectTreeView.IsItemSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                            <Style.Triggers>
+                                                <Trigger Property="controls:MultiSelectTreeView.IsItemSelected" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+
                                         </Style>
                                     </TreeView.ItemContainerStyle>
                                     <TreeView.ItemTemplate>
@@ -271,7 +277,7 @@
                                             </StackPanel>
                                         </HierarchicalDataTemplate>
                                     </TreeView.ItemTemplate>
-                                </controls:ExtendedTreeView>
+                                </controls:MultiSelectTreeView>
                             </Grid>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.FileExplorerViewTemplate>
@@ -291,7 +297,7 @@
                                      HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
                                      AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True"
                                      behaviours:TextBoxBehaviour.ScrollOnTextChanged="True"
-                                     Text="{Binding Report}"/>
+                                     Text="{Binding Report, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.ReportViewTemplate>
 

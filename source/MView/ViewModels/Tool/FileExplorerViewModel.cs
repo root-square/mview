@@ -14,12 +14,10 @@ namespace MView.ViewModels.Tool
     {
         #region ::Fields::
 
-        public event EventHandler SelectedItemChanged;
-
         public const string ToolContentId = "FileExplorer";
 
-        private ObservableCollection<DirectoryItem> _items = new ObservableCollection<DirectoryItem>();
-        private DirectoryItem _selectedItem;
+        private ObservableCollection<DirectoryItem> _nodes = new ObservableCollection<DirectoryItem>();
+        private ObservableCollection<DirectoryItem> _selectedNodes = new ObservableCollection<DirectoryItem>();
 
         #endregion
 
@@ -28,40 +26,35 @@ namespace MView.ViewModels.Tool
         public FileExplorerViewModel() : base("File Explorer")
         {
             ContentId = ToolContentId;
-
-            Items.Add(new DirectoryItem(new DirectoryInfo(@"E:\Translate\Game\검은 약속"), true, true));
         }
 
         #endregion
 
         #region ::Properties::
 
-        public ObservableCollection<DirectoryItem> Items
+        public ObservableCollection<DirectoryItem> Nodes
         {
             get
             {
-                return _items;
+                return _nodes;
             }
             set
             {
-                _items = value;
+                _nodes = value;
                 RaisePropertyChanged();
             }
         }
 
-        public DirectoryItem SelectedItem
+        public ObservableCollection<DirectoryItem> SelectedNodes
         {
             get
             {
-                return _selectedItem;
+                return _selectedNodes;
             }
             set
             {
-                _selectedItem = value;
+                _selectedNodes = value;
                 RaisePropertyChanged();
-
-                if (SelectedItemChanged != null)
-                    SelectedItemChanged(this, EventArgs.Empty);
             }
         }
 

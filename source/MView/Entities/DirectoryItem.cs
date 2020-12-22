@@ -34,7 +34,7 @@ namespace MView.Entities
 
             try
             {
-                DirectoryInfo[] subDirectories = directory.GetDirectories();
+                var subDirectories = directory.EnumerateDirectories();
 
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
@@ -45,7 +45,7 @@ namespace MView.Entities
 
             try
             {
-                FileInfo[] files = directory.GetFiles();
+                var files = directory.EnumerateFiles();
 
                 foreach (FileInfo file in files)
                 {
