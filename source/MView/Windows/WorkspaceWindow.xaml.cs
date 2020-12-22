@@ -64,6 +64,6 @@ namespace MView.Windows
             serializer.Serialize(layoutPath);
         }
 
-		#endregion
-	}
+        #endregion
+    }
 }

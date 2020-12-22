@@ -140,6 +140,11 @@ namespace MView
 
                 return _fileExplorer;
             }
+            set
+            {
+                _fileExplorer = value;
+                RaisePropertyChanged();
+            }
         }
 
         public ReportViewModel Report
@@ -205,6 +210,7 @@ namespace MView
                 {
                     _activeDocument = value;
                     RaisePropertyChanged();
+
                     if (ActiveDocumentChanged != null)
                         ActiveDocumentChanged(this, EventArgs.Empty);
                 }

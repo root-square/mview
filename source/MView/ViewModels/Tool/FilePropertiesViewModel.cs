@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MView.ViewModels.Tool
 {
@@ -23,7 +24,7 @@ namespace MView.ViewModels.Tool
         {
             ContentId = ToolContentId;
 
-            Workspace.Instance.ActiveDocumentChanged += new EventHandler(OnActiveDocumentChanged);
+            Workspace.Instance.FileExplorer.SelectedItemChanged += new EventHandler(OnSelectedItemChanged);
         }
 
 		#endregion
@@ -45,18 +46,28 @@ namespace MView.ViewModels.Tool
 
 		#endregion
 
-		#region ::ActiveDocumentChanged Event Subscriber::
+		#region ::SelectedItemChanged Event Subscriber::
 
-		private void OnActiveDocumentChanged(object sender, EventArgs e)
+		private async void OnSelectedItemChanged(object sender, EventArgs e)
 		{
-			if (Workspace.Instance.ActiveDocument != null && Workspace.Instance.ActiveDocument.FilePath != null && System.IO.File.Exists(Workspace.Instance.ActiveDocument.FilePath))
+			var task = Task.Run(() =>
 			{
-				FileProperties = new FileProperties(Workspace.Instance.ActiveDocument.FilePath);
-			}
-			else
-			{
-				FileProperties = new FileProperties();
-			}
+				DirectoryItem item = Workspace.Instance.FileExplorer.SelectedItem;
+
+				if (item != null)
+				{
+					if (item.Type == DirectoryItemType.File)
+					{
+						FileProperties = new FileProperties(item.FullName);
+					}
+				}
+				else
+				{
+					FileProperties = new FileProperties();
+				}
+			});
+
+			await task;
 		}
 
 		#endregion

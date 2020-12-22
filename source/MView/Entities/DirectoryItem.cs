@@ -28,6 +28,7 @@ namespace MView.Entities
             Name = directory.Name;
             FullName = directory.FullName;
             IsExpanded = isExpanded;
+            IsSelected = false;
 
             List<DirectoryItem> items = new List<DirectoryItem>();
 
@@ -63,6 +64,7 @@ namespace MView.Entities
             Name = file.Name;
             FullName = file.FullName;
             IsExpanded = isExpanded;
+            IsSelected = false;
             SubItems = new List<DirectoryItem>();
         }
 
@@ -79,6 +81,8 @@ namespace MView.Entities
         public string FullName { get; set; }
 
         public bool IsExpanded { get; set; }
+
+        public bool IsSelected { get; set; }
 
         public List<DirectoryItem> SubItems { get; set; }
 
