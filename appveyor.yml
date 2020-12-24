@@ -29,6 +29,10 @@ for:
       
   configuration: Release
   
+  platform:
+  - x86
+  - x64
+  
   deploy:
   - provider: GitHub
     tag: release-v$(appveyor_build_version)
@@ -56,6 +60,10 @@ for:
       - test
       
   configuration: Release
+  
+  platform:
+  - x86
+  - x64
   
   deploy:
   - provider: GitHub
