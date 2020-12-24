@@ -13,9 +13,10 @@
     <None Remove="Resources\icon_add_folder.png" />
     <None Remove="Resources\icon_audiofile.png" />
     <None Remove="Resources\icon_basedirectory.png" />
-    <None Remove="Resources\icon_code.png" />
+    <None Remove="Resources\icon_data.png" />
     <None Remove="Resources\icon_delete.png" />
     <None Remove="Resources\icon_directory.png" />
+    <None Remove="Resources\icon_encrypted.png" />
     <None Remove="Resources\icon_file.png" />
     <None Remove="Resources\icon_image.png" />
     <None Remove="Resources\icon_redo.png" />
@@ -50,9 +51,10 @@
     <Resource Include="Resources\icon_add_folder.png" />
     <Resource Include="Resources\icon_audiofile.png" />
     <Resource Include="Resources\icon_basedirectory.png" />
-    <Resource Include="Resources\icon_code.png" />
+    <Resource Include="Resources\icon_data.png" />
     <Resource Include="Resources\icon_delete.png" />
     <Resource Include="Resources\icon_directory.png" />
+    <Resource Include="Resources\icon_encrypted.png" />
     <Resource Include="Resources\icon_file.png" />
     <Resource Include="Resources\icon_image.png" />
     <Resource Include="Resources\icon_redo.png" />

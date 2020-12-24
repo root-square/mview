@@ -131,7 +131,7 @@ namespace MView.Entities
                 else if (extension == ".json" || extension == ".script")
                 {
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri("pack://application:,,/Resources/icon_code.png");
+                    bitmap.UriSource = new Uri("pack://application:,,/Resources/icon_data.png");
                     bitmap.EndInit();
                 }
                 else if (extension == ".rpgsave")

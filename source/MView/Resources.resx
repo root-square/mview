@@ -133,8 +133,8 @@
   <data name="icon_basedirectory" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_basedirectory.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="icon_code" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_code.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="icon_data" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\icon_data.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="icon_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_delete.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
