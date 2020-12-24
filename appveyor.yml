@@ -4,10 +4,6 @@ skip_tags: true
 
 skip_branch_with_pr: true
 
-configuration:
-- release
-- pre-release
-
 platform:
 - x86
 - x64
@@ -31,7 +27,7 @@ for:
     only:
       - master
       
-  configuration: release
+  configuration: Release
   
   deploy:
   - provider: GitHub
@@ -59,7 +55,7 @@ for:
     only:
       - test
       
-  configuration: pre-release
+  configuration: Release
   
   deploy:
   - provider: GitHub
