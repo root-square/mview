@@ -15,9 +15,6 @@ platform:
 before_build:
 - cmd: nuget restore source/MView.sln
 
-after_build:
-- ps: "$env:CONFIGURATION\n$env:PLATFORM\n\nif ($env:CONFIGURATION -eq \"release\" && $env:PLATFORM -eq \"x86\")\n{\n    $ArtifactPath = \"MView_release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_i386.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x86\\Release\n}\n\nif ($env:CONFIGURATION -eq \"release\" && $env:PLATFORM -eq \"x64\")\n{\n    $ArtifactPath = \"MView_release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_amd64.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x64\\Release\n}\n\nif ($env:CONFIGURATION -eq \"pre-release\" && $env:PLATFORM -eq \"x86\")\n{\n    $ArtifactPath = \"MView_pre-release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_i386.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x86\\Debug\n}\n\nif ($env:CONFIGURATION -eq \"pre-release\" && $env:PLATFORM -eq \"x64\")\n{\n    $ArtifactPath = \"MView_pre-release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_amd64.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x64\\Debug\n}"
-
 build:
   project: source/MView.sln
   verbosity: minimal
@@ -48,7 +45,7 @@ for:
     force_update: false
   
   after_build:
-  - ps: ""
+  - ps: "$env:CONFIGURATION\n$env:PLATFORM\n\nif ($env:PLATFORM -eq \"x86\")\n{\n    $ArtifactPath = \"MView_release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_i386.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x86\\Release\n}\n\nif ($env:PLATFORM -eq \"x64\")\n{\n    $ArtifactPath = \"MView_release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_amd64.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x64\\Release\n}"
 
   artifacts:
   - path: MView_release-v$(appveyor_build_version)_i386.zip
@@ -76,7 +73,8 @@ for:
     force_update: false
   
   after_build:
-  - ps: ""
+  - ps: "$env:CONFIGURATION\n$env:PLATFORM\n\nif ($env:PLATFORM -eq \"x86\")\n{\n    $ArtifactPath = \"MView_pre-release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_i386.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x86\\Debug\n}\n\nif ($env:PLATFORM -eq \"x64\")\n{\n    $ArtifactPath = \"MView_pre-release-v\" + $env:APPVEYOR_BUILD_VERSION + \"_amd64.zip\" \n    7z a $ArtifactPath $env:APPVEYOR_BUILD_FOLDER\\source\\MView\\bin\\x64\\Debug\n}"
+
 
   artifacts:
   - path: MView_pre-release-v$(appveyor_build_version)_i386.zip
