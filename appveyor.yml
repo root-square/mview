@@ -54,11 +54,11 @@ for:
   - path: MView_release-v$(appveyor_build_version)_amd64.zip
     name: release
     
-  # override settings for `develop` branches
+  # override settings for `test` branches
 -
   branches:
     only:
-      - develop
+      - test
       
   configuration: Debug
   
