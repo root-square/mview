@@ -31,7 +31,7 @@ for:
     only:
       - master
       
-  configuration: Release
+  configuration: release
   
   deploy:
   - provider: GitHub
@@ -59,7 +59,7 @@ for:
     only:
       - test
       
-  configuration: Debug
+  configuration: pre-release
   
   deploy:
   - provider: GitHub
