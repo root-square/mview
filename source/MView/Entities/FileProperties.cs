@@ -8,6 +8,8 @@ namespace MView.Entities
 {
     public class FileProperties
     {
+        #region ::Constructors::
+
         public FileProperties()
         {
             Name = "";
@@ -16,7 +18,7 @@ namespace MView.Entities
 
             Extension = "";
 
-            Size = 0;
+            Size = GetFileSize(0);
 
             IsReadOnly = false;
 
@@ -42,7 +44,7 @@ namespace MView.Entities
 
             Extension = fileInfo.Extension;
 
-            Size = fileInfo.Length;
+            Size = GetFileSize(fileInfo.Length);
 
             IsReadOnly = fileInfo.IsReadOnly;
 
@@ -52,6 +54,10 @@ namespace MView.Entities
             LastWriteTime = fileInfo.LastWriteTime;
             LastWriteTimeUtc = fileInfo.LastWriteTimeUtc;
         }
+
+        #endregion
+
+        #region ::Properties::
 
         [Category("File")]
         [ReadOnly(true)]
@@ -67,7 +73,7 @@ namespace MView.Entities
 
         [Category("File")]
         [ReadOnly(true)]
-        public long Size { get; set; }
+        public string Size { get; set; }
 
         [Category("File")]
         [ReadOnly(true)]
@@ -88,5 +94,29 @@ namespace MView.Entities
         [Category("Time")]
         [ReadOnly(true)]
         public DateTime LastWriteTimeUtc { get; set; }
+
+        #endregion
+
+        #region ::Methods::
+
+        private string GetFileSize(long length)
+        {
+            double byteCount = length;
+
+            string size = "0 Bytes";
+
+            if (byteCount >= 1073741824.0)
+                size = string.Format("{0:##.##}", byteCount / 1073741824.0) + " GB";
+            else if (byteCount >= 1048576.0)
+                size = string.Format("{0:##.##}", byteCount / 1048576.0) + " MB";
+            else if (byteCount >= 1024.0)
+                size = string.Format("{0:##.##}", byteCount / 1024.0) + " KB";
+            else if (byteCount > 0 && byteCount < 1024.0)
+                size = byteCount.ToString() + " Bytes";
+
+            return size;
+        }
+
+        #endregion
     }
 }
