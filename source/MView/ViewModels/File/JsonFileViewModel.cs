@@ -7,7 +7,7 @@ namespace MView.ViewModels.File
 {
     public class JsonFileViewModel : FileViewModelBase
     {
-        public JsonFileViewModel(string filePath)
+        public JsonFileViewModel(string filePath) : base(filePath)
         {
             FilePath = filePath;
             Title = FileName;

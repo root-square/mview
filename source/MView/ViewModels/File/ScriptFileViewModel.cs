@@ -7,7 +7,7 @@ namespace MView.ViewModels.File
 {
     public class ScriptFileViewModel : FileViewModelBase
     {
-        public ScriptFileViewModel(string filePath)
+        public ScriptFileViewModel(string filePath) : base(filePath)
         {
             FilePath = filePath;
             Title = FileName;

@@ -29,8 +29,6 @@ namespace MView.ViewModels.Tool
         public FileExplorerViewModel() : base("File Explorer")
         {
             ContentId = ToolContentId;
-
-            Nodes.Add(new DirectoryItem(new DirectoryInfo(@"E:\MVTest"), true, true));
         }
 
         #endregion

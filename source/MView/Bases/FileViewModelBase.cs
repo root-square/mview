@@ -24,6 +24,21 @@ namespace MView.Bases
 
 		#endregion
 
+
+		#region ::Constructors::
+
+		/// <summary>
+		/// Class constructor from file path.
+		/// </summary>
+		/// <param name="filePath"></param>
+		public FileViewModelBase(string filePath)
+		{
+			FilePath = filePath;
+			Title = FileName;
+		}
+
+		#endregion
+
 		#region ::Properties::
 
 		public string FilePath
@@ -52,7 +67,7 @@ namespace MView.Bases
 			get
 			{
 				if (FilePath == null)
-					return "Noname" + (IsDirty ? "*" : "");
+					return "Untitled" + (IsDirty ? "*" : "");
 
 				return Path.GetFileName(FilePath) + (IsDirty ? "*" : "");
 			}
@@ -66,8 +81,9 @@ namespace MView.Bases
 				if (_isDirty != value)
 				{
 					_isDirty = value;
-					RaisePropertyChanged();
-					RaisePropertyChanged();
+					Title = FileName;
+					RaisePropertyChanged(nameof(IsDirty));
+					RaisePropertyChanged(nameof(FileName));
 				}
 			}
 		}
@@ -109,29 +125,6 @@ namespace MView.Bases
 
 				return _closeCommand;
 			}
-		}
-
-		#endregion
-
-		#region ::Constructors::
-
-		/// <summary>
-		/// Class constructor from file path.
-		/// </summary>
-		/// <param name="filePath"></param>
-		public FileViewModelBase(string filePath)
-		{
-			FilePath = filePath;
-			Title = FileName;
-		}
-
-		/// <summary>
-		/// Default class constructor
-		/// </summary>
-		public FileViewModelBase()
-		{
-			IsDirty = true;
-			Title = FileName;
 		}
 
 		#endregion

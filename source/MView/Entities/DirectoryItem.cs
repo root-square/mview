@@ -1,16 +1,26 @@
-﻿using System;
+﻿using MView.Bases;
+using MView.Commands;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace MView.Entities
 {
-    public class DirectoryItem
+    public class DirectoryItem : ViewModelBase
     {
+        #region ::Fields::
+
+        private ICommand _itemDoubleClickCommand;
+
+        #endregion
+
         #region ::Constructors::
 
         public DirectoryItem(DirectoryInfo directory, bool isExpanded = false, bool isBase = false)
@@ -86,6 +96,14 @@ namespace MView.Entities
 
         public List<DirectoryItem> SubItems { get; set; }
 
+        public ICommand ItemDoubleClickCommand
+        {
+            get
+            {
+                return (_itemDoubleClickCommand) ?? (_itemDoubleClickCommand = new DelegateCommand(ItemDoubleClick));
+            }
+        }
+
         #endregion
 
         #region ::Methods::
@@ -149,6 +167,18 @@ namespace MView.Entities
             }
 
             return bitmap;
+        }
+
+        #endregion
+
+        #region ::Command Actions::
+
+        public void ItemDoubleClick()
+        {
+            if (Type != DirectoryItemType.BaseDirectory && Type != DirectoryItemType.Directory)
+            {
+                Workspace.Instance.Open(FullName);
+            }
         }
 
         #endregion

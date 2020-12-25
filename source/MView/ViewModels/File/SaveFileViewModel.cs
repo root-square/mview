@@ -7,7 +7,7 @@ namespace MView.ViewModels.File
 {
     public class SaveFileViewModel : FileViewModelBase
     {
-        public SaveFileViewModel(string filePath)
+        public SaveFileViewModel(string filePath) : base(filePath)
         {
             FilePath = filePath;
             Title = FileName;

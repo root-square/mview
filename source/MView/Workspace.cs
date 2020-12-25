@@ -303,18 +303,20 @@ namespace MView
             switch (extension)
             {
                 case ".ogg":
-                    fileViewModel = new AudioFileViewModel(filePath);
-                    _files.Add(fileViewModel);
-                    break;
+                case ".rpgmvo":
+                case ".ogg_":
                 case ".m4a":
-                    fileViewModel = new AudioFileViewModel(filePath);
-                    _files.Add(fileViewModel);
-                    break;
+                case ".rpgmvm":
+                case ".m4a_":
                 case ".wav":
+                case ".rpgmvw":
+                case ".wav_":
                     fileViewModel = new AudioFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;
                 case ".png":
+                case ".rpgmvp":
+                case ".png_":
                     fileViewModel = new ImageFileViewModel(filePath);
                     _files.Add(fileViewModel);
                     break;

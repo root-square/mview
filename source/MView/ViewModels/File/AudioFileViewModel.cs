@@ -7,7 +7,7 @@ namespace MView.ViewModels.File
 {
     public class AudioFileViewModel : FileViewModelBase
     {
-        public AudioFileViewModel(string filePath)
+        public AudioFileViewModel(string filePath) : base(filePath)
         {
             FilePath = filePath;
             Title = FileName;
