@@ -443,13 +443,65 @@
                     <!--General File Style-->
                     <docker:PanesTemplateSelector.GeneralFileViewTemplate>
                         <DataTemplate>
-                            <TextBox Background="Transparent" Margin="4" BorderThickness="0"
-                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                     VerticalScrollBarVisibility="Visible"
-                                     AcceptsReturn="True" AcceptsTab="True"
-                                     Text="{Binding TextContent, Mode=TwoWay}"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox Grid.Row="0" Background="Transparent" Margin="4" BorderThickness="0"
+                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
+                                         VerticalScrollBarVisibility="Visible"
+                                         AcceptsReturn="True" AcceptsTab="True"
+                                         Text="{Binding TextContent, Mode=TwoWay}"/>
+
+                                <StatusBar Grid.Row="1">
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
+                                    </StatusBarItem>
+
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+                                </StatusBar>
+                            </Grid>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.GeneralFileViewTemplate>
+
+                    <!--Image File Style-->
+                    <docker:PanesTemplateSelector.ImageFileViewTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                
+                                <hc:ImageViewer Grid.Row="0" Background="{Binding BackgroundBrush}" BorderThickness="0"
+                                                ImageSource="{Binding FilePath}"/>
+
+                                <StatusBar Grid.Row="1">
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
+                                    </StatusBarItem>
+                                    
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding ImageSizeString}"/>
+                                    </StatusBarItem>
+                                </StatusBar>
+                            </Grid>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.ImageFileViewTemplate>
                 </docker:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 

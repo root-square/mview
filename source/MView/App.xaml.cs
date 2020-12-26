@@ -65,7 +65,7 @@ namespace MView
                 if (File.Exists(settingsPath))
                 {
                     string historyJson = FileManager.ReadTextFile(historyPath, Encoding.UTF8);
-                    Settings.Instance = JsonSerializer.Deserialize<Settings>(historyJson);
+                    History.Instance = JsonSerializer.Deserialize<History>(historyJson);
                 }
 
                 // Load Workspace.

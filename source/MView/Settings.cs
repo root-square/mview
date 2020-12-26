@@ -51,7 +51,7 @@ namespace MView
         {
             IsSkipUpdates = false;
 
-            ThemeStyle = ThemeStyle.Dark;
+            ThemeStyle = ThemeStyle.Light;
         }
 
         #endregion

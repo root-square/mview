@@ -1,5 +1,6 @@
 ﻿using MView.Bases;
 using MView.Core;
+using MView.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,8 @@ namespace MView.ViewModels.File
 
         private string _textContent = string.Empty;
 
+        private FileProperties _fileProperties = new FileProperties();
+
         #endregion
 
         #region ::Constructors::
@@ -20,20 +23,6 @@ namespace MView.ViewModels.File
         public GeneralFileViewModel(string filePath) : base(filePath)
         {
             Initialize(filePath);
-        }
-
-        #endregion
-
-        #region ::Methods::
-
-        private async void Initialize(string filePath)
-        {
-            var task = Task.Run(() =>
-            {
-                _textContent = FileManager.ReadTextFile(filePath, Encoding.UTF8);
-            });
-
-            await task;
         }
 
         #endregion
@@ -56,6 +45,30 @@ namespace MView.ViewModels.File
                     IsDirty = true;
                 }
             }
+        }
+
+        public string FileSizeString
+        {
+            get
+            {
+                return _fileProperties.Size;
+            }
+        }
+
+        #endregion
+
+        #region ::Methods::
+
+        private async void Initialize(string filePath)
+        {
+            var task = Task.Run(() =>
+            {
+                _textContent = FileManager.ReadTextFile(filePath, Encoding.UTF8);
+
+                _fileProperties = new FileProperties(filePath);
+            });
+
+            await task;
         }
 
         #endregion
