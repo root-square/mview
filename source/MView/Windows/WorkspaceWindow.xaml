@@ -68,20 +68,14 @@
                 </MenuItem>
 
                 <MenuItem Header="View(V)">
-                    <MenuItem Header="Cryptography Manager" IsCheckable="True"
-						      IsChecked="{Binding CryptographyManager.IsVisible, Mode=TwoWay}" />
-                    <MenuItem Header="Data Manager" IsCheckable="True"
-						      IsChecked="{Binding DataManager.IsVisible, Mode=TwoWay}" />
                     <MenuItem Header="File Explorer" IsCheckable="True"
 						      IsChecked="{Binding FileExplorer.IsVisible, Mode=TwoWay}" />
                     <MenuItem Header="File Properties" IsCheckable="True"
 						      IsChecked="{Binding FileProperties.IsVisible, Mode=TwoWay}" />
                     <MenuItem Header="Report" IsCheckable="True"
 						      IsChecked="{Binding Report.IsVisible, Mode=TwoWay}" />
-                    <MenuItem Header="Save Data Manager" IsCheckable="True"
-						      IsChecked="{Binding SaveDataManager.IsVisible, Mode=TwoWay}" />
-                    <MenuItem Header="Script Manager" IsCheckable="True"
-						      IsChecked="{Binding ScriptManager.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Toolbox" IsCheckable="True"
+						      IsChecked="{Binding Toolbox.IsVisible, Mode=TwoWay}" />
                 </MenuItem>
 
                 <MenuItem Header="Help(H)">
@@ -137,122 +131,35 @@
             <!--Pane Style Templates-->
             <DockingManager.LayoutItemTemplateSelector>
                 <docker:PanesTemplateSelector>
-                    <!--Cryptography Manager Style-->
-                    <docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
-                        <DataTemplate>
-                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <StackPanel Orientation="Vertical">
-
-                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 1">
-                                        <Grid Background="{DynamicResource RegionBrush}">
-                                            <TextBlock VerticalAlignment="Center" Margin="8" FontSize="16" Opacity=".80" Text="Cryptography"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <StackPanel Orientation="Vertical" Margin="8">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="50"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="Encryption key" />
-                                            <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
-                                        </Grid>
-
-                                        <Grid Margin="0 8 0 8">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="50"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="Resource file save directory" />
-                                            <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
-                                        </Grid>
-
-                                        <Separator/>
-
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Use encrytion key for decryption" IsChecked="True"/>
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ The *.ogg file cannot be decrypted without using the encryption key."/>
-
-                                        <Separator/>
-
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Verify fake header" IsChecked="True"/>
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Verify that the RPG Maker MV/MZ encrypted resource files are valid."/>
-
-                                        <Separator/>
-
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Backup files" IsChecked="True"/>
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Automatically backup files before tasks begin."/>
-
-                                        <Separator/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                                            <RadioButton Content="Current File" IsChecked="True"/>
-                                            <RadioButton Margin="4 0 0 0" Content="{Binding SelectedItemsString}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                            <Button Content="Encrypt"/>
-                                            <Button Margin="4 0 0 0" Content="Decrypt"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </hc:ScrollViewer>
-                        </DataTemplate>
-                    </docker:PanesTemplateSelector.CryptographyManagerViewTemplate>
-                    
-                    <!--Data Manager Style-->
-                    <docker:PanesTemplateSelector.DataManagerViewTemplate>
-                        <DataTemplate>
-                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <StackPanel Orientation="Vertical">
-
-                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 1">
-                                        <Grid Background="{DynamicResource RegionBrush}">
-                                            <TextBlock VerticalAlignment="Center" Margin="8" FontSize="16" Opacity=".80" Text="Data"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <StackPanel Orientation="Vertical" Margin="8">
-                                        
-                                    </StackPanel>
-                                </StackPanel>
-                            </hc:ScrollViewer>
-                        </DataTemplate>
-                    </docker:PanesTemplateSelector.DataManagerViewTemplate>
-
                     <!--File Explorer Style-->
                     <docker:PanesTemplateSelector.FileExplorerViewTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="32"/>
-                                    <RowDefinition Height="32"/>
+                                    <RowDefinition Height="28"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="0" Grid.RowSpan="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
-                                    <StackPanel Orientation="Vertical" Background="{DynamicResource RegionBrush}">
-                                        <StackPanel Grid.Row="0" Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal" Margin="8 0 8 0">
-                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
-                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
-                                                </Button>
+                                <StackPanel Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Background="{DynamicResource RegionBrush}">
+                                    <StackPanel Grid.Row="0" Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" Margin="8 0 8 0">
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
+                                            </Button>
 
-                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
-                                                </Button>
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
+                                            </Button>
 
-                                                <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                    <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
-                                                </Button>
-                                            </StackPanel>
+                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
+                                            </Button>
                                         </StackPanel>
-
-                                        <hc:SearchBar Grid.Row="1" Margin="2 1 2 2" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
                                     </StackPanel>
-                                </Border>
+
+                                    <hc:SearchBar Grid.Row="1" Height="28" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
+                                </StackPanel>
 
                                 <!--TreeView Data Templates-->
                                 <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
@@ -306,139 +213,45 @@
                         </DataTemplate>
                     </docker:PanesTemplateSelector.ReportViewTemplate>
 
-                    <!--Save Data Manager Style-->
-                    <docker:PanesTemplateSelector.SaveDataManagerViewTemplate>
+                    <!--Toolbox-->
+                    <docker:PanesTemplateSelector.ToolboxViewTemplate>
                         <DataTemplate>
-                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <StackPanel Orientation="Vertical">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 1">
-                                        <Grid Background="{DynamicResource RegionBrush}">
-                                            <TextBlock VerticalAlignment="Center" Margin="8" FontSize="16" Opacity=".80" Text="Package/Unpackage Save Data"/>
-                                        </Grid>
-                                    </Border>
+                                <hc:SearchBar Grid.Row="0" Background="{DynamicResource RegionBrush}" Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
 
-                                    <StackPanel Orientation="Vertical" Margin="8">
-                                        <Grid Margin="0 0 0 8">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="50"/>
-                                            </Grid.ColumnDefinitions>
+                                <!--TreeView Data Templates-->
+                                <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
+                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
+                                          ItemsSource="{Binding Nodes}">
+                                    <TreeView.Resources>
+                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                        </Style>
 
-                                            <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="System.json path" />
-                                            <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
-                                        </Grid>
+                                        <HierarchicalDataTemplate DataType="{x:Type entities:ToolboxCategory}" ItemsSource="{Binding SubItems}">
+                                            <TextBlock Margin="8 4 0 4" Text="{Binding Name}"/>
+                                        </HierarchicalDataTemplate>
 
-                                        <Separator/>
+                                        <HierarchicalDataTemplate DataType="{x:Type entities:ToolboxItem}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <StackPanel.InputBindings>
+                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ItemDoubleClickCommand}"/>
+                                                </StackPanel.InputBindings>
 
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Use system.json" IsChecked="True"/>
-
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Cannot see variable name without system.json file."/>
-
-                                        <Separator/>
-
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Backup files" IsChecked="True"/>
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Automatically backup files before tasks begin."/>
-
-                                        <Separator/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                                            <RadioButton Content="RPG Maker MV" IsChecked="True"/>
-                                            <RadioButton Margin="4 0 0 0" Content="RPG Maker MZ"/>
-                                        </StackPanel>
-
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                            <Button Content="Package"/>
-                                            <Button Margin="4 0 0 0" Content="Unpackage"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </hc:ScrollViewer>
+                                                <Image Width="16" Height="16" VerticalAlignment="Center" Source="{Binding Icon}"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.Resources>
+                                </TreeView>
+                            </Grid>
                         </DataTemplate>
-                    </docker:PanesTemplateSelector.SaveDataManagerViewTemplate>
-
-                    <!--Script Manager Style-->
-                    <docker:PanesTemplateSelector.ScriptManagerViewTemplate>
-                        <DataTemplate>
-                            <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
-                                <StackPanel Orientation="Vertical">
-
-                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 1">
-                                        <Grid Background="{DynamicResource RegionBrush}">
-                                            <TextBlock VerticalAlignment="Center" Margin="8" FontSize="16" Opacity=".80" Text="Import/Export Script"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <StackPanel Orientation="Vertical" Margin="8">
-                                        <Grid Margin="0 0 0 8">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="50"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <hc:TextBox Grid.Column="0" hc:InfoElement.Placeholder="Script save directory" />
-                                            <Button Grid.Column="1" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."/>
-                                        </Grid>
-
-                                        <Separator/>
-
-                                        <ComboBox Style="{StaticResource ComboBoxExtend}" Margin="0 8 0 8" hc:InfoElement.Placeholder="JPath Collection"/>
-
-                                        <Separator/>
-
-                                        <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Backup files" IsChecked="True"/>
-                                        <TextBlock Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Automatically backup files before tasks begin."/>
-
-                                        <Separator/>
-
-                                        <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                                            <RadioButton Content="Current File" IsChecked="True"/>
-                                            <RadioButton Margin="4 0 0 0" Content="{Binding SelectedItemsString}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                            <Button Content="Import"/>
-                                            <Button Margin="4 0 0 0" Content="Export"/>
-                                        </StackPanel>
-                                    </StackPanel>
-
-                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 1">
-                                        <Grid Background="{DynamicResource RegionBrush}">
-                                            <TextBlock VerticalAlignment="Center" Margin="8" FontSize="16" Opacity=".80" Text="Translate Script"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <StackPanel Orientation="Vertical" Margin="8">
-                                        <ComboBox Style="{StaticResource ComboBoxExtend}" Margin="0 0 0 8" hc:InfoElement.Placeholder="Translator"/>
-
-                                        <Grid Margin="0 0 0 8">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="32"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <ComboBox Grid.Column="0" Style="{StaticResource ComboBoxExtend}" hc:InfoElement.Placeholder="From"/>
-
-                                            <iconPacks:PackIconMaterial Grid.Column="1" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity=".68" Kind="SwapHorizontal"/>
-
-                                            <ComboBox Grid.Column="2" Style="{StaticResource ComboBoxExtend}" hc:InfoElement.Placeholder="To"/>
-                                        </Grid>
-
-                                        <Separator/>
-
-                                        <hc:NumericUpDown Style="{StaticResource NumericUpDownExtend}" Margin="0 8 0 0" Minimum="1" Maximum="20" Value="1"
-                                                          hc:InfoElement.Title="Target column number" hc:InfoElement.TitlePlacement="Top"
-                                                          hc:InfoElement.Placeholder="Column number" hc:InfoElement.Necessary="True"/>
-
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
-                                            <Button Content="Translate"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </hc:ScrollViewer>
-                        </DataTemplate>
-                    </docker:PanesTemplateSelector.ScriptManagerViewTemplate>
+                    </docker:PanesTemplateSelector.ToolboxViewTemplate>
 
                     <!--General File Style-->
                     <docker:PanesTemplateSelector.GeneralFileViewTemplate>
@@ -480,7 +293,7 @@
                                 </Grid.RowDefinitions>
                                 
                                 <hc:ImageViewer Grid.Row="0" Background="{Binding BackgroundBrush}" BorderThickness="0"
-                                                ImageSource="{Binding FilePath}"/>
+                                                ImageSource="{Binding ImageFilePath}"/>
 
                                 <StatusBar Grid.Row="1">
                                     <StatusBarItem>

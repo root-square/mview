@@ -269,5 +269,71 @@ namespace MView.Core.Cryptography
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// Recover the header of the files: *.rpgmvm, *.rpgmvw, *.rpgmvp. And returns a restored file.
+        /// </summary>
+        /// <param name="filePath">The path to the file to restore the header.</param>
+        public static byte[] GetRestoredFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
+                }
+
+                // Checks extension.
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (!EncryptedExtensions.Contains(extension) && (extension == ".rpgmvo" || extension == ".ogg_"))
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
+                }
+
+                // Finds and sets header.
+                string[] headerHexArray = null;
+
+                if (extension == ".rpgmvm" || extension == ".m4a_")
+                {
+                    headerHexArray = HEADER_M4A;
+                }
+                else if (extension == ".rpgmvw" || extension == ".wav_")
+                {
+                    headerHexArray = HEADER_WAV;
+                }
+                else if (extension == ".rpgmvp" || extension == ".png_")
+                {
+                    headerHexArray = HEADER_PNG;
+                }
+                else
+                {
+                    throw new NotSupportedException("Not supported file extension.");
+                }
+
+                // Writes a header as byte array.
+                byte[] header = new byte[16];
+
+                for (int index = 0; index < header.Length; index++)
+                {
+                    header[index] = headerHexArray[index].HexToByte();
+                }
+
+                // Loads encrypted file and skips RPG Maker MV encryption header area.
+                byte[] file = File.ReadAllBytes(filePath);
+                byte[] contents = file.Skip(32).ToArray();
+
+                // Copy and return decrypted file.
+                byte[] result = new byte[header.Length + contents.Length];
+                Array.Copy(header, 0, result, 0, header.Length);
+                Array.Copy(contents, 0, result, header.Length, contents.Length);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

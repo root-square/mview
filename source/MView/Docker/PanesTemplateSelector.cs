@@ -49,19 +49,6 @@ namespace MView.Docker
 			get;
 			set;
 		}
-
-		public DataTemplate CryptographyManagerViewTemplate
-		{
-			get;
-			set;
-		}
-
-		public DataTemplate DataManagerViewTemplate
-		{
-			get;
-			set;
-		}
-
 		public DataTemplate FilePropertiesViewTemplate
 		{
 			get;
@@ -80,13 +67,7 @@ namespace MView.Docker
 			set;
 		}
 
-		public DataTemplate SaveDataManagerViewTemplate
-		{
-			get;
-			set;
-		}
-
-		public DataTemplate ScriptManagerViewTemplate
+		public DataTemplate ToolboxViewTemplate
 		{
 			get;
 			set;
@@ -114,12 +95,6 @@ namespace MView.Docker
 			if (item is ScriptFileViewModel)
 				return ScriptFileViewTemplate;
 
-			if (item is CryptographyManagerViewModel)
-				return CryptographyManagerViewTemplate;
-
-			if (item is DataManagerViewModel)
-				return DataManagerViewTemplate;
-
 			if (item is FilePropertiesViewModel)
 				return FilePropertiesViewTemplate;
 
@@ -129,11 +104,8 @@ namespace MView.Docker
 			if (item is ReportViewModel)
 				return ReportViewTemplate;
 
-			if (item is SaveDataManagerViewModel)
-				return SaveDataManagerViewTemplate;
-
-			if (item is ScriptManagerViewModel)
-				return ScriptManagerViewTemplate;
+			if (item is ToolboxViewModel)
+				return ToolboxViewTemplate;
 
 			return base.SelectTemplate(item, container);
 		}

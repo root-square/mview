@@ -54,13 +54,10 @@ namespace MView
         private ToolViewModelBase[] _tools = null;
 
         private FileViewModelBase _activeDocument = null;
-        private CryptographyManagerViewModel _cryptographyManager = null;
-        private DataManagerViewModel _dataManager = null;
         private FileExplorerViewModel _fileExplorer = null;
         private FilePropertiesViewModel _fileProperties = null;
         private ReportViewModel _report = null;
-        private SaveDataManagerViewModel _saveDataManager = null;
-        private ScriptManagerViewModel _scriptManager = null;
+        private ToolboxViewModel _toolbox = null;
 
         private RelayCommand _openCommand = null;
 
@@ -93,30 +90,8 @@ namespace MView
             get
             {
                 if (_tools == null)
-                    _tools = new ToolViewModelBase[] { CryptographyManager, DataManager, FileExplorer, FileProperties, Report, SaveDataManager, ScriptManager };
+                    _tools = new ToolViewModelBase[] { FileExplorer, FileProperties, Report, Toolbox };
                 return _tools;
-            }
-        }
-
-        public CryptographyManagerViewModel CryptographyManager
-        {
-            get
-            {
-                if (_cryptographyManager == null)
-                    _cryptographyManager = new CryptographyManagerViewModel();
-
-                return _cryptographyManager;
-            }
-        }
-
-        public DataManagerViewModel DataManager
-        {
-            get
-            {
-                if (_dataManager == null)
-                    _dataManager = new DataManagerViewModel();
-
-                return _dataManager;
             }
         }
 
@@ -163,25 +138,14 @@ namespace MView
             }
         }
 
-        public SaveDataManagerViewModel SaveDataManager
+        public ToolboxViewModel Toolbox
         {
             get
             {
-                if (_saveDataManager == null)
-                    _saveDataManager = new SaveDataManagerViewModel();
+                if (_toolbox == null)
+                    _toolbox = new ToolboxViewModel();
 
-                return _saveDataManager;
-            }
-        }
-
-        public ScriptManagerViewModel ScriptManager
-        {
-            get
-            {
-                if (_scriptManager == null)
-                    _scriptManager = new ScriptManagerViewModel();
-
-                return _scriptManager;
+                return _toolbox;
             }
         }
 
