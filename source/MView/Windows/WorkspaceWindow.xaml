@@ -38,15 +38,13 @@
                 <MenuItem Header="File(F)">
                     <MenuItem Header="Open">
                         <MenuItem.Icon>
-                            <iconPacks:PackIconMaterial VerticalAlignment="Center" Opacity=".68" Kind="FolderOpen"/>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="FolderOpen"/>
                         </MenuItem.Icon>
-                        <MenuItem Header="Files"/>
-                        <MenuItem Header="Folders"/>
                     </MenuItem>
 
                     <MenuItem Header="Save(S)">
                         <MenuItem.Icon>
-                            <iconPacks:PackIconMaterial VerticalAlignment="Center" Opacity=".68" Kind="ContentSave"/>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSave"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
@@ -54,17 +52,57 @@
 
                     <MenuItem Header="Save All(L)">
                         <MenuItem.Icon>
-                            <iconPacks:PackIconMaterial VerticalAlignment="Center" Opacity=".68" Kind="ContentSaveAll"/>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSaveAll"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
                     <Separator/>
 
-                    <MenuItem Header="Close(C)"/>
+                    <MenuItem Header="Close(C)">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Close"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
                     <Separator/>
 
-                    <MenuItem Header="Exit(E)"/>
+                    <MenuItem Header="Exit"/>
+                </MenuItem>
+
+                <MenuItem Header="Edit(E)">
+                    <MenuItem Header="Undo" Command="Undo">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Undo"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Redo" Command="Redo">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Redo"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator/>
+
+                    <MenuItem Header="Cut" Command="Cut">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCut"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Copy" Command="Copy">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCopy"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Paste" Command="Paste">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentPaste"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Delete" Command="Delete">
+                        <MenuItem.Icon>
+                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="View(V)">
@@ -79,7 +117,11 @@
                 </MenuItem>
 
                 <MenuItem Header="Help(H)">
+                    <MenuItem Header="Manual(M)"/>
 
+                    <Separator/>
+
+                    <MenuItem Header="MView Information(I)"/>
                 </MenuItem>
             </Menu>
         </StackPanel>
@@ -94,30 +136,28 @@
 
         <!--Toolbar-->
         <ToolBar Grid.Row="0" Margin="0" Padding="10 6" VerticalAlignment="Center">
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="8 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_add_file.png"/>
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+                <iconPacks:PackIconMaterial Foreground="{DynamicResource WarningBrush}" Width="14" Height="14" VerticalAlignment="Center" Kind="FolderOpen"/>
             </Button>
             
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_add_folder.png"/>
-            </Button>
-            
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_save.png"/>
+                <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSave"/>
             </Button>
 
             <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_saveall.png"/>
+                <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSaveAll"/>
             </Button>
 
             <Separator Margin="6 0 6 0"/>
 
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_undo.png"/>
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0"
+                    Command="Undo">
+                <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="UndoVariant"/>
             </Button>
 
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center" Width="16" Height="16" Source="/Resources/icon_redo.png"/>
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                    Command="Redo">
+                <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="RedoVariant"/>
             </Button>
         </ToolBar>
 
@@ -137,29 +177,22 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="32"/>
-                                    <RowDefinition Height="28"/>
+                                    <RowDefinition Height="30"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <StackPanel Grid.Row="0" Grid.RowSpan="2" Orientation="Vertical" Background="{DynamicResource RegionBrush}">
-                                    <StackPanel Grid.Row="0" Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal" Margin="8 0 8 0">
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="0 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12"  Kind="Plus"/>
-                                            </Button>
-
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Refresh"/>
-                                            </Button>
-
-                                            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
-                                                <iconPacks:PackIconMaterial Foreground="#FFB4B4B4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="12" Height="12" Kind="Close"/>
-                                            </Button>
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="{DynamicResource RegionBrush}">
+                                    <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="2 0 0 0" Padding="4 0 4 0">
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Refresh"/>
+                                            <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Refresh"/>
                                         </StackPanel>
-                                    </StackPanel>
-
-                                    <hc:SearchBar Grid.Row="1" Height="28" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
+                                    </Button>
                                 </StackPanel>
+
+                                <Grid Grid.Row="1" Background="{DynamicResource RegionBrush}">
+                                    <hc:SearchBar Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
+                                </Grid>
 
                                 <!--TreeView Data Templates-->
                                 <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
@@ -243,7 +276,7 @@
                                                     <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ItemDoubleClickCommand}"/>
                                                 </StackPanel.InputBindings>
 
-                                                <Image Width="16" Height="16" VerticalAlignment="Center" Source="{Binding Icon}"/>
+                                                <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".80" Kind="{Binding Icon}"/>
                                                 <TextBlock VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
                                             </StackPanel>
                                         </HierarchicalDataTemplate>

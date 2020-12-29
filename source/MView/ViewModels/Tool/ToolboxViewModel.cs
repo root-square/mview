@@ -1,9 +1,11 @@
-﻿using MView.Bases;
+﻿using MahApps.Metro.IconPacks;
+using MView.Bases;
 using MView.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace MView.ViewModels.Tool
 {
@@ -46,24 +48,37 @@ namespace MView.ViewModels.Tool
 
         #region ::Methods::
 
+        private enum ToolIconType
+        {
+            ResourceEncrypter,
+            ResourceDecrypter,
+            HashComparerer,
+            TextComparerer,
+            SaveDataManager,
+            ScriptImporter,
+            ScriptExporter,
+            ScriptTranslator,
+            ScriptMigrationManager
+        }
         private void Initialize()
         {
+            // Initialize tools.
             ToolboxCategory cryptography = new ToolboxCategory("Cryptography", true);
-            cryptography.SubItems.Add(new ToolboxItem("Resource Encrypter", null, false));
-            cryptography.SubItems.Add(new ToolboxItem("Resource Decrypter", null, false));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", null));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", null));
 
             ToolboxCategory data = new ToolboxCategory("Data", true);
-            data.SubItems.Add(new ToolboxItem("Hash Comparerer", null, false));
-            data.SubItems.Add(new ToolboxItem("Text Comparerer", null, false));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FolderPoundOutline, "Hash Comparerer", null));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.TimelineTextOutline, "Text Comparerer", null));
 
             ToolboxCategory saveData = new ToolboxCategory("Save Data", true);
-            saveData.SubItems.Add(new ToolboxItem("Save Data Manager", null, false));
+            saveData.SubItems.Add(new ToolboxItem(PackIconMaterialKind.ContentSaveEditOutline, "Save Data Manager", null));
 
             ToolboxCategory script = new ToolboxCategory("Script", true);
-            script.SubItems.Add(new ToolboxItem("Script Importer", null, false));
-            script.SubItems.Add(new ToolboxItem("Script Exporter", null, false));
-            script.SubItems.Add(new ToolboxItem("Script Translator", null, false));
-            script.SubItems.Add(new ToolboxItem("Script Migration Manager", null, false));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", null));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", null));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", null));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", null));
 
             _nodes.Add(cryptography);
             _nodes.Add(data);

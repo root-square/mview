@@ -121,12 +121,6 @@
   <data name="avalondock_layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\avalondock_layout.config;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;ks_c_5601-1987</value>
   </data>
-  <data name="icon_add_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_add_file.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_add_folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_add_folder.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="icon_audiofile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_audiofile.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -135,9 +129,6 @@
   </data>
   <data name="icon_data" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_data.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_delete.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="icon_directory" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_directory.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -151,22 +142,7 @@
   <data name="icon_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_image.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="icon_redo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_redo.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_refresh.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_save.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_saveall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_saveall.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="icon_savedata" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\icon_savedata.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="icon_undo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\icon_undo.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

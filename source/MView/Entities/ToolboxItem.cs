@@ -1,4 +1,5 @@
-﻿using MView.Bases;
+﻿using MahApps.Metro.IconPacks;
+using MView.Bases;
 using MView.Commands;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,26 @@ namespace MView.Entities
     {
         #region ::Fields::
 
+        private Page _toolPage;
+
         private ICommand _itemDoubleClickCommand;
 
         #endregion
 
         #region ::Constructors::
 
-        public ToolboxItem(string name, Page toolPage = null, bool isExpanded = false)
+        public ToolboxItem(PackIconMaterialKind icon, string name, Page toolPage = null)
         {
+            Icon = icon;
             Name = name;
+            _toolPage = toolPage;
         }
 
         #endregion
 
         #region ::Properties::
 
-        public ImageSource Icon { get; set; }
+        public PackIconMaterialKind Icon { get; set; }
 
         public string Name { get; set; }
 
