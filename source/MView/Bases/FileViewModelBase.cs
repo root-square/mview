@@ -137,7 +137,7 @@ namespace MView.Bases
 
 		private void OnClose()
 		{
-			Workspace.Instance.Close(this);
+			Workspace.Instance.CloseFile(this);
 		}
 
 		private bool CanSave(object parameter)
@@ -147,7 +147,7 @@ namespace MView.Bases
 
 		private void OnSave(object parameter)
 		{
-			Workspace.Instance.Save(this, false);
+			Workspace.Instance.SaveFile(this, false);
 		}
 
 		private bool CanSaveAs(object parameter)
@@ -157,7 +157,7 @@ namespace MView.Bases
 
 		private void OnSaveAs(object parameter)
 		{
-			Workspace.Instance.Save(this, true);
+			Workspace.Instance.SaveFile(this, true);
 		}
 
 		#endregion

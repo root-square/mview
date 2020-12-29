@@ -177,7 +177,7 @@ namespace MView.Entities
         {
             if (Type != DirectoryItemType.BaseDirectory && Type != DirectoryItemType.Directory)
             {
-                Workspace.Instance.Open(FullName);
+                Workspace.Instance.ActiveDocument = Workspace.Instance.OpenFile(FullName);
             }
         }
 

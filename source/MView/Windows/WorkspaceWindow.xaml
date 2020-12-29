@@ -36,21 +36,21 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Margin="8 0 0 0">
             <Menu Background="{DynamicResource SecondaryRegionBrush}">
                 <MenuItem Header="File(F)">
-                    <MenuItem Header="Open">
+                    <MenuItem Header="Open(O)" Command="{Binding OpenCommand}">
                         <MenuItem.Icon>
                             <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="FolderOpen"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Save(S)">
+                    <MenuItem Header="Save(S)" Command="{Binding SaveCommand}">
                         <MenuItem.Icon>
                             <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSave"/>
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Save As(A)"/>
+                    <MenuItem Header="Save As(A)" Command="{Binding SaveAsCommand}"/>
 
-                    <MenuItem Header="Save All(L)">
+                    <MenuItem Header="Save All(L)" Command="{Binding SaveAllCommand}">
                         <MenuItem.Icon>
                             <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSaveAll"/>
                         </MenuItem.Icon>
@@ -58,7 +58,7 @@
 
                     <Separator/>
 
-                    <MenuItem Header="Close(C)">
+                    <MenuItem Header="Close(C)" Command="{Binding CloseCommand}">
                         <MenuItem.Icon>
                             <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Close"/>
                         </MenuItem.Icon>
@@ -66,7 +66,7 @@
 
                     <Separator/>
 
-                    <MenuItem Header="Exit"/>
+                    <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
                 </MenuItem>
 
                 <MenuItem Header="Edit(E)">
@@ -136,15 +136,18 @@
 
         <!--Toolbar-->
         <ToolBar Grid.Row="0" Margin="0" Padding="10 6" VerticalAlignment="Center">
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                    Command="{Binding OpenCommand}">
                 <iconPacks:PackIconMaterial Foreground="{DynamicResource WarningBrush}" Width="14" Height="14" VerticalAlignment="Center" Kind="FolderOpen"/>
             </Button>
             
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                    Command="{Binding SaveCommand}">
                 <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSave"/>
             </Button>
 
-            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0">
+            <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                    Command="{Binding SaveAllCommand}">
                 <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentSaveAll"/>
             </Button>
 

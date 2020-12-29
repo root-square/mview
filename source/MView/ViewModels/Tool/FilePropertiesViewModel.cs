@@ -26,14 +26,14 @@ namespace MView.ViewModels.Tool
         {
             ContentId = ToolContentId;
 
-            Workspace.Instance.FileExplorer.SelectedNodes.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
+            Workspace.Instance.ActiveDocumentChanged += OnActiveDocumentChanged;
         }
 
-		#endregion
+        #endregion
 
-		#region ::Properties::
+        #region ::Properties::
 
-		public FileProperties FileProperties
+        public FileProperties FileProperties
         {
             get
             {
@@ -50,19 +50,14 @@ namespace MView.ViewModels.Tool
 
 		#region ::CollectionChanged Event Subscriber::
 
-		private async void OnCollectionChanged(object sender, EventArgs e)
+		private async void OnActiveDocumentChanged(object sender, EventArgs e)
 		{
 			var task = Task.Run(() =>
 			{
-				ObservableCollection<DirectoryItem> item = Workspace.Instance.FileExplorer.SelectedNodes;
-
-				if (item.Count == 1)
+				if (Workspace.Instance.ActiveDocument != null)
 				{
-					if (item[0].Type == DirectoryItemType.File)
-					{
-						FileProperties = new FileProperties(item[0].FullName);
-					}
-				}
+                    FileProperties = new FileProperties(Workspace.Instance.ActiveDocument.FilePath);
+                }
 				else
 				{
 					FileProperties = new FileProperties();

@@ -13,7 +13,7 @@ namespace MView.ViewModels.Tool
 
         public const string ToolContentId = "Report";
 
-        private string _report = $"MView Version {Assembly.GetExecutingAssembly().GetName().Version}\r\n";
+        private string _report = $"MView Version {Assembly.GetExecutingAssembly().GetName().Version}\r\nCopyright <c> 2020 June all rights reserved.\r\n\r\n";
 
         #endregion
 

@@ -59,7 +59,13 @@ namespace MView
         private ReportViewModel _report = null;
         private ToolboxViewModel _toolbox = null;
 
+        // Commands
         private RelayCommand _openCommand = null;
+        private DelegateCommand _saveCommand = null;
+        private DelegateCommand _saveAsCommand = null;
+        private DelegateCommand _saveAllCommand = null;
+        private DelegateCommand _closeCommand = null;
+        private DelegateCommand _exitCommand = null;
 
         #endregion
 
@@ -149,19 +155,6 @@ namespace MView
             }
         }
 
-        public ICommand OpenCommand
-        {
-            get
-            {
-                if (_openCommand == null)
-                {
-                    _openCommand = new RelayCommand((p) => OnOpen(p), (p) => CanOpen(p));
-                }
-
-                return _openCommand;
-            }
-        }
-
         public FileViewModelBase ActiveDocument
         {
             get
@@ -194,69 +187,64 @@ namespace MView
             }
         }
 
+        public ICommand OpenCommand
+        {
+            get
+            {
+                if (_openCommand == null)
+                {
+                    _openCommand = new RelayCommand((p) => OnOpen(p), (p) => CanOpen(p));
+                }
+
+                return _openCommand;
+            }
+        }
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                return (_saveCommand) ?? (_saveCommand = new DelegateCommand(OnSave));
+            }
+        }
+
+        public ICommand SaveAsCommand
+        {
+            get
+            {
+                return (_saveAsCommand) ?? (_saveAsCommand = new DelegateCommand(OnSaveAs));
+            }
+        }
+
+        public ICommand SaveAllCommand
+        {
+            get
+            {
+                return (_saveAllCommand) ?? (_saveAllCommand = new DelegateCommand(OnSaveAll));
+            }
+        }
+
+        public ICommand CloseCommand
+        {
+            get
+            {
+                return (_closeCommand) ?? (_closeCommand = new DelegateCommand(OnClose));
+            }
+        }
+
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return (_exitCommand) ?? (_exitCommand = new DelegateCommand(OnExit));
+            }
+        }
+
         #endregion
 
         #region ::Methods::
 
-        internal void Close(FileViewModelBase fileToClose)
-        {
-            if (fileToClose.IsDirty)
-            {
-                var res = MessageBox.Show(string.Format("Save changes for file '{0}'?", fileToClose.FileName), "MView", MessageBoxButton.YesNoCancel);
-                if (res == MessageBoxResult.Cancel)
-                    return;
-                if (res == MessageBoxResult.Yes)
-                {
-                    Save(fileToClose);
-                }
-            }
-
-            _files.Remove(fileToClose);
-        }
-
-        internal void Save(FileViewModelBase fileToSave, bool saveAsFlag = false)
-        {
-            if (fileToSave.FilePath == null || saveAsFlag)
-            {
-                var dlg = new SaveFileDialog();
-                if (dlg.ShowDialog().GetValueOrDefault())
-                    fileToSave.FilePath = dlg.SafeFileName;
-            }
-
-            if (fileToSave.FilePath == null)
-            {
-                return;
-            }
-
-            if (fileToSave is AudioFileViewModel)
-            {
-                // TODO : Save action
-            }
-            else if (fileToSave is GeneralFileViewModel)
-            {
-                // TODO : Save action
-            }
-            else if (fileToSave is ImageFileViewModel)
-            {
-                // TODO : Save action
-            }
-            else if (fileToSave is JsonFileViewModel)
-            {
-                // TODO : Save action
-            }
-            else if (fileToSave is SaveFileViewModel)
-            {
-                // TODO : Save action
-            }
-            else if (fileToSave is ScriptFileViewModel)
-            {
-                // TODO : Save action
-            }
-
-            ActiveDocument.IsDirty = false;
-        }
-
-        internal FileViewModelBase Open(string filePath)
+        internal FileViewModelBase OpenFile(string filePath)
         {
             var fileViewModel = _files.FirstOrDefault(fm => fm.FilePath == filePath);
             if (fileViewModel != null)
@@ -301,8 +289,81 @@ namespace MView
                     _files.Add(fileViewModel);
                     break;
             }
+
             return fileViewModel;
         }
+
+        internal void SaveFile(FileViewModelBase fileToSave, bool saveAsFlag = false)
+        {
+            if (fileToSave.FilePath == null || saveAsFlag)
+            {
+                var dlg = new SaveFileDialog();
+                if (dlg.ShowDialog().GetValueOrDefault())
+                    fileToSave.FilePath = dlg.SafeFileName;
+            }
+
+            if (fileToSave.FilePath == null)
+            {
+                return;
+            }
+
+            if (fileToSave is AudioFileViewModel)
+            {
+                // TODO : Save action
+            }
+            else if (fileToSave is GeneralFileViewModel)
+            {
+                // TODO : Save action
+            }
+            else if (fileToSave is ImageFileViewModel)
+            {
+                // TODO : Save action
+            }
+            else if (fileToSave is JsonFileViewModel)
+            {
+                // TODO : Save action
+            }
+            else if (fileToSave is SaveFileViewModel)
+            {
+                // TODO : Save action
+            }
+            else if (fileToSave is ScriptFileViewModel)
+            {
+                // TODO : Save action
+            }
+
+            ActiveDocument.IsDirty = false;
+        }
+
+        internal void CloseFile(FileViewModelBase fileToClose)
+        {
+            if (fileToClose.IsDirty)
+            {
+                var res = MessageBox.Show(string.Format("Save changes for file '{0}'?", fileToClose.FileName), "MView", MessageBoxButton.YesNoCancel);
+                if (res == MessageBoxResult.Cancel)
+                    return;
+
+                if (res == MessageBoxResult.Yes)
+                {
+                    SaveFile(fileToClose);
+                }
+            }
+
+            _files.Remove(fileToClose);
+        }
+
+        internal void CloseAllFiles()
+        {
+            List<FileViewModelBase> files = _files.ToList();
+            foreach (FileViewModelBase file in files)
+            {
+                if (file != null)
+                {
+                    CloseFile(file);
+                }
+            }
+        }
+
 
         #endregion
 
@@ -313,12 +374,69 @@ namespace MView
         private void OnOpen(object parameter)
         {
             var dlg = new OpenFileDialog();
+            dlg.CheckFileExists = true;
+            dlg.Filter = "HTML Index|index.html";
 
             if (dlg.ShowDialog().GetValueOrDefault())
             {
-                var fileViewModel = Open(dlg.FileName);
-                ActiveDocument = fileViewModel;
+                DirectoryInfo directory = Directory.GetParent(dlg.FileName);
+                
+                FileExplorer.Nodes = new ObservableCollection<DirectoryItem>();
+                FileExplorer.SelectedNodes = new ObservableCollection<DirectoryItem>();
+                FileExplorer.Nodes.Add(new DirectoryItem(directory, true, true));
+
+                Report.AddReportWithIdentifier($"A new project has been opened.({directory.FullName})", ReportType.Information);
             }
+            else
+            {
+                Report.AddReportWithIdentifier("The OpenFileDialog has been canceled.", ReportType.Caution);
+            }
+        }
+
+        private void OnSave()
+        {
+            if (ActiveDocument == null)
+            {
+                return;
+            }
+
+            SaveFile(ActiveDocument, false);
+        }
+
+        private void OnSaveAs()
+        {
+            if (ActiveDocument == null)
+            {
+                return;
+            }
+
+            SaveFile(ActiveDocument, true);
+        }
+
+        private void OnSaveAll()
+        {
+            foreach (FileViewModelBase file in _files)
+            {
+                if (file != null)
+                {
+                    SaveFile(file, false);
+                }
+            }
+        }
+
+        private void OnClose()
+        {
+            if (ActiveDocument == null)
+            {
+                return;
+            }
+
+            CloseFile(ActiveDocument);
+        }
+
+        private void OnExit()
+        {
+            Application.Current.Shutdown();
         }
 
         #endregion

@@ -1,8 +1,10 @@
 ﻿using AvalonDock.Layout.Serialization;
+using MView.Bases;
 using MView.Commands;
 using MView.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -29,7 +31,7 @@ namespace MView.Windows
             this.Unloaded += new RoutedEventHandler(WorkspaceUnloaded);
         }
 
-		#region ::Layout Loader/Unloader::
+		#region ::Workspace Loader/Unloader::
 
 		private void WorkspaceLoaded(object sender, RoutedEventArgs e)
         {
@@ -62,6 +64,14 @@ namespace MView.Windows
 
             var serializer = new XmlLayoutSerializer(dockManager);
             serializer.Serialize(layoutPath);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // Save and close all files.
+            Workspace.Instance.CloseAllFiles();
+
+            base.OnClosing(e);
         }
 
         #endregion
