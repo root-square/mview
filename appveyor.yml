@@ -3,11 +3,11 @@ version: 1.5.{build}
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+  version: $(APPVEYOR_BUILD_VERSION)
+  package_version: $(APPVEYOR_BUILD_VERSION)
+  assembly_version: $(APPVEYOR_BUILD_VERSION)
+  file_version: $(APPVEYOR_BUILD_VERSION)
+  informational_version: $(APPVEYOR_BUILD_VERSION)
 
 skip_tags: true
 
