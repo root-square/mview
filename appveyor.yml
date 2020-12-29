@@ -1,14 +1,5 @@
 version: 1.5.{build}
 
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
-
 skip_tags: true
 
 skip_branch_with_pr: true
