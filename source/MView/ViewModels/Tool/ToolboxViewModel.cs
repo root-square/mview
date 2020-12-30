@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.IconPacks;
 using MView.Bases;
 using MView.Entities;
+using MView.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -64,7 +65,7 @@ namespace MView.ViewModels.Tool
         {
             // Initialize tools.
             ToolboxCategory cryptography = new ToolboxCategory("Cryptography", true);
-            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", null));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", new ResourceEncrypterPage()));
             cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", null));
 
             ToolboxCategory data = new ToolboxCategory("Data", true);

@@ -1,9 +1,11 @@
 ﻿using MahApps.Metro.IconPacks;
 using MView.Bases;
 using MView.Commands;
+using MView.Windows;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -50,7 +52,7 @@ namespace MView.Entities
         {
             get
             {
-                return (_itemDoubleClickCommand) ?? (_itemDoubleClickCommand = new RelayCommand(ItemDoubleClick));
+                return (_itemDoubleClickCommand) ?? (_itemDoubleClickCommand = new DelegateCommand(ItemDoubleClick));
             }
         }
 
@@ -62,17 +64,18 @@ namespace MView.Entities
 
         #region ::Command Actions::
 
-        public void ItemDoubleClick(object obj)
+        public void ItemDoubleClick()
         {
-            Page page = (Page)obj;
-
-            if (page != null)
+            if (_toolPage != null)
             {
-                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem clicked.", ReportType.Completed);
+                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. Request ToolHost execution.", ReportType.Information);
+
+                Window window = new ToolHostWindow(_toolPage, Name);
+                window.ShowDialog();
             }
             else
             {
-                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem clicked. But it's value is null.", ReportType.Completed);
+                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. But it's value is null.", ReportType.Caution);
             }
         }
 

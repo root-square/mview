@@ -75,7 +75,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
 
