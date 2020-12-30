@@ -117,11 +117,11 @@
                 </MenuItem>
 
                 <MenuItem Header="Help(H)">
-                    <MenuItem Header="Manual(M)"/>
+                    <MenuItem Header="Manual(M)" Command="{Binding ManualCommand}"/>
 
                     <Separator/>
 
-                    <MenuItem Header="MView Information(I)"/>
+                    <MenuItem Header="MView Information(I)" Command="{Binding InformationCommand}"/>
                 </MenuItem>
             </Menu>
         </StackPanel>
@@ -184,14 +184,40 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" Background="{DynamicResource RegionBrush}">
-                                    <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="2 0 0 0" Padding="4 0 4 0">
-                                        <StackPanel Orientation="Horizontal">
-                                            <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Refresh"/>
-                                            <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Refresh"/>
-                                        </StackPanel>
-                                    </Button>
-                                </StackPanel>
+                                <Grid Grid.Row="0" Background="{DynamicResource RegionBrush}" >
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="2 0 0 0" Padding="4 0 4 0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Folder"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Add"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                                            Command="{Binding RefreshCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="FileEdit"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Rename"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                                            Command="{Binding RefreshCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Delete"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
+                                            Command="{Binding RefreshCommand}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Refresh"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Refresh"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
 
                                 <Grid Grid.Row="1" Background="{DynamicResource RegionBrush}">
                                     <hc:SearchBar Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>

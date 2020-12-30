@@ -180,7 +180,7 @@ namespace MView.ViewModels
         {
             Window window = new WorkspaceWindow();
             WindowVisibility = false;
-            window.Show();
+            window.ShowDialog();
             WindowVisibility = true;
         }
 
@@ -188,7 +188,7 @@ namespace MView.ViewModels
         {
             Window window = new ToolboxWindow();
             WindowVisibility = false;
-            window.Show();
+            window.ShowDialog();
             WindowVisibility = true;
         }
 
@@ -204,7 +204,7 @@ namespace MView.ViewModels
         {
             Window window = new InformationWindow();
             WindowVisibility = false;
-            window.Show();
+            window.ShowDialog();
             WindowVisibility = true;
         }
 

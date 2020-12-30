@@ -23,19 +23,36 @@ namespace MView.Entities
 
         #region ::Constructors::
 
+        public DirectoryItem()
+        {
+
+        }
+
+        public DirectoryItem(FileInfo file, bool isExpanded = false)
+        {
+            Type = DirectoryItemType.File;
+            Icon = GetIcon(Type, file.FullName);
+            Name = file.Name;
+            FullName = file.FullName;
+            IsExpanded = isExpanded;
+            IsSelected = false;
+            SubItems = new List<DirectoryItem>();
+        }
+
         public DirectoryItem(DirectoryInfo directory, bool isExpanded = false, bool isBase = false)
         {
             if (isBase)
             {
                 Type = DirectoryItemType.BaseDirectory;
+                Name = directory.FullName;
             }
             else
             {
                 Type = DirectoryItemType.Directory;
+                Name = directory.Name;
             }
 
             Icon = GetIcon(Type, directory.FullName);
-            Name = directory.Name;
             FullName = directory.FullName;
             IsExpanded = isExpanded;
             IsSelected = false;
@@ -65,17 +82,6 @@ namespace MView.Entities
             catch { }
 
             SubItems = items;
-        }
-
-        public DirectoryItem(FileInfo file, bool isExpanded = false)
-        {
-            Type = DirectoryItemType.File;
-            Icon = GetIcon(Type, file.FullName);
-            Name = file.Name;
-            FullName = file.FullName;
-            IsExpanded = isExpanded;
-            IsSelected = false;
-            SubItems = new List<DirectoryItem>();
         }
 
         #endregion

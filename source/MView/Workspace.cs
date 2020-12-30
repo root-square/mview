@@ -5,9 +5,11 @@ using MView.Commands;
 using MView.Entities;
 using MView.ViewModels.File;
 using MView.ViewModels.Tool;
+using MView.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -66,6 +68,8 @@ namespace MView
         private DelegateCommand _saveAllCommand = null;
         private DelegateCommand _closeCommand = null;
         private DelegateCommand _exitCommand = null;
+        private DelegateCommand _manualCommand = null;
+        private DelegateCommand _informationCommand = null;
 
         #endregion
 
@@ -237,6 +241,22 @@ namespace MView
             get
             {
                 return (_exitCommand) ?? (_exitCommand = new DelegateCommand(OnExit));
+            }
+        }
+
+        public ICommand ManualCommand
+        {
+            get
+            {
+                return (_manualCommand) ?? (_manualCommand = new DelegateCommand(OnClickManual));
+            }
+        }
+
+        public ICommand InformationCommand
+        {
+            get
+            {
+                return (_informationCommand) ?? (_informationCommand = new DelegateCommand(OnClickInformation));
             }
         }
 
@@ -437,6 +457,17 @@ namespace MView
         private void OnExit()
         {
             Application.Current.Shutdown();
+        }
+
+        private void OnClickManual()
+        {
+            Process.Start("explorer.exe", "https://github.com/handbros/MView");
+        }
+
+        private void OnClickInformation()
+        {
+            Window window = new InformationWindow();
+            window.ShowDialog();
         }
 
         #endregion
