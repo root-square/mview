@@ -18,10 +18,10 @@ namespace MView.Windows
     /// </summary>
     public partial class ToolHostWindow : HandyControl.Controls.Window
     {
-        public ToolHostWindow(Page toolPage, string name)
+        public ToolHostWindow(Page toolPage)
         {
             InitializeComponent();
-            ToolHostViewModel.Instance = new ToolHostViewModel(toolPage, name);
+            ToolHostViewModel.Instance = new ToolHostViewModel(toolPage);
             this.DataContext = ToolHostViewModel.Instance;
         }
     }

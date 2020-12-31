@@ -62,11 +62,11 @@ namespace MView.ViewModels
             SelectedNodes.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
         }
 
-        public ToolHostViewModel(Page toolPage, string name = null)
+        public ToolHostViewModel(Page toolPage)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(toolPage.Title))
             {
-                _title = name;
+                _title = toolPage.Title; // TODO : 페이지 타이틀로 고치기.
             }
 
             _toolPage = toolPage;

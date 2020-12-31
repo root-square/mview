@@ -70,7 +70,7 @@ namespace MView.Entities
             {
                 Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. Request ToolHost execution.", ReportType.Information);
 
-                Window window = new ToolHostWindow(_toolPage, Name);
+                Window window = new ToolHostWindow(_toolPage);
                 window.ShowDialog();
             }
             else
