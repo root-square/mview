@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 namespace MView.Converters
 {
     /// <summary>
-    /// Active document converter.
+    /// Type to image converter.
     /// </summary>
     [ValueConversion(typeof(DirectoryItemType), typeof(ImageSource))]
     public class TypeToImageConverter : IValueConverter

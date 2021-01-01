@@ -1,4 +1,5 @@
 ﻿using MView.Bases;
+using MView.Commands;
 using MView.Core;
 using MView.Entities;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Text;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MView.ViewModels
 {
@@ -39,7 +41,7 @@ namespace MView.ViewModels
 
         #region ::Fields::
 
-        private string _title = "ToolHost";
+        private string _title = "Tool Host";
 
         private Page _toolPage = null;
 
@@ -49,6 +51,8 @@ namespace MView.ViewModels
         private string _selectedItemsString = "Selected Items(0)";
 
         private bool _isUseCurrentFile = true;
+
+        private ICommand _refreshCommand;
 
         #endregion
 
@@ -85,11 +89,6 @@ namespace MView.ViewModels
             get
             {
                 return _title;
-            }
-            set
-            {
-                _title = value;
-                RaisePropertyChanged();
             }
         }
 
@@ -153,82 +152,26 @@ namespace MView.ViewModels
             }
         }
 
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return (_refreshCommand) ?? (_refreshCommand = new DelegateCommand(OnRefresh));
+            }
+        }
+
         #endregion
 
         #region ::Methods::
 
-        private bool IsBaseOf(string target, string candidate)
+        #endregion
+
+        #region ::Command Actions::
+
+        private void OnRefresh()
         {
-            target = Path.GetFullPath(target);
-            candidate = Path.GetFullPath(candidate);
-
-            if (target.Equals(candidate, StringComparison.OrdinalIgnoreCase) || target.StartsWith(candidate + "\\", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public List<string> GetSelectedFiles(List<string> extensions = null)
-        {
-            // Get directories and files.
-            List<string> result = new List<string>();
-            List<DirectoryItem> directories = new List<DirectoryItem>();
-            List<DirectoryItem> files = new List<DirectoryItem>();
-
-            foreach (DirectoryItem item in _selectedNodes)
-            {
-                if (item.Type == DirectoryItemType.BaseDirectory || item.Type == DirectoryItemType.Directory)
-                {
-                    directories.Add(item);
-                }
-                else
-                {
-                    files.Add(item);
-                }
-            }
-
-            // Ignore duplicated directories.
-            for (int i = 0; i < directories.Count; i++)
-            {
-                foreach (DirectoryItem item in directories)
-                {
-                    if (IsBaseOf(directories[i].FullName, item.FullName) && directories.IndexOf(directories[i]) != i)
-                    {
-                        directories.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
-
-            // Ignore duplicated files.
-            for (int i = 0; i < files.Count; i++)
-            {
-                foreach (DirectoryItem item in directories)
-                {
-                    if (IsBaseOf(files[i].FullName, item.FullName) && files.IndexOf(files[i]) != i)
-                    {
-                        files.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
-
-            // Get subitems.
-            foreach (DirectoryItem item in directories)
-            {
-                result.AddRange(FileManager.GetFiles(item.FullName, extensions));
-            }
-
-            foreach (DirectoryItem item in files)
-            {
-                result.Add(item.FullName);
-            }
-
-            return result;
+            Nodes = new ObservableCollection<DirectoryItem>(Workspace.Instance.FileExplorer.RefreshNodes(_nodes));
+            SelectedNodes = new ObservableCollection<DirectoryItem>();
         }
 
         #endregion

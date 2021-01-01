@@ -61,6 +61,10 @@ namespace MView
         private ReportViewModel _report = null;
         private ToolboxViewModel _toolbox = null;
 
+        // Status
+        private TaskStatusType _status = TaskStatusType.Idle;
+        private string _statusString = "Idle";
+
         // Commands
         private RelayCommand _openCommand = null;
         private DelegateCommand _saveCommand = null;
@@ -191,6 +195,32 @@ namespace MView
             }
         }
 
+        public TaskStatusType Status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string StatusString
+        {
+            get
+            {
+                return _statusString;
+            }
+            set
+            {
+                _statusString = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public ICommand OpenCommand
         {
             get
@@ -263,6 +293,12 @@ namespace MView
         #endregion
 
         #region ::Methods::
+
+        internal void SetStatus(TaskStatusType type, string text)
+        {
+            Status = type;
+            StatusString = text;
+        }
 
         internal FileViewModelBase OpenFile(string filePath)
         {
@@ -384,7 +420,6 @@ namespace MView
             }
         }
 
-
         #endregion
 
         #region ::Command Actions::
@@ -400,12 +435,20 @@ namespace MView
             if (dlg.ShowDialog().GetValueOrDefault())
             {
                 DirectoryInfo directory = Directory.GetParent(dlg.FileName);
-                
-                FileExplorer.Nodes = new ObservableCollection<DirectoryItem>();
-                FileExplorer.SelectedNodes = new ObservableCollection<DirectoryItem>();
-                FileExplorer.Nodes.Add(new DirectoryItem(directory, true, true));
+                DirectoryItem item = new DirectoryItem(directory, true, true);
 
-                Report.AddReportWithIdentifier($"A new project has been opened.({directory.FullName})", ReportType.Information);
+                if (!FileExplorer.Nodes.Contains(item))
+                {
+                    FileExplorer.Nodes = new ObservableCollection<DirectoryItem>();
+                    FileExplorer.SelectedNodes = new ObservableCollection<DirectoryItem>();
+                    FileExplorer.Nodes.Add(new DirectoryItem(directory, true, true));
+
+                    Report.AddReportWithIdentifier($"A new project has been opened.({directory.FullName})", ReportType.Information);
+                }
+                else
+                {
+                    Report.AddReportWithIdentifier($"The project is already open.({directory.FullName})", ReportType.Caution);
+                }
             }
             else
             {

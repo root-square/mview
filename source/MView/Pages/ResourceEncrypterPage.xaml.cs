@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MView.ViewModels.ToolPage;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace MView.Pages
         public ResourceEncrypterPage()
         {
             InitializeComponent();
+            this.DataContext = new ResourceEncrypterViewModel();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace MView.Entities
         {
             if (_toolPage != null)
             {
-                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. Request ToolHost execution.", ReportType.Information);
+                Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. Requests ToolHost execution.", ReportType.Information);
 
                 Window window = new ToolHostWindow(_toolPage);
                 window.ShowDialog();

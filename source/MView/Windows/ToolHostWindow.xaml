@@ -74,7 +74,8 @@
                         <RadioButton Margin="40 0 0 0" Content="{Binding SelectedItemsString}" IsChecked="{Binding IsUseCurrentFile, Converter={StaticResource InverseBooleanConverter}}"/>
                     </StackPanel>
 
-                    <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0" Content="New Folder"/>
+                    <Button Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 20 0" Content="Refresh"
+                            Command="{Binding RefreshCommand}"/>
                 </Grid>
             </Border>
         </Grid>

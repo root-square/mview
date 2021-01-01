@@ -23,13 +23,15 @@
            Height="700" Width="1000"
            Icon="/MView;component/Resources/mview_favicon_16.png"
            UseLayoutRounding="True" WindowState="Maximized">
-    <Window.Resources>
+    <hc:Window.Resources>
+        <converters:TaskStatusToStringConverter x:Key="TaskStatusToStringConverter"/>
+        <converters:TaskStatusToSolidColorBrushConverter x:Key="TaskStatusToSolidColorBrushConverter"/>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:TypeToImageConverter x:Key="TypeToImageConverter" />
         <runtime:Boolean x:Key="TRUE">True</runtime:Boolean>
         <runtime:Boolean x:Key="FALSE">False</runtime:Boolean>
-    </Window.Resources>
+    </hc:Window.Resources>
 
     <!--Menu Area-->
     <hc:Window.NonClientAreaContent>
@@ -132,6 +134,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="36"/>
             <RowDefinition/>
+            <RowDefinition Height="24"/>
         </Grid.RowDefinitions>
 
         <!--Toolbar-->
@@ -410,5 +413,12 @@
                 <docker:LayoutInitializer />
             </DockingManager.LayoutUpdateStrategy>
         </DockingManager>
+
+        <Grid Grid.Row="2" Background="{Binding Status, Converter={StaticResource TaskStatusToSolidColorBrushConverter}}">
+            <StackPanel Orientation="Horizontal" Margin="6 0 6 0">
+                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Kind="Console"/>
+                <TextBlock VerticalAlignment="Center" Margin="6 0 0 0" Text="{Binding StatusString}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </hc:Window>
