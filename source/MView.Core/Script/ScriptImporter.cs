@@ -13,6 +13,7 @@ namespace MView.Core.Script
     /// </summary>
     public class ScriptImporter
     {
+        // TODO : 예외처리하기.
         private List<JPathCollection> _jPathCollections = new List<JPathCollection>();
 
         /// <summary>

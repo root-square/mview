@@ -24,7 +24,6 @@
            Icon="/MView;component/Resources/mview_favicon_16.png"
            UseLayoutRounding="True" WindowState="Maximized">
     <hc:Window.Resources>
-        <converters:TaskStatusToStringConverter x:Key="TaskStatusToStringConverter"/>
         <converters:TaskStatusToSolidColorBrushConverter x:Key="TaskStatusToSolidColorBrushConverter"/>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

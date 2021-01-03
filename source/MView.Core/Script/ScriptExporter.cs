@@ -106,9 +106,9 @@ namespace MView.Core.Script
 
                 FileManager.WriteTextFile(savePath, result, Encoding.UTF8);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
     }

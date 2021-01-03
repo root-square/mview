@@ -198,6 +198,8 @@ namespace MView.ViewModels.Tool
             }
         }
 
+        // TODO : 파일 탐색, 색인 관련 기능들을 다른 유틸리티 클래스로 분리하기.
+
         public List<string> GetSelectedFiles(List<DirectoryItem> nodes, List<string> extensions = null)
         {
             // Get directories and files.
@@ -281,9 +283,9 @@ namespace MView.ViewModels.Tool
 
                 return fileList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 

@@ -71,9 +71,9 @@ namespace MView.Core.Cryptography
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -134,9 +134,9 @@ namespace MView.Core.Cryptography
                     fs.Write(file, 0, file.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -189,9 +189,9 @@ namespace MView.Core.Cryptography
                     fs.Write(file, 0, file.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -264,9 +264,9 @@ namespace MView.Core.Cryptography
                     fs.Write(contents, 0, contents.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -330,9 +330,9 @@ namespace MView.Core.Cryptography
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
     }
