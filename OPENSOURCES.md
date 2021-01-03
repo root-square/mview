@@ -1,12 +1,13 @@
 # MView
 ## Open-source software licenses
 
- * #### Dirkster99/AvalonDock @ MS-PL License
+ * #### Dirkster99/AvalonDock @ Mircoroft Public License(Ms-PL)
  * #### ghost1372/HandyControls @ MIT License
  * #### jawa-the-hutt/lz-string-csharp @ Unlicense
  * #### MahApps/MahApps.Metro.IconPacks @ MIT License
  * #### cmyksvoll/MultiSelectTreeView @ MIT License
  * #### JamesNK/Newtonsoft.Json @ MIT License
+ * #### naudio/NAudio @ Mircoroft Public License(Ms-PL)
  
 ### Microsoft Public License (Ms-PL)
 Microsoft Public License (Ms-PL)
