@@ -328,7 +328,7 @@ namespace MView.ViewModels.ToolPage
             }
 
             // Check files.
-            if (ToolHostViewModel.Instance.IsUseCurrentFile)
+            if (ToolHostWithExplorerViewModel.Instance.IsUseCurrentFile)
             {
                 if (Workspace.Instance.ActiveDocument != null)
                 {
@@ -342,7 +342,7 @@ namespace MView.ViewModels.ToolPage
                 }
             }
 
-            if (ToolHostViewModel.Instance.SelectedNodes.Count == 0)
+            if (ToolHostWithExplorerViewModel.Instance.SelectedNodes.Count == 0)
             {
                 MessageBox.Show("Select a file to proceed.", "MView", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -351,7 +351,7 @@ namespace MView.ViewModels.ToolPage
             var task = Task.Run(() =>
             {
                 // TODO : 백업 기능 추가, 확장자 변경 시키기.
-                if (ToolHostViewModel.Instance.IsUseCurrentFile)
+                if (ToolHostWithExplorerViewModel.Instance.IsUseCurrentFile)
                 {
                     Workspace.Instance.SetStatus(TaskStatusType.Working, "Encrypting resource...");
 
@@ -367,10 +367,10 @@ namespace MView.ViewModels.ToolPage
 
                     // Get selected files.
                     string[] extensions = new string[] { ".ogg", ".m4a", ".wav", ".png" };
-                    List<string> files = Workspace.Instance.FileExplorer.GetSelectedFiles(ToolHostViewModel.Instance.SelectedNodes.ToList(), extensions.ToList());
+                    List<string> files = Workspace.Instance.FileExplorer.GetSelectedFiles(ToolHostWithExplorerViewModel.Instance.SelectedNodes.ToList(), extensions.ToList());
 
                     // Make file dictionary.
-                    string baseDirectory = ToolHostViewModel.Instance.Nodes[0].FullName;
+                    string baseDirectory = ToolHostWithExplorerViewModel.Instance.Nodes[0].FullName;
                     Dictionary<string, string> fileDictionary = Workspace.Instance.FileExplorer.IndexFromList(files, baseDirectory, _saveDirectory);
                     Dictionary<string, string> modifiedDictionary = new Dictionary<string, string>();
                     

@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.IconPacks;
 using MView.Bases;
 using MView.Commands;
+using MView.Pages;
 using MView.Windows;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,11 @@ namespace MView.Entities
     {
         #region ::Fields::
 
-        private Page _toolPage;
+        private double _width = 0;
+        private double _height = 0;
+
+        private string _pageName;
+        private bool _isUseExplorer = true;
 
         private ICommand _itemDoubleClickCommand;
 
@@ -25,11 +30,15 @@ namespace MView.Entities
 
         #region ::Constructors::
 
-        public ToolboxItem(PackIconMaterialKind icon, string name, Page toolPage = null)
+        public ToolboxItem(PackIconMaterialKind icon, string name, string pageName, bool isUseExplorer = true, double width = 600, double height = 700)
         {
             Icon = icon;
             Name = name;
-            _toolPage = toolPage;
+
+            _width = width;
+            _height = height;
+            _pageName = pageName;
+            _isUseExplorer = isUseExplorer;
         }
 
         #endregion
@@ -66,12 +75,57 @@ namespace MView.Entities
 
         public void ItemDoubleClick()
         {
-            if (_toolPage != null)
+            if (_pageName != null)
             {
                 Workspace.Instance.Report.AddReportWithIdentifier("ToolboxItem is clicked. Requests ToolHost execution.", ReportType.Information);
 
-                Window window = new ToolHostWindow(_toolPage);
-                window.ShowDialog();
+                // Initialize tool page.
+                Page page;
+                switch (_pageName)
+                {
+                    case nameof(ResourceEncrypterPage):
+                        page = new ResourceEncrypterPage();
+                        break;
+                    case nameof(ResourceDecrypterPage):
+                        page = new ResourceDecrypterPage();
+                        break;
+                    case nameof(HashComparererPage):
+                        page = new HashComparererPage();
+                        break;
+                    case nameof(TextComparererPage):
+                        page = new TextComparererPage();
+                        break;
+                    case nameof(SaveDataManagerPage):
+                        page = new SaveDataManagerPage();
+                        break;
+                    case nameof(ScriptImporterPage):
+                        page = new ScriptImporterPage();
+                        break;
+                    case nameof(ScriptExporterPage):
+                        page = new ScriptExporterPage();
+                        break;
+                    case nameof(ScriptTranslatorPage):
+                        page = new ScriptTranslatorPage();
+                        break;
+                    case nameof(ScriptMigrationManagerPage):
+                        page = new ScriptMigrationManagerPage();
+                        break;
+                    default:
+                        page = new Page();
+                        break;
+                }
+
+                // Show tool page with tool host.
+                if (_isUseExplorer)
+                {
+                    Window window = new ToolHostWithExplorerWindow(page, _width, _height);
+                    window.ShowDialog();
+                }
+                else
+                {
+                    Window window = new ToolHostWindow(page, _width, _height);
+                    window.ShowDialog();
+                }
             }
             else
             {

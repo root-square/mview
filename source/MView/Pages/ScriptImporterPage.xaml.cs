@@ -1,5 +1,4 @@
-﻿using MView.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MView.Windows
+namespace MView.Pages
 {
     /// <summary>
-    /// ToolHostWindow.xaml에 대한 상호 작용 논리
+    /// ScriptImporterPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ToolHostWindow : HandyControl.Controls.Window
+    public partial class ScriptImporterPage : Page
     {
-        public ToolHostWindow(Page toolPage, double width = 300, double height = 300)
+        public ScriptImporterPage()
         {
-            this.DataContext = new ToolHostViewModel(toolPage, width, height);
             InitializeComponent();
         }
     }

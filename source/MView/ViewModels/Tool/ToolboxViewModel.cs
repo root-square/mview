@@ -65,21 +65,21 @@ namespace MView.ViewModels.Tool
         {
             // Initialize tools.
             ToolboxCategory cryptography = new ToolboxCategory("Cryptography", true);
-            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", new ResourceEncrypterPage()));
-            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", null));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", nameof(ResourceEncrypterPage), true, 700, 900));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", nameof(ResourceDecrypterPage), true));
 
             ToolboxCategory data = new ToolboxCategory("Data", true);
-            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FolderPoundOutline, "Hash Comparerer", null));
-            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.TimelineTextOutline, "Text Comparerer", null));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FolderPoundOutline, "Hash Comparerer", nameof(HashComparererPage), false));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.TimelineTextOutline, "Text Comparerer", nameof(TextComparererPage), false));
 
             ToolboxCategory saveData = new ToolboxCategory("Save Data", true);
-            saveData.SubItems.Add(new ToolboxItem(PackIconMaterialKind.ContentSaveEditOutline, "Save Data Manager", null));
+            saveData.SubItems.Add(new ToolboxItem(PackIconMaterialKind.ContentSaveEditOutline, "Save Data Manager", nameof(SaveDataManagerPage), true));
 
             ToolboxCategory script = new ToolboxCategory("Script", true);
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", null));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", null));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", null));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", null));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", nameof(ScriptImporterPage), true));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", nameof(ScriptExporterPage), true));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", nameof(ScriptTranslatorPage), true));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", nameof(ScriptMigrationManagerPage), false));
 
             _nodes.Add(cryptography);
             _nodes.Add(data);

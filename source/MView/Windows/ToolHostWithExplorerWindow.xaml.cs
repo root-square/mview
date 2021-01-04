@@ -1,9 +1,7 @@
 ﻿using MView.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,11 +16,12 @@ namespace MView.Windows
     /// <summary>
     /// ToolHostWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ToolHostWindow : HandyControl.Controls.Window
+    public partial class ToolHostWithExplorerWindow : HandyControl.Controls.Window
     {
-        public ToolHostWindow(Page toolPage, double width = 300, double height = 300)
+        public ToolHostWithExplorerWindow(Page toolPage, double width = 600, double height = 700)
         {
-            this.DataContext = new ToolHostViewModel(toolPage, width, height);
+            ToolHostWithExplorerViewModel.Instance = new ToolHostWithExplorerViewModel(toolPage, width, height);
+            this.DataContext = ToolHostWithExplorerViewModel.Instance;
             InitializeComponent();
         }
     }
