@@ -89,11 +89,11 @@ namespace MView.Entities
                     case nameof(ResourceDecrypterPage):
                         page = new ResourceDecrypterPage();
                         break;
-                    case nameof(HashComparererPage):
-                        page = new HashComparererPage();
+                    case nameof(HashComparerPage):
+                        page = new HashComparerPage();
                         break;
-                    case nameof(TextComparererPage):
-                        page = new TextComparererPage();
+                    case nameof(TextComparerPage):
+                        page = new TextComparerPage();
                         break;
                     case nameof(SaveDataManagerPage):
                         page = new SaveDataManagerPage();

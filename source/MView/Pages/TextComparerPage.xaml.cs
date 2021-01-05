@@ -18,9 +18,9 @@ namespace MView.Pages
     /// <summary>
     /// TextComparererPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class TextComparererPage : Page
+    public partial class TextComparerPage : Page
     {
-        public TextComparererPage()
+        public TextComparerPage()
         {
             InitializeComponent();
         }

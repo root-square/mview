@@ -10,7 +10,7 @@
            Background="{DynamicResource RegionBrush}"
            ResizeMode="CanResize"
            WindowStartupLocation="CenterScreen"
-           Height="{Binding Height}" Width="{Binding Width}" MinHeight="300" MinWidth="300">
+           Height="{Binding Height}" Width="{Binding Width}" MinHeight="100" MinWidth="100">
     <Grid>
         <Frame BorderThickness="0" NavigationUIVisibility="Hidden" Content="{Binding ToolPage}"/>
     </Grid>

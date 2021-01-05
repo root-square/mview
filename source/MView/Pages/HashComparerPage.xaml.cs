@@ -18,9 +18,9 @@ namespace MView.Pages
     /// <summary>
     /// HashComparererPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class HashComparererPage : Page
+    public partial class HashComparerPage : Page
     {
-        public HashComparererPage()
+        public HashComparerPage()
         {
             InitializeComponent();
         }

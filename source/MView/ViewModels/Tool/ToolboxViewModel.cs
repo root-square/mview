@@ -66,11 +66,11 @@ namespace MView.ViewModels.Tool
             // Initialize tools.
             ToolboxCategory cryptography = new ToolboxCategory("Cryptography", true);
             cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockCheckOutline, "Resource Encrypter", nameof(ResourceEncrypterPage), true, 700, 900));
-            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", nameof(ResourceDecrypterPage), true));
+            cryptography.SubItems.Add(new ToolboxItem(PackIconMaterialKind.LockOpenCheckOutline, "Resource Decrypter", nameof(ResourceDecrypterPage), true, 700, 900));
 
             ToolboxCategory data = new ToolboxCategory("Data", true);
-            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FolderPoundOutline, "Hash Comparerer", nameof(HashComparererPage), false));
-            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.TimelineTextOutline, "Text Comparerer", nameof(TextComparererPage), false));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FolderPoundOutline, "Hash Comparer", nameof(HashComparerPage), false, 550, 210));
+            data.SubItems.Add(new ToolboxItem(PackIconMaterialKind.TimelineTextOutline, "Text Comparer", nameof(TextComparerPage), false, 550, 210));
 
             ToolboxCategory saveData = new ToolboxCategory("Save Data", true);
             saveData.SubItems.Add(new ToolboxItem(PackIconMaterialKind.ContentSaveEditOutline, "Save Data Manager", nameof(SaveDataManagerPage), true));
