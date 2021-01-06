@@ -222,7 +222,7 @@
                                 </Grid>
 
                                 <Grid Grid.Row="1" Background="{DynamicResource RegionBrush}">
-                                    <hc:SearchBar Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
+                                    <hc:SearchBar Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:InfoElement.Necessary="True" hc:BorderElement.CornerRadius="0"/>
                                 </Grid>
 
                                 <!--TreeView Data Templates-->
@@ -286,7 +286,7 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <hc:SearchBar Grid.Row="0" Background="{DynamicResource RegionBrush}" Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:BorderElement.CornerRadius="0"/>
+                                <hc:SearchBar Grid.Row="0" Background="{DynamicResource RegionBrush}" Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:InfoElement.Necessary="True" hc:BorderElement.CornerRadius="0"/>
 
                                 <!--TreeView Data Templates-->
                                 <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"

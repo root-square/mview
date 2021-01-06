@@ -76,9 +76,9 @@ namespace MView.ViewModels.Tool
             saveData.SubItems.Add(new ToolboxItem(PackIconMaterialKind.ContentSaveEditOutline, "Save Data Manager", nameof(SaveDataManagerPage), true));
 
             ToolboxCategory script = new ToolboxCategory("Script", true);
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", nameof(ScriptImporterPage), true));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", nameof(ScriptExporterPage), true));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", nameof(ScriptTranslatorPage), true));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", nameof(ScriptImporterPage), true, 700, 840));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", nameof(ScriptExporterPage), true, 700, 840));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", nameof(ScriptTranslatorPage), true, 700, 860));
             script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", nameof(ScriptMigrationManagerPage), false));
 
             _nodes.Add(cryptography);
