@@ -317,6 +317,53 @@
                         </DataTemplate>
                     </docker:PanesTemplateSelector.ToolboxViewTemplate>
 
+                    <!--Audio File Style-->
+                    <docker:PanesTemplateSelector.AudioFileViewTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Contents Area-->
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+
+                                    </Grid>
+
+                                    <GridSplitter Grid.Row="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="True" Height="1"/>
+
+                                    <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 0">
+                                        <Grid Background="{DynamicResource SecondaryRegionBrush}">
+                                            <StackPanel Orientation="Vertical">
+                                                <Slider Background="White" VerticalAlignment="Center" Value="40" Maximum="100"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <!--Status Bar-->
+                                <StatusBar Grid.Row="1">
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
+                                    </StatusBarItem>
+
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+                                </StatusBar>
+                            </Grid>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.AudioFileViewTemplate>
+
                     <!--General File Style-->
                     <docker:PanesTemplateSelector.GeneralFileViewTemplate>
                         <DataTemplate>
@@ -326,12 +373,14 @@
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <!--Contents Area-->
                                 <TextBox Grid.Row="0" Background="Transparent" Margin="4" BorderThickness="0"
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
                                          VerticalScrollBarVisibility="Visible"
                                          AcceptsReturn="True" AcceptsTab="True"
                                          Text="{Binding TextContent, Mode=TwoWay}"/>
 
+                                <!--Status Bar-->
                                 <StatusBar Grid.Row="1">
                                     <StatusBarItem>
                                         <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
@@ -355,10 +404,12 @@
                                     <RowDefinition/>
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
-                                
+
+                                <!--Contents Area-->
                                 <hc:ImageViewer Grid.Row="0" Background="{Binding BackgroundBrush}" BorderThickness="0"
                                                 ImageSource="{Binding ImageFilePath}"/>
 
+                                <!--Status Bar-->
                                 <StatusBar Grid.Row="1">
                                     <StatusBarItem>
                                         <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
@@ -379,6 +430,63 @@
                             </Grid>
                         </DataTemplate>
                     </docker:PanesTemplateSelector.ImageFileViewTemplate>
+
+                    <!--Script File Style-->
+                    <docker:PanesTemplateSelector.ScriptFileViewTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Contents Area-->
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="150"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0">
+                                        <DataGrid HeadersVisibility="All" RowHeaderWidth="60" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn IsReadOnly="True" Width="80" CanUserResize="False" Header="Index"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+
+                                    <GridSplitter Grid.Row="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="True" Height="1"/>
+
+                                    <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 0">
+                                        <Grid Background="{DynamicResource SecondaryRegionBrush}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="30*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Margin="4" Text="Test1"/>
+                                            <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="1"/>
+                                            <TextBlock Grid.Column="2" Margin="4" Text="Test2"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <!--Status Bar-->
+                                <StatusBar Grid.Row="1">
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
+                                    </StatusBarItem>
+
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+                                </StatusBar>
+                            </Grid>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.ScriptFileViewTemplate>
                 </docker:PanesTemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
 

@@ -63,9 +63,16 @@ namespace MView.ViewModels.File
         {
             var task = Task.Run(() =>
             {
-                _textContent = FileManager.ReadTextFile(filePath, Encoding.UTF8);
+                try
+                {
+                    _textContent = FileManager.ReadTextFile(filePath, Encoding.UTF8);
 
-                _fileProperties = new FileProperties(filePath);
+                    _fileProperties = new FileProperties(filePath);
+                }
+                catch (Exception ex)
+                {
+                    Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
+                }
             });
 
             await task;
