@@ -46,7 +46,7 @@
                         </Grid>
 
                         <!--Icon-->
-                        <iconPacks:PackIconMaterial Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource PrimaryTextBrush}" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".68" Kind="SwapHorizontal"/>
+                        <iconPacks:PackIconMaterial Grid.Column="1" Grid.Row="1" Foreground="{DynamicResource PrimaryTextBrush}" Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity=".68" Kind="ArrowRight"/>
 
                         <!--Target 2 Selector-->
                         <TextBlock Grid.Column="2" Grid.Row="0" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="8 0 0 0" Text="To"/>

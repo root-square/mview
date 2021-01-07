@@ -79,7 +79,7 @@ namespace MView.ViewModels.Tool
             script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileImportOutline, "Script Importer", nameof(ScriptImporterPage), true, 700, 840));
             script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.FileExportOutline, "Script Exporter", nameof(ScriptExporterPage), true, 700, 840));
             script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.Translate, "Script Translator", nameof(ScriptTranslatorPage), true, 700, 860));
-            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", nameof(ScriptMigrationManagerPage), false));
+            script.SubItems.Add(new ToolboxItem(PackIconMaterialKind.SwapHorizontalVariant, "Script Migration Manager", nameof(ScriptMigrationManagerPage), false, 700, 320));
 
             _nodes.Add(cryptography);
             _nodes.Add(data);
