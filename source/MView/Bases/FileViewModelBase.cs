@@ -135,7 +135,7 @@ namespace MView.Bases
 			return true;
 		}
 
-		private void OnClose()
+		protected virtual void OnClose()
 		{
 			Workspace.Instance.CloseFile(this);
 		}
@@ -145,7 +145,7 @@ namespace MView.Bases
 			return IsDirty;
 		}
 
-		private void OnSave(object parameter)
+		protected virtual void OnSave(object parameter)
 		{
 			Workspace.Instance.SaveFile(this, false);
 		}
@@ -155,7 +155,7 @@ namespace MView.Bases
 			return IsDirty;
 		}
 
-		private void OnSaveAs(object parameter)
+		protected virtual void OnSaveAs(object parameter)
 		{
 			Workspace.Instance.SaveFile(this, true);
 		}

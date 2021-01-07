@@ -36,6 +36,7 @@ namespace MView.Utilities.Audio
             {
                 var inputStream = new AudioFileReader(fileName);
                 fileStream = inputStream;
+
                 var aggregator = new AudioSampleAggregator(inputStream);
                 aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;
                 aggregator.PerformFFT = true;
@@ -82,6 +83,14 @@ namespace MView.Utilities.Audio
             if (fileStream != null)
             {
                 fileStream.Position = 0;
+            }
+        }
+
+        public void SetVolume(float volume)
+        {
+            if (playbackDevice != null)
+            {
+                playbackDevice.Volume = volume;
             }
         }
 

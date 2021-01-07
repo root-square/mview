@@ -329,25 +329,45 @@
                                 <!--Contents Area-->
                                 <Grid Grid.Row="0">
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
                                         <RowDefinition/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="60"/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0">
+                                    <Border Grid.Row="0" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 0 0 1">
+                                        <Grid Background="{DynamicResource RegionBrush}">
+                                            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" Text="Audio Visualizer"/>
+                                                <ComboBox VerticalAlignment="Center" Width="300" Margin="8 0 0 0" ItemsSource="{Binding Visualizations}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedVisualization, Mode=TwoWay}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
 
-                                    </Grid>
-
-                                    <GridSplitter Grid.Row="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="True" Height="1"/>
+                                    <ContentPresenter Grid.Row="1" Content="{Binding Visualization}"/>
 
                                     <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 0">
-                                        <Grid Background="{DynamicResource SecondaryRegionBrush}">
-                                            <StackPanel Orientation="Vertical">
-                                                <Slider Background="White" VerticalAlignment="Center" Value="40" Maximum="100"/>
+                                        <Grid Background="{DynamicResource RegionBrush}">
+                                            <StackPanel Orientation="Horizontal" Margin="8">
+                                                <Button Command="{Binding PlayCommand}" Width="36" Height="36" ToolTip="Play">
+                                                    <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="Play"/>
+                                                </Button>
+                                                
+                                                <Button Command="{Binding PauseCommand}" Width="36" Height="36" Margin="6 0 0 0" ToolTip="Pause">
+                                                    <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="Pause"/>
+                                                </Button>
+
+                                                <Button Command="{Binding StopCommand}" Width="36" Height="36" Margin="6 0 0 0" ToolTip="Stop">
+                                                    <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="Stop"/>
+                                                </Button>
+
+                                                <Slider VerticalAlignment="Center" Margin="8 0 0 0" Width="200" Value="{Binding Volume}" Minimum="0.0" Maximum="1.0" LargeChange="0.1" SmallChange="0.01"/>
+
+                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" Text="{Binding VolumeString}"/>
                                             </StackPanel>
                                         </Grid>
                                     </Border>
                                 </Grid>
+                                
                                 <!--Status Bar-->
                                 <StatusBar Grid.Row="1">
                                     <StatusBarItem>
