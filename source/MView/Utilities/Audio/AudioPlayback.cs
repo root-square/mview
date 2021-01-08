@@ -1,6 +1,8 @@
-﻿using NAudio.Wave;
+﻿using NAudio.Vorbis;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +18,12 @@ namespace MView.Utilities.Audio
 
         public event EventHandler<MaxSampleEventArgs> MaximumCalculated;
 
-        public void Load(string fileName)
+        public void Load(string fileName, bool isVorbis = false)
         {
             Stop();
             CloseFile();
             EnsureDeviceCreated();
-            OpenFile(fileName);
+            OpenFile(fileName, isVorbis);
         }
 
         private void CloseFile()
@@ -30,19 +32,34 @@ namespace MView.Utilities.Audio
             fileStream = null;
         }
 
-        private void OpenFile(string fileName)
+        private void OpenFile(string fileName, bool isVorbis = false)
         {
             try
             {
-                var inputStream = new AudioFileReader(fileName);
-                fileStream = inputStream;
+                if (isVorbis)
+                {
+                    var inputStream = new VorbisWaveReader(fileName);
+                    fileStream = inputStream;
 
-                var aggregator = new AudioSampleAggregator(inputStream);
-                aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;
-                aggregator.PerformFFT = true;
-                aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
-                aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
-                playbackDevice.Init(aggregator);
+                    var aggregator = new AudioSampleAggregator(inputStream);
+                    aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;
+                    aggregator.PerformFFT = true;
+                    aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
+                    aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
+                    playbackDevice.Init(aggregator);
+                }
+                else
+                {
+                    var inputStream = new AudioFileReader(fileName);
+                    fileStream = inputStream;
+
+                    var aggregator = new AudioSampleAggregator(inputStream);
+                    aggregator.NotificationCount = inputStream.WaveFormat.SampleRate / 100;
+                    aggregator.PerformFFT = true;
+                    aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
+                    aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
+                    playbackDevice.Init(aggregator);
+                }
             }
             catch (Exception)
             {

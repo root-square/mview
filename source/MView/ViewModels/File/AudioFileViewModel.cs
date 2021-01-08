@@ -1,11 +1,13 @@
 ﻿using MView.Bases;
 using MView.Commands;
 using MView.Core;
+using MView.Core.Cryptography;
 using MView.Entities;
 using MView.Utilities;
 using MView.Utilities.Audio;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,27 +137,70 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
+            string loadedFilePath = await FileLoadAsync(filePath);
+
+            if (loadedFilePath == null)
+            {
+                return;
+            }
+
+            // Initialize AudioPlayback and Visualizations.
             _visualizations = ReflectionHelper.CreateAllInstancesOf<IVisualizationPlugin>().ToList();
             _selectedVisualization = _visualizations.FirstOrDefault();
 
             _audioPlayback = new AudioPlayback();
             _audioPlayback.MaximumCalculated += OnAudioGraphMaximumCalculated;
             _audioPlayback.FftCalculated += OnAudioGraphFftCalculated;
-            _audioPlayback.Load(filePath);
 
-            var task = Task.Run(() =>
+            string extension = Path.GetExtension(filePath).ToLower();
+
+            if (extension == ".ogg" || extension == ".rpgmvo" || extension == ".ogg_")
             {
-                try
-                {
-                    _fileProperties = new FileProperties(filePath);
-                }
-                catch (Exception ex)
-                {
-                    Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
-                }
-            });
+                _audioPlayback.Load(loadedFilePath, true); // Load audio file using Ogg Vorbis wave reader.
+            }
+            else
+            {
+                _audioPlayback.Load(loadedFilePath);
+            }
 
-            await task;
+            _fileProperties = new FileProperties(filePath);
+        }
+
+        private async Task<string> FileLoadAsync(string filePath)
+        {
+            try
+            {
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (extension == ".rpgmvo" || extension == ".ogg_" || extension == ".rpgmvm" || extension == ".m4a_" || extension == ".rpgmvw" || extension == ".wav_")
+                {
+                    var verifyTask = new Task<bool>(() => CryptographyProvider.VerifyFakeHeader(filePath));
+                    verifyTask.Start();
+                    await verifyTask;
+
+                    if (!verifyTask.Result)
+                    {
+                        throw new InvalidDataException("An invalid *.rpgmvo(*.ogg_), *.rpgmvm(*.m4a_), *.rpgmvw(*.wav_) file was entered.");
+                    }
+
+                    string tempFilePath = Path.GetTempFileName();
+
+                    var restoreTask = new Task(() => CryptographyProvider.RestoreHeader(filePath, tempFilePath));
+                    restoreTask.Start();
+                    await restoreTask;
+
+                    return tempFilePath;
+                }
+                else
+                {
+                    return filePath;
+                }
+            }
+            catch (Exception ex)
+            {
+                Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
+                return null;
+            }
         }
 
         private void Play()

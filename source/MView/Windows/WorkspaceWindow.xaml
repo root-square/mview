@@ -543,8 +543,8 @@
 
         <Grid Grid.Row="2" Background="{Binding Status, Converter={StaticResource TaskStatusToSolidColorBrushConverter}}">
             <StackPanel Orientation="Horizontal" Margin="6 0 6 0">
-                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Kind="Console"/>
-                <TextBlock VerticalAlignment="Center" Margin="6 0 0 0" Text="{Binding StatusString}"/>
+                <iconPacks:PackIconMaterial Foreground="White" Width="12" Height="12" VerticalAlignment="Center" Kind="Console"/>
+                <TextBlock Foreground="White" VerticalAlignment="Center" Margin="6 0 0 0" Text="{Binding StatusString}"/>
             </StackPanel>
         </Grid>
     </Grid>

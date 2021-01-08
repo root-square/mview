@@ -6,7 +6,21 @@
              xmlns:local="clr-namespace:MView.Utilities.Audio.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas Background="Black">
-        <Polyline x:Name="polyline" Stroke="Yellow" StrokeThickness="1"/>
+    <Canvas>
+        <Canvas.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0, 0, 10, 10" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0,0,50,50"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="{DynamicResource BorderBrush}" Thickness="1"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Canvas.Background>
+        <Polyline x:Name="polyline" Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="1"/>
     </Canvas>
 </UserControl>

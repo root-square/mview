@@ -34,7 +34,6 @@ namespace MView.Utilities.Audio.Controls
             InitializeComponent();
             waveForm.Stroke = Foreground;
             waveForm.StrokeThickness = 1;
-            waveForm.Fill = new SolidColorBrush(Colors.Bisque);
             mainCanvas.Children.Add(waveForm);
         }
 
