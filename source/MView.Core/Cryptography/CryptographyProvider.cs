@@ -292,112 +292,105 @@ namespace MView.Core.Cryptography
         /// <param name="savePath">The path where the completed file will be saved.</param>
         public static void RestoreOggHeader(string filePath, string savePath)
         {
-            if (!File.Exists(filePath))
+            try
             {
-                throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
-            }
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
+                }
 
-            if (!Directory.Exists(Path.GetDirectoryName(savePath)))
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(savePath));
-            }
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
 
-            // Checks extension.
-            string extension = Path.GetExtension(filePath).ToLower();
+                // Checks extension.
+                string extension = Path.GetExtension(filePath).ToLower();
 
-            if (extension != ".rpgmvo" && extension != ".ogg_")
-            {
-                throw new NotSupportedException("Incompatible file format used.");
-            }
+                if (extension != ".rpgmvo" && extension != ".ogg_")
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
+                }
 
-            byte[] file = File.ReadAllBytes(filePath);
+                byte[] file = File.ReadAllBytes(filePath);
 
-            int offset = 0;
-            offset += 16; // Skip RPG MV Header.
+                int offset = 0;
+                offset += 16; // Skip RPG MV Header.
 
-            var header = (Signature: "", SerialNumber: 0, TotalSegments: 1);
+                var header = (Signature: "", SerialNumber: 0, TotalSegments: 1);
 
-            // OGG Header.
-            offset += 4;
-            offset += 22;
-            header.TotalSegments = file.ReadByte(offset);
-
-            offset += 2;
-            offset += header.TotalSegments;
-
-            // OGG Vorbis Header.
-            offset += 27;
-            offset += 1;
-            offset += header.TotalSegments;
-
-            bool isLittleEndian = BitConverter.IsLittleEndian;
-
-            // OGG Data Header.
-            byte[] signatureBytes = file.ReadByte(offset, 4);
-            header.Signature = Encoding.ASCII.GetString(signatureBytes);
-
-            if (header.Signature == "OggS")
-            {
+                // OGG Header.
                 offset += 4;
+                offset += 22;
+                header.TotalSegments = file.ReadByte(offset);
+
+                offset += 2;
+                offset += header.TotalSegments;
+
+                // OGG Vorbis Header.
+                offset += 27;
+                offset += 1;
+                offset += header.TotalSegments;
+
+                bool isLittleEndian = BitConverter.IsLittleEndian;
+
+                // OGG Data Header.
+                byte[] signatureBytes = file.ReadByte(offset, 4);
+                header.Signature = Encoding.ASCII.GetString(signatureBytes);
+
+                if (header.Signature == "OggS")
+                {
+                    offset += 4;
+                }
+                else
+                {
+                    throw new InvalidDataException("Failed to parse the OGG Header.");
+                }
+
+                // Serial number.
+                offset += 2;
+                offset += 8;
+
+                byte[] serialNumber = isLittleEndian ? file.ReadUInt32LE(offset) : file.ReadUInt32BE(offset);
+
+                // Sort serial number to LE or BE.
+                if (isLittleEndian)
+                {
+                    Array.Reverse(serialNumber);
+                }
+                else
+                {
+                    Array.Sort(serialNumber);
+                }
+
+                // Convert string array to byte array.
+                byte[] oggSignature = new byte[14];
+
+                for (int index = 0; index < oggSignature.Length; index++)
+                {
+                    oggSignature[index] = HEADER_OGG[index].HexToByte();
+                }
+
+                // Concat header.
+                byte[] oggHeader = new byte[oggSignature.Length + serialNumber.Length];
+                Array.Copy(oggSignature, 0, oggHeader, 0, oggSignature.Length);
+                Array.Copy(serialNumber, 0, oggHeader, oggSignature.Length, serialNumber.Length);
+
+                // Loads encrypted file and skips RPG Maker MV encryption header area.
+                int contentsOffset = serialNumber.Length - 2;
+
+                byte[] contents = file.Skip(32 + contentsOffset).ToArray();
+
+                // Save decrypted file.
+                using (FileStream fs = new FileStream(savePath, FileMode.Create))
+                {
+                    fs.Write(oggHeader, 0, oggHeader.Length);
+                    fs.Write(contents, 0, contents.Length);
+                }
             }
-            else
+            catch (Exception)
             {
-                throw new InvalidDataException("Failed to parse the OGG Header.");
-            }
-
-
-            // Serial number.
-            offset += 2;
-            offset += 8;
-
-            byte[] serialNumberTemp = isLittleEndian ? file.ReadUInt32LE(offset) : file.ReadUInt32BE(offset);
-
-            foreach (byte bt in serialNumberTemp)
-            {
-                Console.WriteLine(bt);
-            }
-
-            MatchCollection matches = Regex.Matches(Encoding.ASCII.GetString(serialNumberTemp), "/.{2}/g");
-            List<string> matchesList = (from Match m in matches select m.Value).ToList();
-
-            byte[] serialNumber = new byte[matches.Count];
-
-            for (int i = 0; i < matches.Count; i++)
-            {
-                serialNumber[i] = matchesList[i].HexToByte();
-            }
-
-            // Sort serial number to LE or BE.
-            if (isLittleEndian)
-            {
-                Array.Reverse(serialNumber);
-            }
-            else
-            {
-                Array.Sort(serialNumber);
-            }
-
-            // Convert string array to byte array.
-            byte[] oggSignature = new byte[14];
-
-            for (int index = 0; index < oggSignature.Length; index++)
-            {
-                oggSignature[index] = HEADER_OGG[index].HexToByte();
-            }
-
-            // Concat header.
-            byte[] oggHeader = new byte[oggSignature.Length + serialNumber.Length];
-            Array.Copy(oggSignature, 0, oggHeader, 0, oggSignature.Length);
-            Array.Copy(serialNumber, 0, oggHeader, oggSignature.Length, serialNumber.Length);
-
-            // Loads encrypted file and skips RPG Maker MV encryption header area.
-            byte[] contents = file.Skip(oggHeader.Length).ToArray();
-
-            // Save decrypted file.
-            using (FileStream fs = new FileStream(savePath, FileMode.Create))
-            {
-                fs.Write(oggHeader, 0, oggHeader.Length);
-                fs.Write(contents, 0, contents.Length);
+                throw;
             }
         }
 
