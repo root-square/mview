@@ -78,7 +78,7 @@ namespace MView.ViewModels.File
         {
             get
             {
-                return _selectedVisualization.Content;
+                return _selectedVisualization?.Content;
             }
         }
 
@@ -91,7 +91,7 @@ namespace MView.ViewModels.File
             set
             {
                 _volume = value;
-                _audioPlayback.SetVolume(value);
+                _audioPlayback?.SetVolume(value);
                 RaisePropertyChanged();
                 RaisePropertyChanged("VolumeString");
             }
@@ -114,7 +114,7 @@ namespace MView.ViewModels.File
             set
             {
                 _trackBarValue = value;
-                _audioPlayback.SetPosition(value);
+                _audioPlayback?.SetPosition(value);
                 RaisePropertyChanged();
             }
         }
@@ -181,44 +181,51 @@ namespace MView.ViewModels.File
             // Load file.
             string loadedFilePath = await FileLoadAsync(filePath);
 
-            if (loadedFilePath == null)
+            try
             {
-                OnClose();
-                return;
-            }
-            else
-            {
-                // Initialize AudioPlayback and Visualizations.
-                _visualizations = ReflectionHelper.CreateAllInstancesOf<IVisualizationPlugin>().ToList();
-                _selectedVisualization = _visualizations.FirstOrDefault();
-
-                _audioPlayback = new AudioPlayback();
-                _audioPlayback.MaximumCalculated += OnAudioGraphMaximumCalculated;
-                _audioPlayback.FftCalculated += OnAudioGraphFftCalculated;
-
-                string extension = Path.GetExtension(filePath).ToLower();
-
-                if (extension == ".ogg" || extension == ".rpgmvo" || extension == ".ogg_")
+                if (loadedFilePath == null)
                 {
-                    _audioPlayback.Load(loadedFilePath, true); // Load audio file using Ogg Vorbis wave reader.
+                    OnClose();
+                    return;
                 }
                 else
                 {
-                    _audioPlayback.Load(loadedFilePath);
+                    // Initialize AudioPlayback and Visualizations.
+                    _visualizations = ReflectionHelper.CreateAllInstancesOf<IVisualizationPlugin>().ToList();
+                    _selectedVisualization = _visualizations.FirstOrDefault();
+
+                    _audioPlayback = new AudioPlayback();
+                    _audioPlayback.MaximumCalculated += OnAudioGraphMaximumCalculated;
+                    _audioPlayback.FftCalculated += OnAudioGraphFftCalculated;
+
+                    string extension = Path.GetExtension(filePath).ToLower();
+
+                    if (extension == ".ogg" || extension == ".rpgmvo" || extension == ".ogg_")
+                    {
+                        _audioPlayback.Load(loadedFilePath, true); // Load audio file using Ogg Vorbis wave reader.
+                    }
+                    else
+                    {
+                        _audioPlayback.Load(loadedFilePath);
+                    }
+
+                    // Initialize track bar.
+                    _trackBarTimer = new Timer();
+                    _trackBarTimer.Interval = 500;
+                    _trackBarTimer.Elapsed += new ElapsedEventHandler(OnTrackBarTimerElapsed);
+
+                    _trackBarMaximumValue = _audioPlayback.GetTotalTime();
+
+                    TimeSpan current = TimeSpan.Zero;
+                    _trackBarString = $"{current.ToString(@"hh\:mm\:ss")} / {_trackBarMaximumValue.ToString(@"hh\:mm\:ss")}";
+
+                    // Load file properties.
+                    _fileProperties = new FileProperties(filePath);
                 }
-
-                // Initialize track bar.
-                _trackBarTimer = new Timer();
-                _trackBarTimer.Interval = 500;
-                _trackBarTimer.Elapsed += new ElapsedEventHandler(OnTrackBarTimerElapsed);
-
-                _trackBarMaximumValue = _audioPlayback.GetTotalTime();
-
-                TimeSpan current = TimeSpan.Zero;
-                _trackBarString = $"{current.ToString(@"hh\:mm\:ss")} / {_trackBarMaximumValue.ToString(@"hh\:mm\:ss")}";
-
-                // Load file properties.
-                _fileProperties = new FileProperties(filePath);
+            }
+            catch (Exception ex)
+            {
+                Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
             }
         }
 
@@ -228,7 +235,8 @@ namespace MView.ViewModels.File
             {
                 string extension = Path.GetExtension(filePath).ToLower();
 
-                if (extension == ".rpgmvm" || extension == ".m4a_" || extension == ".rpgmvw" || extension == ".wav_")
+                // If the file is encrypted.
+                if (extension == ".rpgmvo" || extension == ".ogg_" || extension == ".rpgmvm" || extension == ".m4a_" || extension == ".rpgmvw" || extension == ".wav_")
                 {
                     var verifyTask = new Task<bool>(() => CryptographyProvider.VerifyFakeHeader(filePath));
                     verifyTask.Start();
@@ -239,17 +247,25 @@ namespace MView.ViewModels.File
                         throw new InvalidDataException("An invalid *.rpgmvo(*.ogg_), *.rpgmvm(*.m4a_), *.rpgmvw(*.wav_) file was entered.");
                     }
 
+                    // Restore the file.
                     string tempFilePath = Path.GetTempFileName();
 
-                    var restoreTask = new Task(() => CryptographyProvider.RestoreHeader(filePath, tempFilePath));
-                    restoreTask.Start();
-                    await restoreTask;
+                    if (extension == ".rpgmvo" || extension == ".ogg_")
+                    {
+                        var restoreTask = new Task(() => CryptographyProvider.RestoreOggHeader(filePath, tempFilePath));
+                        restoreTask.Start();
+                        await restoreTask;
 
-                    return tempFilePath;
-                }
-                else if (extension == ".rpgmvo" || extension == ".ogg_")
-                {
-                    throw new NotSupportedException("Incompatible file format used.");
+                        return tempFilePath;
+                    }
+                    else
+                    {
+                        var restoreTask = new Task(() => CryptographyProvider.RestoreHeader(filePath, tempFilePath));
+                        restoreTask.Start();
+                        await restoreTask;
+
+                        return tempFilePath;
+                    }
                 }
                 else
                 {
