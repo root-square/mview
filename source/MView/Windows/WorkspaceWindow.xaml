@@ -347,7 +347,25 @@
 
                                     <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 0">
                                         <Grid Background="{DynamicResource RegionBrush}">
-                                            <StackPanel Orientation="Horizontal" Margin="8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="290"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <!--Track Bar-->
+                                            <Grid Grid.Column="0" Margin="20 0 0 0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="8 0 0 0" Text="{Binding TrackBarString}"/>
+                                                <Slider Grid.Column="1" VerticalAlignment="Center" Margin="8 0 0 0" Value="{Binding TrackBarValue, Mode=TwoWay}" Minimum="0.0" Maximum="{Binding TrackBarMaximumValue}" LargeChange="5.0" SmallChange="1.0"/>
+                                            </Grid>
+                                            
+                                            <!--Controllers-->
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0">
+                                                <!--PlayState Changers-->
                                                 <Button Command="{Binding PlayCommand}" Width="36" Height="36" ToolTip="Play">
                                                     <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="Play"/>
                                                 </Button>
@@ -360,7 +378,8 @@
                                                     <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="Stop"/>
                                                 </Button>
 
-                                                <Slider VerticalAlignment="Center" Margin="8 0 0 0" Width="200" Value="{Binding Volume}" Minimum="0.0" Maximum="1.0" LargeChange="0.1" SmallChange="0.01"/>
+                                                <!--Volume Controller-->
+                                                <Slider VerticalAlignment="Center" Margin="8 0 0 0" Width="100" Value="{Binding Volume}" Minimum="0.0" Maximum="1.0" LargeChange="0.1" SmallChange="0.01"/>
 
                                                 <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" Text="{Binding VolumeString}"/>
                                             </StackPanel>

@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace MView.Core.Cryptography
 {
@@ -26,6 +27,11 @@ namespace MView.Core.Cryptography
         /// RPG MV encrypted resource file header.
         /// </summary>
         private static readonly string[] HEADER_MV = new string[] { "52", "50", "47", "4D", "56", "00", "00", "00", "00", "03", "01", "00", "00", "00", "00", "00" };
+
+        /// <summary>
+        /// OGG Vorbis file header.
+        /// </summary>
+        private static readonly string[] HEADER_OGG = new string[] { "4F", "67", "67", "53", "00", "02", "00", "00", "00", "00", "00", "00", "00", "00" };
 
         /// <summary>
         /// MPEG-4 Part.14 audio file header.
@@ -263,6 +269,48 @@ namespace MView.Core.Cryptography
                     fs.Write(header, 0, header.Length);
                     fs.Write(contents, 0, contents.Length);
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        // Encrypted File Structure : RPG Maker MV Header(16Byte) -> Original Header that encrypted by XOR operation(16Byte) -> File Contents
+
+        // Ogg File Structure : Signature(4Byte)[OggS] -> Version(1Byte)[0x00] -> Flags(1Byte)[0x02, Beginning Of Stream] -> GranulePosition(8Byte)[00000000]
+        // -> SerialNumber(4Byte)[Random] -> Checksum(4Byte) -> TotalSegments(1Byte)
+
+        // Restore Procedure : Remove 32Byte on the top -> Insert a 14Byte header from the original file at the top -> Rest 2Bytes are filled randomly
+
+        /// <summary>
+        /// Recover the header of the files: *.rpgmvo.
+        /// </summary>
+        /// <param name="filePath">The path to the file to restore the header.</param>
+        /// <param name="savePath">The path where the completed file will be saved.</param>
+        public static void RestoreOggHeader(string filePath, string savePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
+                }
+
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
+
+                // Checks extension.
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (extension != ".rpgmvo" && extension != ".ogg_")
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
+                }
+
+                byte[] file = File.ReadAllBytes(filePath);
             }
             catch (Exception)
             {

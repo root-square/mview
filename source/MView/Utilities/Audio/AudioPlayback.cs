@@ -11,7 +11,7 @@ namespace MView.Utilities.Audio
 {
     public class AudioPlayback : IDisposable
     {
-        private IWavePlayer playbackDevice;
+        private WaveOut playbackDevice;
         private WaveStream fileStream;
 
         public event EventHandler<FftEventArgs> FftCalculated;
@@ -100,6 +100,38 @@ namespace MView.Utilities.Audio
             if (fileStream != null)
             {
                 fileStream.Position = 0;
+            }
+        }
+
+        public double GetCurrentPosition()
+        {
+            if (fileStream != null)
+            {
+                return fileStream.CurrentTime.TotalSeconds;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public void SetPosition(double seconds)
+        {
+            if (playbackDevice != null)
+            {
+                fileStream.CurrentTime = TimeSpan.FromSeconds(seconds);
+            }
+        }
+
+        public TimeSpan GetTotalTime()
+        {
+            if (playbackDevice != null)
+            {
+                return fileStream.TotalTime;
+            }
+            else
+            {
+                return TimeSpan.Zero;
             }
         }
 

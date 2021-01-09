@@ -11,7 +11,7 @@ namespace MView.Utilities.Audio
     {
         private readonly SpectrumAnalyzerControl spectrumAnalyser = new SpectrumAnalyzerControl();
 
-        public string Name => "Spectrum Analyser";
+        public string Name => "Spectrum Analyzer";
 
         public object Content => spectrumAnalyser;
 

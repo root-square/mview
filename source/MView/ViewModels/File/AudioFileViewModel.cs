@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 
 namespace MView.ViewModels.File
@@ -23,6 +24,11 @@ namespace MView.ViewModels.File
         private List<IVisualizationPlugin> _visualizations;
         private IVisualizationPlugin _selectedVisualization;
         private float _volume = 1.0f;
+
+        private Timer _trackBarTimer;
+        private double _trackBarValue = 0.0f;
+        private TimeSpan _trackBarMaximumValue = TimeSpan.Zero;
+        private string _trackBarString = "00:00:00 / 00:00:00";
 
         private FileProperties _fileProperties = new FileProperties();
 
@@ -99,6 +105,41 @@ namespace MView.ViewModels.File
             }
         }
 
+        public double TrackBarValue
+        {
+            get
+            {
+                return _trackBarValue;
+            }
+            set
+            {
+                _trackBarValue = value;
+                _audioPlayback.SetPosition(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        public double TrackBarMaximumValue
+        {
+            get
+            {
+                return _trackBarMaximumValue.TotalSeconds;
+            }
+        }
+
+        public string TrackBarString
+        {
+            get
+            {
+                return _trackBarString;
+            }
+            set
+            {
+                _trackBarString = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public string FileSizeString
         {
             get
@@ -137,33 +178,48 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
+            // Load file.
             string loadedFilePath = await FileLoadAsync(filePath);
 
             if (loadedFilePath == null)
             {
+                OnClose();
                 return;
-            }
-
-            // Initialize AudioPlayback and Visualizations.
-            _visualizations = ReflectionHelper.CreateAllInstancesOf<IVisualizationPlugin>().ToList();
-            _selectedVisualization = _visualizations.FirstOrDefault();
-
-            _audioPlayback = new AudioPlayback();
-            _audioPlayback.MaximumCalculated += OnAudioGraphMaximumCalculated;
-            _audioPlayback.FftCalculated += OnAudioGraphFftCalculated;
-
-            string extension = Path.GetExtension(filePath).ToLower();
-
-            if (extension == ".ogg" || extension == ".rpgmvo" || extension == ".ogg_")
-            {
-                _audioPlayback.Load(loadedFilePath, true); // Load audio file using Ogg Vorbis wave reader.
             }
             else
             {
-                _audioPlayback.Load(loadedFilePath);
-            }
+                // Initialize AudioPlayback and Visualizations.
+                _visualizations = ReflectionHelper.CreateAllInstancesOf<IVisualizationPlugin>().ToList();
+                _selectedVisualization = _visualizations.FirstOrDefault();
 
-            _fileProperties = new FileProperties(filePath);
+                _audioPlayback = new AudioPlayback();
+                _audioPlayback.MaximumCalculated += OnAudioGraphMaximumCalculated;
+                _audioPlayback.FftCalculated += OnAudioGraphFftCalculated;
+
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (extension == ".ogg" || extension == ".rpgmvo" || extension == ".ogg_")
+                {
+                    _audioPlayback.Load(loadedFilePath, true); // Load audio file using Ogg Vorbis wave reader.
+                }
+                else
+                {
+                    _audioPlayback.Load(loadedFilePath);
+                }
+
+                // Initialize track bar.
+                _trackBarTimer = new Timer();
+                _trackBarTimer.Interval = 500;
+                _trackBarTimer.Elapsed += new ElapsedEventHandler(OnTrackBarTimerElapsed);
+
+                _trackBarMaximumValue = _audioPlayback.GetTotalTime();
+
+                TimeSpan current = TimeSpan.Zero;
+                _trackBarString = $"{current.ToString(@"hh\:mm\:ss")} / {_trackBarMaximumValue.ToString(@"hh\:mm\:ss")}";
+
+                // Load file properties.
+                _fileProperties = new FileProperties(filePath);
+            }
         }
 
         private async Task<string> FileLoadAsync(string filePath)
@@ -172,7 +228,7 @@ namespace MView.ViewModels.File
             {
                 string extension = Path.GetExtension(filePath).ToLower();
 
-                if (extension == ".rpgmvo" || extension == ".ogg_" || extension == ".rpgmvm" || extension == ".m4a_" || extension == ".rpgmvw" || extension == ".wav_")
+                if (extension == ".rpgmvm" || extension == ".m4a_" || extension == ".rpgmvw" || extension == ".wav_")
                 {
                     var verifyTask = new Task<bool>(() => CryptographyProvider.VerifyFakeHeader(filePath));
                     verifyTask.Start();
@@ -190,6 +246,10 @@ namespace MView.ViewModels.File
                     await restoreTask;
 
                     return tempFilePath;
+                }
+                else if (extension == ".rpgmvo" || extension == ".ogg_")
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
                 }
                 else
                 {
@@ -211,18 +271,24 @@ namespace MView.ViewModels.File
             }
             if (FilePath != null)
             {
-                _audioPlayback.Play();
+                _audioPlayback?.Play();
+                _trackBarTimer.Start();
             }
         }
 
         private void Stop()
         {
-            _audioPlayback.Stop();
+            _audioPlayback?.Stop();
+
+            TrackBarValue = 0.0f;
+            _trackBarTimer.Stop();
         }
 
         private void Pause()
         {
-            _audioPlayback.Pause();
+            _audioPlayback?.Pause();
+
+            _trackBarTimer.Stop();
         }
 
         #endregion
@@ -243,6 +309,15 @@ namespace MView.ViewModels.File
             {
                 SelectedVisualization.OnMaxCalculated(e.MinSample, e.MaxSample);
             }
+        }
+
+        void OnTrackBarTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            _trackBarValue = _audioPlayback.GetCurrentPosition();
+            RaisePropertyChanged("TrackBarValue");
+
+            TimeSpan current = TimeSpan.FromSeconds(_trackBarValue);
+            TrackBarString = $"{current.ToString(@"hh\:mm\:ss")} / {_trackBarMaximumValue.ToString(@"hh\:mm\:ss")}";
         }
 
         #endregion
@@ -274,6 +349,7 @@ namespace MView.ViewModels.File
             {
                 Stop();
                 _audioPlayback.Dispose();
+                _trackBarTimer.Dispose();
             }
 
             if (disposing)
