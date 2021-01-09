@@ -7,7 +7,7 @@ namespace MView.Test
     {
         static void Main(string[] args)
         {
-            CryptographyProvider.RestoreOggHeader(@"E:\MVTest\Battle1.rpgmvo", @"E:\MVTest\Battle1-My.ogg");
+            CryptographyProvider.RestoreOggHeader(@"E:\MVTest\Battle1.rpgmvo", @"E:\MVTest\Battle1-2.ogg");
             Console.WriteLine("Completed.");
             Console.ReadLine();
         }
