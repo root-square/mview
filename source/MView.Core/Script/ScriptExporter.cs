@@ -58,9 +58,8 @@ namespace MView.Core.Script
                 JToken json = JToken.Parse(source);
 
                 JToken[] jTokenArray = new JToken[6];
-                JArray jArray = JArray.Parse("[]");
 
-                if (json.Type == JTokenType.Array) // Part of JArray parsing.
+                if (json.Type == JTokenType.Array) // Part of JArray parser.
                 {
                     foreach (JToken field in json)
                     {
@@ -83,7 +82,7 @@ namespace MView.Core.Script
                         }
                     }
                 }
-                else // Part of JObject parsing.
+                else // Part of JObject parser.
                 {
                     JObject jObject = JObject.Parse("{}");
 

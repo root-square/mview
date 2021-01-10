@@ -27,6 +27,7 @@
         <converters:TaskStatusToSolidColorBrushConverter x:Key="TaskStatusToSolidColorBrushConverter"/>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:JsonItemTypeToSolidColorBrushConverter x:Key="JsonItemTypeToSolidColorBrushConverter" />
         <converters:TypeToImageConverter x:Key="TypeToImageConverter" />
         <runtime:Boolean x:Key="TRUE">True</runtime:Boolean>
         <runtime:Boolean x:Key="FALSE">False</runtime:Boolean>
@@ -476,6 +477,91 @@
                         </DataTemplate>
                     </docker:PanesTemplateSelector.ImageFileViewTemplate>
 
+                    <!--Json File Style-->
+                    <docker:PanesTemplateSelector.JsonFileViewTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Contents Area-->
+                                <!--TreeView Data Templates-->
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <controls:BindableTreeView Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
+                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
+                                          ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                        <TreeView.Resources>
+                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
+                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                            </Style>
+
+                                            <HierarchicalDataTemplate DataType="{x:Type entities:ToolboxCategory}" ItemsSource="{Binding SubItems}">
+                                                <TextBlock Margin="8 4 0 4" Text="{Binding Name}"/>
+                                            </HierarchicalDataTemplate>
+
+                                            <HierarchicalDataTemplate DataType="{x:Type entities:JsonItem}" ItemsSource="{Binding SubItems}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <iconPacks:PackIconMaterial Foreground="{Binding Type, Converter={StaticResource JsonItemTypeToSolidColorBrushConverter}}" Width="14" Height="14" VerticalAlignment="Center" Opacity=".80" Kind="{Binding Icon}"/>
+                                                    <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
+                                                </StackPanel>
+                                            </HierarchicalDataTemplate>
+                                        </TreeView.Resources>
+                                    </controls:BindableTreeView>
+
+                                    <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2"/>
+
+                                    <Grid Grid.Column="2" Margin="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <StackPanel Grid.Row="0" Orientation="Vertical">
+                                            <hc:TextBox hc:InfoElement.Placeholder="Type" hc:InfoElement.Title="Type"
+                                                        Text="{Binding SelectedItemType, Mode=OneWay}" IsReadOnly="True"/>
+                                            <hc:TextBox Margin="0 6 0 0"
+                                                        hc:InfoElement.Placeholder="Path" hc:InfoElement.Title="Path"
+                                                        Text="{Binding SelectedItemPath, Mode=OneWay}" IsReadOnly="True"/>
+                                        </StackPanel>
+
+                                        <Grid Grid.Row="1" Margin="0 6 0 0">
+                                            <hc:TextBox hc:InfoElement.Placeholder="Value" hc:InfoElement.Title="Value"
+                                                        AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
+                                                        VerticalContentAlignment="Top" VerticalScrollBarVisibility="Visible"
+                                                        Text="{Binding SelectedItemValue, Mode=OneWay}"/>
+                                        </Grid>
+
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 6 0 0" HorizontalAlignment="Right">
+                                            <Button Content="Apply"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+
+                                <!--Status Bar-->
+                                <StatusBar Grid.Row="1">
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FilePath}"/>
+                                    </StatusBarItem>
+
+                                    <Separator/>
+
+                                    <StatusBarItem>
+                                        <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+                                </StatusBar>
+                            </Grid>
+                        </DataTemplate>
+                    </docker:PanesTemplateSelector.JsonFileViewTemplate>
+
                     <!--Script File Style-->
                     <docker:PanesTemplateSelector.ScriptFileViewTemplate>
                         <DataTemplate>
@@ -501,7 +587,7 @@
                                         </DataGrid>
                                     </Grid>
 
-                                    <GridSplitter Grid.Row="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="True" Height="1"/>
+                                    <GridSplitter Grid.Row="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ShowsPreview="True" Height="2"/>
 
                                     <Border Grid.Row="2" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0 1 0 0">
                                         <Grid Background="{DynamicResource SecondaryRegionBrush}">
@@ -512,7 +598,7 @@
                                             </Grid.ColumnDefinitions>
 
                                             <TextBlock Grid.Column="0" Margin="4" Text="Test1"/>
-                                            <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="1"/>
+                                            <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2"/>
                                             <TextBlock Grid.Column="2" Margin="4" Text="Test2"/>
                                         </Grid>
                                     </Border>
