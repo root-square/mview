@@ -20,8 +20,8 @@ namespace MView.ViewModels.Tool
 
         public const string ToolContentId = "FileExplorer";
 
-        private ObservableCollection<DirectoryItem> _nodes = new ObservableCollection<DirectoryItem>();
-        private ObservableCollection<DirectoryItem> _selectedNodes = new ObservableCollection<DirectoryItem>();
+        private ObservableCollection<DirectoryItem> _items = new ObservableCollection<DirectoryItem>();
+        private ObservableCollection<DirectoryItem> _selectedItems = new ObservableCollection<DirectoryItem>();
 
         private ICommand _refreshCommand;
 
@@ -38,28 +38,28 @@ namespace MView.ViewModels.Tool
 
         #region ::Properties::
 
-        public ObservableCollection<DirectoryItem> Nodes
+        public ObservableCollection<DirectoryItem> Items
         {
             get
             {
-                return _nodes;
+                return _items;
             }
             set
             {
-                _nodes = value;
+                _items = value;
                 RaisePropertyChanged();
             }
         }
 
-        public ObservableCollection<DirectoryItem> SelectedNodes
+        public ObservableCollection<DirectoryItem> SelectedItems
         {
             get
             {
-                return _selectedNodes;
+                return _selectedItems;
             }
             set
             {
-                _selectedNodes = value;
+                _selectedItems = value;
                 RaisePropertyChanged();
             }
         }
@@ -76,11 +76,11 @@ namespace MView.ViewModels.Tool
 
         #region ::Methods::
 
-        public List<DirectoryItem> RefreshNodes(IEnumerable<DirectoryItem> nodes)
+        public List<DirectoryItem> RefreshItems(IEnumerable<DirectoryItem> items)
         {
             try
             {
-                List<DirectoryItem> currentItems = nodes.ToList();
+                List<DirectoryItem> currentItems = items.ToList();
                 List<DirectoryItem> newItems = new List<DirectoryItem>();
 
                 foreach (DirectoryItem item in currentItems)
@@ -200,14 +200,14 @@ namespace MView.ViewModels.Tool
 
         // TODO : 파일 탐색, 색인 관련 기능들을 다른 유틸리티 클래스로 분리하기.
 
-        public List<string> GetSelectedFiles(List<DirectoryItem> nodes, List<string> extensions = null)
+        public List<string> GetSelectedFiles(List<DirectoryItem> items, List<string> extensions = null)
         {
             // Get directories and files.
             List<DirectoryItem> directories = new List<DirectoryItem>();
             List<DirectoryItem> files = new List<DirectoryItem>();
             List<string> result = new List<string>();
 
-            foreach (DirectoryItem item in nodes)
+            foreach (DirectoryItem item in items)
             {
                 if (item.Type == DirectoryItemType.BaseDirectory || item.Type == DirectoryItemType.Directory)
                 {
@@ -289,14 +289,46 @@ namespace MView.ViewModels.Tool
             }
         }
 
+        public List<DirectoryItem> ResetAllItems(IEnumerable<DirectoryItem> items)
+        {
+            List<DirectoryItem> fixedItems = new List<DirectoryItem>();
+
+            foreach (DirectoryItem item in items)
+            {
+                if (item.Type == DirectoryItemType.BaseDirectory || item.Type == DirectoryItemType.Directory)
+                {
+                    if (item.Type == DirectoryItemType.BaseDirectory)
+                    {
+                        item.IsExpanded = true;
+                    }
+                    else
+                    {
+                        item.IsExpanded = false;
+                    }
+
+                    item.IsSelected = false;
+                    item.SubItems = ResetAllItems(item.SubItems);
+                    fixedItems.Add(item);
+                }
+                else
+                {
+                    item.IsExpanded = false;
+                    item.IsSelected = false;
+                    fixedItems.Add(item);
+                }
+            }
+
+            return fixedItems;
+        }
+
         #endregion
 
         #region ::Command Actions::
 
         private void OnRefresh()
         {
-            Nodes = new ObservableCollection<DirectoryItem>(RefreshNodes(_nodes));
-            SelectedNodes = new ObservableCollection<DirectoryItem>();
+            Items = new ObservableCollection<DirectoryItem>(RefreshItems(_items));
+            SelectedItems = new ObservableCollection<DirectoryItem>();
         }
 
         #endregion

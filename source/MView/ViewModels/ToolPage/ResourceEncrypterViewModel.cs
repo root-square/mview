@@ -342,7 +342,7 @@ namespace MView.ViewModels.ToolPage
                 }
             }
 
-            if (ToolHostWithExplorerViewModel.Instance.SelectedNodes.Count == 0)
+            if (ToolHostWithExplorerViewModel.Instance.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Select a file to proceed.", "MView", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -367,10 +367,10 @@ namespace MView.ViewModels.ToolPage
 
                     // Get selected files.
                     string[] extensions = new string[] { ".ogg", ".m4a", ".wav", ".png" };
-                    List<string> files = Workspace.Instance.FileExplorer.GetSelectedFiles(ToolHostWithExplorerViewModel.Instance.SelectedNodes.ToList(), extensions.ToList());
+                    List<string> files = Workspace.Instance.FileExplorer.GetSelectedFiles(ToolHostWithExplorerViewModel.Instance.SelectedItems.ToList(), extensions.ToList());
 
                     // Make file dictionary.
-                    string baseDirectory = ToolHostWithExplorerViewModel.Instance.Nodes[0].FullName;
+                    string baseDirectory = ToolHostWithExplorerViewModel.Instance.Items[0].FullName;
                     Dictionary<string, string> fileDictionary = Workspace.Instance.FileExplorer.IndexFromList(files, baseDirectory, _saveDirectory);
                     Dictionary<string, string> modifiedDictionary = new Dictionary<string, string>();
                     

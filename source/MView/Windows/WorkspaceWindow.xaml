@@ -228,17 +228,17 @@
                                 <!--TreeView Data Templates-->
                                 <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
                                           VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
-                                          ItemsSource="{Binding Nodes}" SelectedItems="{Binding SelectedNodes, Mode=TwoWay}">
+                                          ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
                                     <TreeView.ItemContainerStyle>
                                         <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
-                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                            
                                             <Setter Property="controls:MultiSelectTreeView.IsItemSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                                             <Style.Triggers>
                                                 <Trigger Property="controls:MultiSelectTreeView.IsItemSelected" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                                                    <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
                                                 </Trigger>
                                             </Style.Triggers>
-
                                         </Style>
                                     </TreeView.ItemContainerStyle>
                                     <TreeView.ItemTemplate>
@@ -397,6 +397,12 @@
 
                                     <StatusBarItem>
                                         <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="4 0 4 0" Text="{Binding FileSizeString}"/>
+                                    </StatusBarItem>
+
+                                    <StatusBarItem HorizontalAlignment="Right" Visibility="{Binding IsUnstable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal" Margin="4 0 4 0">
+                                            <TextBlock Foreground="{DynamicResource DangerBrush}" Margin="2 0 0 0" FontWeight="Bold" Text="Unstable"/>
+                                        </StackPanel>
                                     </StatusBarItem>
                                 </StatusBar>
                             </Grid>

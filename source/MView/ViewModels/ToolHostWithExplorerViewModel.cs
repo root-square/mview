@@ -47,8 +47,8 @@ namespace MView.ViewModels
 
         private Page _toolPage = null;
 
-        private ObservableCollection<DirectoryItem> _nodes = new ObservableCollection<DirectoryItem>();
-        private ObservableCollection<DirectoryItem> _selectedNodes = new ObservableCollection<DirectoryItem>();
+        private ObservableCollection<DirectoryItem> _items = new ObservableCollection<DirectoryItem>();
+        private ObservableCollection<DirectoryItem> _selectedItems = new ObservableCollection<DirectoryItem>();
 
         private string _selectedItemsString = string.Format("Selected Items({0})", 0);
 
@@ -66,10 +66,11 @@ namespace MView.ViewModels
             _width = 300;
             _height = 300;
 
-            _nodes = Workspace.Instance.FileExplorer.Nodes;
-            _selectedNodes = Workspace.Instance.FileExplorer.SelectedNodes;
+            // Copy collections.
+            List<DirectoryItem> items = Workspace.Instance.FileExplorer.ResetAllItems(Workspace.Instance.FileExplorer.Items);
+            _items = new ObservableCollection<DirectoryItem>(items);
 
-            SelectedNodes.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
+            SelectedItems.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
         }
 
         public ToolHostWithExplorerViewModel(Page toolPage, double width = 600, double height = 700)
@@ -83,10 +84,12 @@ namespace MView.ViewModels
             _height = height;
 
             _toolPage = toolPage;
-            _nodes = Workspace.Instance.FileExplorer.Nodes;
-            _selectedNodes = Workspace.Instance.FileExplorer.SelectedNodes;
 
-            SelectedNodes.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
+            // Copy collections.
+            List<DirectoryItem> items = Workspace.Instance.FileExplorer.ResetAllItems(Workspace.Instance.FileExplorer.Items);
+            _items = new ObservableCollection<DirectoryItem>(items);
+
+            SelectedItems.CollectionChanged += new NotifyCollectionChangedEventHandler(OnCollectionChanged);
         }
 
         #endregion
@@ -125,28 +128,28 @@ namespace MView.ViewModels
             }
         }
 
-        public ObservableCollection<DirectoryItem> Nodes
+        public ObservableCollection<DirectoryItem> Items
         {
             get
             {
-                return _nodes;
+                return _items;
             }
             set
             {
-                _nodes = value;
+                _items = value;
                 RaisePropertyChanged();
             }
         }
 
-        public ObservableCollection<DirectoryItem> SelectedNodes
+        public ObservableCollection<DirectoryItem> SelectedItems
         {
             get
             {
-                return _selectedNodes;
+                return _selectedItems;
             }
             set
             {
-                _selectedNodes = value;
+                _selectedItems = value;
                 RaisePropertyChanged();
             }
         }
@@ -191,8 +194,8 @@ namespace MView.ViewModels
 
         private void OnRefresh()
         {
-            Nodes = new ObservableCollection<DirectoryItem>(Workspace.Instance.FileExplorer.RefreshNodes(_nodes));
-            SelectedNodes = new ObservableCollection<DirectoryItem>();
+            Items = new ObservableCollection<DirectoryItem>(Workspace.Instance.FileExplorer.RefreshItems(_items));
+            SelectedItems = new ObservableCollection<DirectoryItem>();
         }
 
         #endregion
@@ -201,7 +204,7 @@ namespace MView.ViewModels
 
         private void OnCollectionChanged(object sender, EventArgs e)
         {
-            SelectedItemsString = string.Format("Selected Items({0})", SelectedNodes.Count);
+            SelectedItemsString = string.Format("Selected Items({0})", SelectedItems.Count);
         }
 
         #endregion

@@ -34,17 +34,17 @@
                                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10"
                                           VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
                                           IsEnabled="{Binding IsUseCurrentFile, Converter={StaticResource InverseBooleanConverter}}"
-                                          ItemsSource="{Binding Nodes}" SelectedItems="{Binding SelectedNodes, Mode=TwoWay}">
+                                          ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        
                         <Setter Property="controls:MultiSelectTreeView.IsItemSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                         <Style.Triggers>
                             <Trigger Property="controls:MultiSelectTreeView.IsItemSelected" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
                             </Trigger>
                         </Style.Triggers>
-
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>

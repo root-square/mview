@@ -30,6 +30,7 @@ namespace MView.ViewModels.File
         private TimeSpan _trackBarMaximumValue = TimeSpan.Zero;
         private string _trackBarString = "00:00:00 / 00:00:00";
 
+        private bool _isUnstable = false;
         private FileProperties _fileProperties = new FileProperties();
 
         private ICommand _playCommand;
@@ -148,6 +149,14 @@ namespace MView.ViewModels.File
             }
         }
 
+        public bool IsUnstable
+        {
+            get
+            {
+                return _isUnstable;
+            }
+        }
+
         public ICommand PlayCommand
         {
             get
@@ -255,6 +264,8 @@ namespace MView.ViewModels.File
                         var restoreTask = new Task(() => CryptographyProvider.RestoreOggHeader(filePath, tempFilePath));
                         restoreTask.Start();
                         await restoreTask;
+
+                        _isUnstable = true;
 
                         return tempFilePath;
                     }
@@ -372,6 +383,7 @@ namespace MView.ViewModels.File
             {
                 Stop();
                 _audioPlayback.Dispose();
+                _trackBarTimer.Dispose();
             }
 
             // .NET Framework에 의하여 관리되지 않는 외부 리소스들을 여기서 정리합니다.

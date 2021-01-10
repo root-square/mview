@@ -47,6 +47,7 @@ namespace MView.Utilities.Audio
                     aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
                     aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
                     playbackDevice.Init(aggregator);
+                    playbackDevice.PlaybackStopped += OnPlaybackStopped;
                 }
                 else
                 {
@@ -59,6 +60,7 @@ namespace MView.Utilities.Audio
                     aggregator.FftCalculated += (s, a) => FftCalculated?.Invoke(this, a);
                     aggregator.MaximumCalculated += (s, a) => MaximumCalculated?.Invoke(this, a);
                     playbackDevice.Init(aggregator);
+                    playbackDevice.PlaybackStopped += OnPlaybackStopped;
                 }
             }
             catch (Exception)
@@ -66,6 +68,11 @@ namespace MView.Utilities.Audio
                 CloseFile();
                 throw;
             }
+        }
+
+        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            Stop();
         }
 
         private void EnsureDeviceCreated()

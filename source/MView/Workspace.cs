@@ -437,11 +437,11 @@ namespace MView
                 DirectoryInfo directory = Directory.GetParent(dlg.FileName);
                 DirectoryItem item = new DirectoryItem(directory, true, true);
 
-                if (!FileExplorer.Nodes.Contains(item))
+                if (!FileExplorer.Items.Contains(item))
                 {
-                    FileExplorer.Nodes = new ObservableCollection<DirectoryItem>();
-                    FileExplorer.SelectedNodes = new ObservableCollection<DirectoryItem>();
-                    FileExplorer.Nodes.Add(new DirectoryItem(directory, true, true));
+                    FileExplorer.Items = new ObservableCollection<DirectoryItem>();
+                    FileExplorer.SelectedItems = new ObservableCollection<DirectoryItem>();
+                    FileExplorer.Items.Add(new DirectoryItem(directory, true, true));
 
                     Report.AddReportWithIdentifier($"A new project has been opened.({directory.FullName})", ReportType.Information);
                 }

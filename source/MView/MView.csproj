@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\LICENSE" />
+    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\README.md" />
     <None Remove="Resources\avalondock_layout.config" />
     <None Remove="Resources\icon_audiofile.png" />
     <None Remove="Resources\icon_basedirectory.png" />
