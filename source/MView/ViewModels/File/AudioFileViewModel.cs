@@ -115,7 +115,16 @@ namespace MView.ViewModels.File
             set
             {
                 _trackBarValue = value;
-                _audioPlayback?.SetPosition(value);
+
+                if (TimeSpan.FromSeconds(_trackBarValue) == _trackBarMaximumValue)
+                {
+                    Stop();
+                }
+                else
+                {
+                    _audioPlayback?.SetPosition(value);
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -308,6 +317,7 @@ namespace MView.ViewModels.File
             _audioPlayback?.Stop();
 
             TrackBarValue = 0.0f;
+            TrackBarString = "00:00:00 / 00:00:00";
             _trackBarTimer.Stop();
         }
 
