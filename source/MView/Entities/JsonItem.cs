@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -23,10 +24,32 @@ namespace MView.Entities
 
         }
 
-        public JsonItem(JToken json, bool isExapnded = false)
+        public JsonItem(JToken json, string parentsPath = null, bool isExapnded = false)
         {
+            ArrayNumber = -1;
+            IsProperty = false;
+            PropertyName = null;
             SubItems = new List<JsonItem>();
 
+            // Get json absolute path.
+            string fullPath = string.Empty;
+            JToken currentToken = json;
+
+            while (currentToken != currentToken.Root)
+            {
+                ConnectStrings(currentToken.Path, fullPath, out fullPath);
+
+                currentToken = currentToken.Parent;
+            }
+
+            if (!string.IsNullOrEmpty(parentsPath))
+            {
+                ConnectStrings(parentsPath, fullPath, out fullPath);
+            }
+
+            FullPath = fullPath;
+
+            // Initialize json item.
             if (json.Type == JTokenType.Object)
             {
                 Type = GetJsonItemType(json.Type);
@@ -38,7 +61,7 @@ namespace MView.Entities
 
                 foreach (JToken token in json.Children())
                 {
-                    SubItems.Add(new JsonItem(token));
+                    SubItems.Add(new JsonItem(token, FullPath));
                 }
             }
             else if (json.Type == JTokenType.Array)
@@ -55,8 +78,9 @@ namespace MView.Entities
 
                 foreach (JToken token in json.Children())
                 {
-                    JsonItem item = new JsonItem(token);
-                    item.Name = $"{count++} : {item.Name}";
+                    JsonItem item = new JsonItem(token, FullPath);
+                    item.ArrayNumber = count++;
+                    item.Name = $"{item.ArrayNumber} : {item.Name}";
                     SubItems.Add(item);
                 }
             }
@@ -69,17 +93,19 @@ namespace MView.Entities
                 Path = json.Path;
                 Value = property.Value;
                 IsExpanded = isExapnded;
+                IsProperty = true;
+                PropertyName = property.Name;
 
                 // Collect property value.
                 if (property.Value.Type == JTokenType.Object)
                 {
-                    JsonItem objValue = new JsonItem(property.Value);
+                    JsonItem objValue = new JsonItem(property.Value, FullPath);
                     Name = property.Name;
                     SubItems = objValue.SubItems;
                 }
                 else if (property.Value.Type == JTokenType.Array)
                 {
-                    JsonItem arrayValue = new JsonItem(property.Value);
+                    JsonItem arrayValue = new JsonItem(property.Value, FullPath);
                     Name = property.Name;
                     SubItems = arrayValue.SubItems;
                 }
@@ -236,6 +262,65 @@ namespace MView.Entities
             }
         }
 
+        private bool GetStringWithoutBrackets(string text, out string result)
+        {
+            int startIndex = text.LastIndexOf('[');
+            int endIndex = text.LastIndexOf(']'); ;
+
+            if (startIndex == -1 || endIndex == -1 || endIndex <= startIndex)
+            {
+                result = text;
+                return false;
+            }
+            else
+            {
+                result = text.Remove(startIndex, endIndex - startIndex + 1);
+                return true;
+            }
+        }
+
+        private bool ConnectStrings(string target, string source, out string result)
+        {
+            // Ignore null or empty.
+            if (string.IsNullOrEmpty(target))
+            {
+                result = source;
+                return false;
+            }
+            else if (string.IsNullOrEmpty(source))
+            {
+                result = target;
+                return false;
+            }
+
+            // Get offset and size.
+            char firstChar = source.ToCharArray().First();
+
+            int offset = target.LastIndexOf('.') + 1;
+            int size = target.Length - offset;
+
+            // Except offset error.
+            if (offset == -1)
+            {
+                result = $"{target}.{source}";
+                return false;
+            }
+
+            // Substring target and connect with source.
+            string targetMask = target.Substring(offset, size);
+
+            if (source.StartsWith(targetMask))
+            {
+                result = target.Remove(offset, size) + source;
+                return true;
+            }
+            else
+            {
+                result = $"{target}.{source}";
+                return false;
+            }
+        }
+
         #endregion
 
         #region ::Properties::
@@ -248,7 +333,15 @@ namespace MView.Entities
 
         public string Path { get; set; }
 
+        public string FullPath { get; set; }
+
         public JToken Value { get; set; }
+
+        public int ArrayNumber { get; set; }
+
+        public bool IsProperty { get; set; }
+
+        public string PropertyName { get; set; }
 
         public bool IsExpanded { get; set; }
 

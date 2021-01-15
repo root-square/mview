@@ -27,6 +27,7 @@
         <converters:TaskStatusToSolidColorBrushConverter x:Key="TaskStatusToSolidColorBrushConverter"/>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
         <converters:JsonItemTypeToSolidColorBrushConverter x:Key="JsonItemTypeToSolidColorBrushConverter" />
         <converters:TypeToImageConverter x:Key="TypeToImageConverter" />
         <runtime:Boolean x:Key="TRUE">True</runtime:Boolean>
@@ -228,7 +229,7 @@
 
                                 <!--TreeView Data Templates-->
                                 <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
-                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
+                                          VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
                                           ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
                                     <TreeView.ItemContainerStyle>
                                         <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
@@ -291,7 +292,7 @@
 
                                 <!--TreeView Data Templates-->
                                 <TreeView Grid.Row="1" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
-                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
+                                          VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
                                           ItemsSource="{Binding Nodes}">
                                     <TreeView.Resources>
                                         <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
@@ -496,16 +497,12 @@
                                     </Grid.ColumnDefinitions>
                                     
                                     <controls:BindableTreeView Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
-                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
-                                          ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                                          VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
+                                          ItemsSource="{Binding Items, Mode=TwoWay}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
                                         <TreeView.Resources>
                                             <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
                                                 <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
                                             </Style>
-
-                                            <HierarchicalDataTemplate DataType="{x:Type entities:ToolboxCategory}" ItemsSource="{Binding SubItems}">
-                                                <TextBlock Margin="8 4 0 4" Text="{Binding Name}"/>
-                                            </HierarchicalDataTemplate>
 
                                             <HierarchicalDataTemplate DataType="{x:Type entities:JsonItem}" ItemsSource="{Binding SubItems}">
                                                 <StackPanel Orientation="Horizontal">
@@ -522,7 +519,6 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
                                             <RowDefinition/>
-                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         
                                         <StackPanel Grid.Row="0" Orientation="Vertical">
@@ -531,18 +527,17 @@
                                             <hc:TextBox Margin="0 6 0 0"
                                                         hc:InfoElement.Placeholder="Path" hc:InfoElement.Title="Path"
                                                         Text="{Binding SelectedItemPath, Mode=OneWay}" IsReadOnly="True"/>
+                                            <hc:TextBox Margin="0 6 0 0"
+                                                        hc:InfoElement.Placeholder="Full Path" hc:InfoElement.Title="Full Path"
+                                                        Text="{Binding SelectedItemFullPath, Mode=OneWay}" IsReadOnly="True"/>
                                         </StackPanel>
 
                                         <Grid Grid.Row="1" Margin="0 6 0 0">
                                             <hc:TextBox hc:InfoElement.Placeholder="Value" hc:InfoElement.Title="Value"
                                                         AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
                                                         VerticalContentAlignment="Top" VerticalScrollBarVisibility="Visible"
-                                                        Text="{Binding SelectedItemValue, Mode=OneWay}"/>
+                                                        Text="{Binding SelectedItemValue, Mode=OneWay}" IsReadOnly="True"/>
                                         </Grid>
-
-                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0 6 0 0" HorizontalAlignment="Right">
-                                            <Button Content="Apply"/>
-                                        </StackPanel>
                                     </Grid>
                                 </Grid>
 

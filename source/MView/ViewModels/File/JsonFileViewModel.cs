@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace MView.ViewModels.File
 {
@@ -16,6 +17,10 @@ namespace MView.ViewModels.File
 
         private ObservableCollection<JsonItem> _items = new ObservableCollection<JsonItem>();
         private object _selectedItem;
+        private JsonItemType _selectedItemType;
+        private string _selectedItemPath;
+        private string _selectedItemFullPath;
+        private string _seledtedItemValue;
 
         private FileProperties _fileProperties = new FileProperties();
 
@@ -47,21 +52,27 @@ namespace MView.ViewModels.File
 
         public object SelectedItem
         {
+            get
+            {
+                return _selectedItem;
+            }
             set
             {
                 _selectedItem = value;
-                RaisePropertyChanged("SelectedItemType");
-                RaisePropertyChanged("SelectedItemPath");
-                RaisePropertyChanged("SelectedItemValue");
+                RefreshSelectedItemInformation();
             }
         }
 
-        public string SelectedItemType
+        public JsonItemType SelectedItemType
         {
             get
             {
-                JsonItem item = (JsonItem)_selectedItem;
-                return item?.Type.ToString();
+                return _selectedItemType;
+            }
+            set
+            {
+                _selectedItemType = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -69,8 +80,25 @@ namespace MView.ViewModels.File
         {
             get
             {
-                JsonItem item = (JsonItem)_selectedItem;
-                return item?.Path;
+                return _selectedItemPath;
+            }
+            set
+            {
+                _selectedItemPath = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string SelectedItemFullPath
+        {
+            get
+            {
+                return _selectedItemFullPath;
+            }
+            set
+            {
+                _selectedItemFullPath = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -78,8 +106,12 @@ namespace MView.ViewModels.File
         {
             get
             {
-                JsonItem item = (JsonItem)_selectedItem;
-                return item?.Value.ToString();
+                return _seledtedItemValue;
+            }
+            set
+            {
+                _seledtedItemValue = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -103,7 +135,7 @@ namespace MView.ViewModels.File
                 {
                     string jsonString = FileManager.ReadTextFile(filePath, Encoding.UTF8);
                     JToken json = JToken.Parse(jsonString);
-                    _items.Add(new JsonItem(json, true));
+                    _items.Add(new JsonItem(json, null, true));
 
                     _fileProperties = new FileProperties(filePath);
                 }
@@ -114,6 +146,20 @@ namespace MView.ViewModels.File
             });
 
             await task;
+        }
+
+        private void RefreshSelectedItemInformation()
+        {
+            JsonItem item = (JsonItem)_selectedItem;
+
+            if (item != null)
+            {
+                SelectedItemType = item.Type;
+                SelectedItemPath = item.Path;
+                SelectedItemValue = item.Value.ToString();
+                SelectedItemFullPath = item.FullPath;
+
+            }
         }
 
         #endregion

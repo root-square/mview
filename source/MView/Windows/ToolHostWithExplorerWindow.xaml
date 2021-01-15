@@ -32,7 +32,7 @@
             <!--TreeView Data Templates-->
             <controls:MultiSelectTreeView Grid.Row="0" Background="{DynamicResource SecondaryRegionBrush}" BorderBrush="{DynamicResource BorderBrush}"
                                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10"
-                                          VirtualizingStackPanel.VirtualizationMode="Standard" VirtualizingStackPanel.IsVirtualizing="False"
+                                          VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
                                           IsEnabled="{Binding IsUseCurrentFile, Converter={StaticResource InverseBooleanConverter}}"
                                           ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
                 <TreeView.ItemContainerStyle>
