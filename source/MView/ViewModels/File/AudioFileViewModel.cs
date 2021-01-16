@@ -196,6 +196,8 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
+            Workspace.Instance.SetStatus(TaskStatusType.Loading, $"Loading a file... ({filePath})"); // Set status.
+
             // Load file.
             string loadedFilePath = await FileLoadAsync(filePath);
 
@@ -244,6 +246,10 @@ namespace MView.ViewModels.File
             catch (Exception ex)
             {
                 Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
+            }
+            finally
+            {
+                Workspace.Instance.SetStatus(TaskStatusType.Completed, $"Completed."); // Set status.
             }
         }
 

@@ -61,6 +61,8 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
+            Workspace.Instance.SetStatus(TaskStatusType.Loading, $"Loading a file... ({filePath})");
+
             var task = Task.Run(() =>
             {
                 try
@@ -76,6 +78,8 @@ namespace MView.ViewModels.File
             });
 
             await task;
+
+            Workspace.Instance.SetStatus(TaskStatusType.Completed, $"Completed.");
         }
 
         #endregion

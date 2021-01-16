@@ -129,13 +129,18 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
+            Workspace.Instance.SetStatus(TaskStatusType.Loading, $"Loading a file... ({filePath})");
+
+            JsonItem item = new JsonItem();
+
             var task = Task.Run(() =>
             {
                 try
                 {
+                    // Preload json items.
                     string jsonString = FileManager.ReadTextFile(filePath, Encoding.UTF8);
                     JToken json = JToken.Parse(jsonString);
-                    _items.Add(new JsonItem(json, null, true));
+                    item = new JsonItem(json, null, true);
 
                     _fileProperties = new FileProperties(filePath);
                 }
@@ -146,6 +151,10 @@ namespace MView.ViewModels.File
             });
 
             await task;
+
+            _items.Add(item);
+
+            Workspace.Instance.SetStatus(TaskStatusType.Completed, $"Completed.");
         }
 
         private void RefreshSelectedItemInformation()
