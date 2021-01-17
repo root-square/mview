@@ -425,7 +425,7 @@
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
                                          VerticalScrollBarVisibility="Visible"
                                          AcceptsReturn="True" AcceptsTab="True"
-                                         Text="{Binding TextContent, Mode=TwoWay}"/>
+                                         Text="{Binding TextContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <!--Status Bar-->
                                 <StatusBar Grid.Row="1">
@@ -481,7 +481,7 @@
                     <!--Json File Style-->
                     <docker:PanesTemplateSelector.JsonFileViewTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Background="{DynamicResource RegionBrush}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="30"/>
@@ -489,57 +489,120 @@
 
                                 <!--Contents Area-->
                                 <!--TreeView Data Templates-->
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
+                                <TabControl Grid.Row="0">
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="FileDocumentEdit"/>
+                                                <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="4 0 0 0" Text="Editor"/>
+                                            </StackPanel>
+                                        </TabItem.Header>
+
+                                        <controls:CodeEditor Background="{DynamicResource RegionBrush}" Foreground="{DynamicResource PrimaryTextBrush}"
+                                                             FontFamily="Consolas" FontSize="10pt" 
+                                                             SyntaxHighlighting="Json" ShowLineNumbers="True" VerticalScrollBarVisibility="Visible"
+                                                             Document="{Binding Document, UpdateSourceTrigger=PropertyChanged}">
+                                            <controls:CodeEditor.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Command="Cut" Header="Cut">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCut"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Command="Copy" Header="Copy">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCopy"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Command="Paste" Header="Paste">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentPaste"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Command="Delete" Header="Delete">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Command="SelectAll" Header="Select All"/>
+                                                    <Separator />
+
+                                                    <MenuItem Command="Undo" Header="Undo">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Undo"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Command="Redo" Header="Redo">
+                                                        <MenuItem.Icon>
+                                                            <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Redo"/>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                </ContextMenu>
+                                            </controls:CodeEditor.ContextMenu>
+                                        </controls:CodeEditor>
+                                    </TabItem>
                                     
-                                    <controls:BindableTreeView Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <StackPanel Orientation="Horizontal" >
+                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".80" Kind="FileTree"/>
+                                                <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="4 0 0 0" Text="Viewer"/>
+                                            </StackPanel>
+                                        </TabItem.Header>
+                                        
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <controls:BindableTreeView Grid.Column="0" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
                                           VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
                                           ItemsSource="{Binding Items, Mode=TwoWay}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
-                                        <TreeView.Resources>
-                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
-                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-                                            </Style>
+                                                <TreeView.Resources>
+                                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
+                                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                                    </Style>
 
-                                            <HierarchicalDataTemplate DataType="{x:Type entities:JsonItem}" ItemsSource="{Binding SubItems}">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <iconPacks:PackIconMaterial Foreground="{Binding Type, Converter={StaticResource JsonItemTypeToSolidColorBrushConverter}}" Width="14" Height="14" VerticalAlignment="Center" Opacity=".80" Kind="{Binding Icon}"/>
-                                                    <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
-                                                </StackPanel>
-                                            </HierarchicalDataTemplate>
-                                        </TreeView.Resources>
-                                    </controls:BindableTreeView>
+                                                    <HierarchicalDataTemplate DataType="{x:Type entities:JsonItem}" ItemsSource="{Binding SubItems}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <iconPacks:PackIconMaterial Foreground="{Binding Type, Converter={StaticResource JsonItemTypeToSolidColorBrushConverter}}" Width="14" Height="14" VerticalAlignment="Center" Opacity=".80" Kind="{Binding Icon}"/>
+                                                            <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="4 0 0 0" Text="{Binding Name}"/>
+                                                        </StackPanel>
+                                                    </HierarchicalDataTemplate>
+                                                </TreeView.Resources>
+                                            </controls:BindableTreeView>
 
-                                    <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2"/>
+                                            <GridSplitter Grid.Column="1" Background="{DynamicResource BorderBrush}" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2"/>
 
-                                    <Grid Grid.Column="2" Margin="10">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        
-                                        <StackPanel Grid.Row="0" Orientation="Vertical">
-                                            <hc:TextBox hc:InfoElement.Placeholder="Type" hc:InfoElement.Title="Type"
+                                            <Grid Grid.Column="2" Margin="10">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+
+                                                <StackPanel Grid.Row="0" Orientation="Vertical">
+                                                    <hc:TextBox hc:InfoElement.Placeholder="Type" hc:InfoElement.Title="Type"
                                                         Text="{Binding SelectedItemType, Mode=OneWay}" IsReadOnly="True"/>
-                                            <hc:TextBox Margin="0 6 0 0"
+                                                    <hc:TextBox Margin="0 6 0 0"
                                                         hc:InfoElement.Placeholder="Path" hc:InfoElement.Title="Path"
                                                         Text="{Binding SelectedItemPath, Mode=OneWay}" IsReadOnly="True"/>
-                                            <hc:TextBox Margin="0 6 0 0"
+                                                    <hc:TextBox Margin="0 6 0 0"
                                                         hc:InfoElement.Placeholder="Full Path" hc:InfoElement.Title="Full Path"
                                                         Text="{Binding SelectedItemFullPath, Mode=OneWay}" IsReadOnly="True"/>
-                                        </StackPanel>
+                                                </StackPanel>
 
-                                        <Grid Grid.Row="1" Margin="0 6 0 0">
-                                            <hc:TextBox hc:InfoElement.Placeholder="Value" hc:InfoElement.Title="Value"
+                                                <Grid Grid.Row="1" Margin="0 6 0 0">
+                                                    <hc:TextBox hc:InfoElement.Placeholder="Value" hc:InfoElement.Title="Value"
                                                         AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap"
                                                         VerticalContentAlignment="Top" VerticalScrollBarVisibility="Visible"
                                                         Text="{Binding SelectedItemValue, Mode=OneWay}" IsReadOnly="True"/>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </Grid>
+                                    </TabItem>
+                                </TabControl>
 
                                 <!--Status Bar-->
                                 <StatusBar Grid.Row="1">

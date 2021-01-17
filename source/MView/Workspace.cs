@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using MView.Bases;
 using MView.Commands;
+using MView.Core;
 using MView.Entities;
 using MView.ViewModels.File;
 using MView.ViewModels.Tool;
@@ -369,7 +370,12 @@ namespace MView
             }
             else if (fileToSave is GeneralFileViewModel)
             {
-                // TODO : Save action
+                GeneralFileViewModel file = fileToSave as GeneralFileViewModel;
+
+                if (file.IsDirty)
+                {
+                    FileManager.WriteTextFile(file.FilePath, file.TextContent, Encoding.UTF8);
+                }
             }
             else if (fileToSave is ImageFileViewModel)
             {
@@ -377,7 +383,12 @@ namespace MView
             }
             else if (fileToSave is JsonFileViewModel)
             {
-                // TODO : Save action
+                JsonFileViewModel file = fileToSave as JsonFileViewModel;
+
+                if (file.IsDirty)
+                {
+                    FileManager.WriteTextFile(file.FilePath, file.DocumentText, Encoding.UTF8);
+                }
             }
             else if (fileToSave is SaveFileViewModel)
             {
@@ -389,6 +400,7 @@ namespace MView
             }
 
             ActiveDocument.IsDirty = false;
+            ActiveDocument.OnAfterSave(null);
         }
 
         internal void CloseFile(FileViewModelBase fileToClose)

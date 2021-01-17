@@ -61,8 +61,6 @@ namespace MView.ViewModels.File
 
         private async void Initialize(string filePath)
         {
-            Workspace.Instance.SetStatus(TaskStatusType.Loading, $"Loading a file... ({filePath})");
-
             var task = Task.Run(() =>
             {
                 try
@@ -76,6 +74,8 @@ namespace MView.ViewModels.File
                     Workspace.Instance.Report.AddReportWithIdentifier($"{ex.Message}\r\n{ex.StackTrace}", ReportType.Warning);
                 }
             });
+
+            Workspace.Instance.SetStatus(TaskStatusType.Loading, $"Loading a file... ({filePath})");
 
             await task;
 

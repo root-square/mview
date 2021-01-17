@@ -35,7 +35,6 @@ namespace MView.Controls
         }
 
         #region Text.
-
         /// <summary>
         /// Dependancy property for the editor text property binding.
         /// </summary>
@@ -97,12 +96,9 @@ namespace MView.Controls
                 canScroll = true;
             }
         }
-
-        #endregion
-
+        #endregion // Text.
 
         #region Caret Offset.
-
         /// <summary>
         /// DependencyProperty for the TextEditorCaretOffset binding. 
         /// </summary>
@@ -123,11 +119,9 @@ namespace MView.Controls
             get { return base.CaretOffset; }
             set { SetValue(CaretOffsetProperty, value); }
         }
-
-        #endregion
+        #endregion // Caret Offset.
 
         #region Selection.
-
         /// <summary>
         /// DependencyProperty for the TextLocation. Setting this value 
         /// will scroll the TextEditor to the desired TextLocation.
@@ -198,8 +192,7 @@ namespace MView.Controls
             get { return base.SelectionStart; }
             set { SetValue(SelectionStartProperty, value); }
         }
-
-        #endregion
+        #endregion // Selection.
 
         #region Properties.
 
@@ -217,18 +210,14 @@ namespace MView.Controls
         // This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FilePathProperty =
              DependencyProperty.Register("FilePath", typeof(string), typeof(CodeEditor),
-             new PropertyMetadata(string.Empty, OnFilePathChanged));
-
-        #endregion
-
-        #region ::Methods::
+             new PropertyMetadata(String.Empty, OnFilePathChanged));
 
         private static void OnFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
-        #endregion
+        #endregion // Properties.
 
         #region Raise Property Changed.
 
@@ -243,6 +232,6 @@ namespace MView.Controls
                 PropertyChanged(this, new PropertyChangedEventArgs(caller));
         }
 
-        #endregion
+        #endregion // Raise Property Changed.
     }
 }

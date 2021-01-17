@@ -1,4 +1,5 @@
 ﻿using MView.Commands;
+using MView.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,6 @@ namespace MView.Bases
 		private static ImageSourceConverter ISC = new ImageSourceConverter();
 
 		private string _filePath = null;
-		private string _textContent = string.Empty;
 		private bool _isDirty = false;
 
 		private RelayCommand _saveCommand = null;
@@ -55,7 +55,6 @@ namespace MView.Bases
 
 					if (File.Exists(_filePath))
 					{
-						_textContent = File.ReadAllText(_filePath);
 						ContentId = _filePath;
 					}
 				}
@@ -158,6 +157,11 @@ namespace MView.Bases
 		protected virtual void OnSaveAs(object parameter)
 		{
 			Workspace.Instance.SaveFile(this, true);
+		}
+
+		public virtual void OnAfterSave(object parameter)
+		{
+			Workspace.Instance.Report.AddReportWithIdentifier($"'{FilePath}' has been saved successfully.", ReportType.Information);
 		}
 
 		#endregion
