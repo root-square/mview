@@ -13,28 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MView.Utilities.Audio.Controls
+namespace MView.Audio.Visualization.Controls
 {
     /// <summary>
-    /// Interaction logic for PolygonWaveFormControl.xaml
+    /// Interaction logic for PolylineWaveFormControl.xaml
     /// </summary>
-    public partial class PolygonWaveFormControl : UserControl, IWaveFormRenderer
+    public partial class PolylineWaveFormControl : UserControl, IWaveFormRenderer
     {
         int renderPosition;
         double yTranslate = 40;
         double yScale = 40;
-        double xScale = 2;
         int blankZone = 10;
 
-        readonly Polygon waveForm = new Polygon();
+        readonly Polyline topLine = new Polyline();
+        readonly Polyline bottomLine = new Polyline();
 
-        public PolygonWaveFormControl()
+        public PolylineWaveFormControl()
         {
             SizeChanged += OnSizeChanged;
             InitializeComponent();
-            waveForm.Stroke = Foreground;
-            waveForm.StrokeThickness = 1;
-            mainCanvas.Children.Add(waveForm);
+            topLine.Stroke = Foreground;
+            bottomLine.Stroke = Foreground;
+            topLine.StrokeThickness = 1;
+            bottomLine.StrokeThickness = 1;
+            mainCanvas.Children.Add(topLine);
+            mainCanvas.Children.Add(bottomLine);
         }
 
         void OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -49,38 +52,29 @@ namespace MView.Utilities.Audio.Controls
 
         private void ClearAllPoints()
         {
-            waveForm.Points.Clear();
-        }
-
-        private int Points
-        {
-            get { return waveForm.Points.Count / 2; }
+            topLine.Points.Clear();
+            bottomLine.Points.Clear();
         }
 
         public void AddValue(float maxValue, float minValue)
         {
-            int visiblePixels = (int)(ActualWidth / xScale);
-            if (visiblePixels > 0)
+            int pixelWidth = (int)ActualWidth;
+            if (pixelWidth > 0)
             {
                 CreatePoint(maxValue, minValue);
 
-                if (renderPosition > visiblePixels)
+                if (renderPosition > ActualWidth)
                 {
                     renderPosition = 0;
                 }
-                int erasePosition = (renderPosition + blankZone) % visiblePixels;
-                if (erasePosition < Points)
+                int erasePosition = (renderPosition + blankZone) % pixelWidth;
+                if (erasePosition < topLine.Points.Count)
                 {
                     double yPos = SampleToYPosition(0);
-                    waveForm.Points[erasePosition] = new Point(erasePosition * xScale, yPos);
-                    waveForm.Points[BottomPointIndex(erasePosition)] = new Point(erasePosition * xScale, yPos);
+                    topLine.Points[erasePosition] = new Point(erasePosition, yPos);
+                    bottomLine.Points[erasePosition] = new Point(erasePosition, yPos);
                 }
             }
-        }
-
-        private int BottomPointIndex(int position)
-        {
-            return waveForm.Points.Count - position - 1;
         }
 
         private double SampleToYPosition(float value)
@@ -90,19 +84,17 @@ namespace MView.Utilities.Audio.Controls
 
         private void CreatePoint(float topValue, float bottomValue)
         {
-            double topYPos = SampleToYPosition(topValue);
-            double bottomYPos = SampleToYPosition(bottomValue);
-            double xPos = renderPosition * xScale;
-            if (renderPosition >= Points)
+            double topLinePos = SampleToYPosition(topValue);
+            double bottomLinePos = SampleToYPosition(bottomValue);
+            if (renderPosition >= topLine.Points.Count)
             {
-                int insertPos = Points;
-                waveForm.Points.Insert(insertPos, new Point(xPos, topYPos));
-                waveForm.Points.Insert(insertPos + 1, new Point(xPos, bottomYPos));
+                topLine.Points.Add(new Point(renderPosition, topLinePos));
+                bottomLine.Points.Add(new Point(renderPosition, bottomLinePos));
             }
             else
             {
-                waveForm.Points[renderPosition] = new Point(xPos, topYPos);
-                waveForm.Points[BottomPointIndex(renderPosition)] = new Point(xPos, bottomYPos);
+                topLine.Points[renderPosition] = new Point(renderPosition, topLinePos);
+                bottomLine.Points[renderPosition] = new Point(renderPosition, bottomLinePos);
             }
             renderPosition++;
         }

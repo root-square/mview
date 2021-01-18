@@ -1,10 +1,10 @@
-﻿using MView.Bases;
+﻿using MView.Audio;
+using MView.Audio.Visualization;
+using MView.Bases;
 using MView.Commands;
 using MView.Core;
 using MView.Core.Cryptography;
 using MView.Entities;
-using MView.Utilities;
-using MView.Utilities.Audio;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -36,11 +36,10 @@
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.50.1" />
     <PackageReference Include="HandyControls" Version="3.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.8.0" />
-    <PackageReference Include="NAudio" Version="1.10.0" />
-    <PackageReference Include="NAudio.Vorbis" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MView.Audio\MView.Audio.csproj" />
     <ProjectReference Include="..\MView.Core\MView.Core.csproj" />
   </ItemGroup>
 
@@ -76,6 +75,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>

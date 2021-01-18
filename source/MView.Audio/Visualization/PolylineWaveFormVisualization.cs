@@ -1,11 +1,11 @@
-﻿using MView.Utilities.Audio.Controls;
+﻿using MView.Audio.Visualization.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MView.Utilities.Audio
+namespace MView.Audio.Visualization
 {
     public class PolylineWaveFormVisualization : IVisualizationPlugin
     {

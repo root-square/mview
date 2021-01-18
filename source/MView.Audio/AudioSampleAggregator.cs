@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MView.Utilities.Audio
+namespace MView.Audio
 {
     public class AudioSampleAggregator : ISampleProvider
     {

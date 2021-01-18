@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MView.Utilities
+namespace MView.Audio
 {
     public static class ReflectionHelper
     {

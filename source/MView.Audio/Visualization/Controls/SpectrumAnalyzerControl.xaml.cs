@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MView.Utilities.Audio.Controls
+namespace MView.Audio.Visualization.Controls
 {
     /// <summary>
     /// Interaction logic for SpectrumAnalyser.xaml

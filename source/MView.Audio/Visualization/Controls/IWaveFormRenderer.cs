@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MView.Utilities.Audio.Controls
+namespace MView.Audio.Visualization.Controls
 {
     public interface IWaveFormRenderer
     {
