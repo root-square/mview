@@ -183,47 +183,11 @@
                         <DataTemplate>
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="32"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-
-                                <Grid Grid.Row="0" Background="{DynamicResource RegionBrush}" >
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="2 0 0 0" Padding="4 0 4 0">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Folder"/>
-                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Add"/>
-                                            </StackPanel>
-                                        </Button>
-
-                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
-                                            Command="{Binding RefreshCommand}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="FileEdit"/>
-                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Rename"/>
-                                            </StackPanel>
-                                        </Button>
-
-                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
-                                            Command="{Binding RefreshCommand}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
-                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Delete"/>
-                                            </StackPanel>
-                                        </Button>
-
-                                        <Button Style="{StaticResource ButtonDefault}" Background="Transparent" BorderBrush="Transparent" Height="30" Margin="4 0 0 0" Padding="4 0 4 0"
-                                            Command="{Binding RefreshCommand}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconPacks:PackIconMaterial Width="12" Height="12" VerticalAlignment="Center" Opacity=".68" Kind="Refresh"/>
-                                                <TextBlock VerticalAlignment="Center" Margin="8 0 0 0" FontSize="12" Opacity=".68" Text="Refresh"/>
-                                            </StackPanel>
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid Grid.Row="1" Background="{DynamicResource RegionBrush}">
+                                
+                                <Grid Grid.Row="0" Background="{DynamicResource RegionBrush}">
                                     <hc:SearchBar Height="30" BorderThickness="1" hc:InfoElement.Placeholder="Search" hc:InfoElement.Necessary="True" hc:BorderElement.CornerRadius="0"/>
                                 </Grid>
 
@@ -231,11 +195,60 @@
                                 <controls:MultiSelectTreeView Grid.Row="2" Background="Transparent" BorderThickness="0" VerticalAlignment="Stretch"
                                           VirtualizingStackPanel.VirtualizationMode="Recycling" VirtualizingStackPanel.IsVirtualizing="True"
                                           ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
+                                    <TreeView.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding OpenFileCommand}" Header="Open">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="RedoVariant"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            
+                                            <Separator/>
+
+                                            <MenuItem Header="Add">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Plus"/>
+                                                </MenuItem.Icon>
+
+                                                <MenuItem Header="File">
+                                                    <MenuItem.Icon>
+                                                        <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="File"/>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Header="Folder">
+                                                    <MenuItem.Icon>
+                                                        <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Folder"/>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                            </MenuItem>
+                                            
+                                            <MenuItem Header="Rename">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="FileEdit"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            
+                                            <MenuItem Header="Delete">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <Separator/>
+
+                                            <MenuItem Command="{Binding RefreshCommand}" Header="Refresh">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Refresh"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TreeView.ContextMenu>
                                     <TreeView.ItemContainerStyle>
                                         <Style TargetType="TreeViewItem" BasedOn="{StaticResource TreeViewItemBaseStyle}">
                                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                            
                                             <Setter Property="controls:MultiSelectTreeView.IsItemSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+
                                             <Style.Triggers>
                                                 <Trigger Property="controls:MultiSelectTreeView.IsItemSelected" Value="True">
                                                     <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
@@ -247,7 +260,7 @@
                                         <HierarchicalDataTemplate DataType="{x:Type entities:DirectoryItem}" ItemsSource="{Binding SubItems}">
                                             <StackPanel Orientation="Horizontal">
                                                 <StackPanel.InputBindings>
-                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding ItemDoubleClickCommand}"/>
+                                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding OpenFileCommand}"/>
                                                 </StackPanel.InputBindings>
                                                 
                                                 <Image Width="16" Height="16" VerticalAlignment="Center" Source="{Binding Icon}"/>
@@ -425,7 +438,46 @@
                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Top"
                                          VerticalScrollBarVisibility="Visible"
                                          AcceptsReturn="True" AcceptsTab="True"
-                                         Text="{Binding TextContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding TextContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="Cut" Header="Cut">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCut"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Command="Copy" Header="Copy">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentCopy"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Command="Paste" Header="Paste">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="ContentPaste"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Command="Delete" Header="Delete">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Delete"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Command="SelectAll" Header="Select All"/>
+
+                                            <Separator />
+
+                                            <MenuItem Command="Undo" Header="Undo">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Undo"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem Command="Redo" Header="Redo">
+                                                <MenuItem.Icon>
+                                                    <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="Redo"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
 
                                 <!--Status Bar-->
                                 <StatusBar Grid.Row="1">
@@ -525,6 +577,7 @@
                                                         </MenuItem.Icon>
                                                     </MenuItem>
                                                     <MenuItem Command="SelectAll" Header="Select All"/>
+                                                    
                                                     <Separator />
 
                                                     <MenuItem Command="Undo" Header="Undo">

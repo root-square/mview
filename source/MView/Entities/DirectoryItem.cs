@@ -17,7 +17,7 @@ namespace MView.Entities
     {
         #region ::Fields::
 
-        private ICommand _itemDoubleClickCommand;
+        private ICommand _openFileCommand;
 
         #endregion
 
@@ -102,11 +102,11 @@ namespace MView.Entities
 
         public List<DirectoryItem> SubItems { get; set; }
 
-        public ICommand ItemDoubleClickCommand
+        public ICommand OpenFileCommand
         {
             get
             {
-                return (_itemDoubleClickCommand) ?? (_itemDoubleClickCommand = new DelegateCommand(ItemDoubleClick));
+                return (_openFileCommand) ?? (_openFileCommand = new DelegateCommand(OnOpenFile));
             }
         }
 
@@ -179,7 +179,7 @@ namespace MView.Entities
 
         #region ::Command Actions::
 
-        public void ItemDoubleClick()
+        public void OnOpenFile()
         {
             if (Type != DirectoryItemType.BaseDirectory && Type != DirectoryItemType.Directory)
             {
