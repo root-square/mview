@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MView.Core.Plugin
+namespace MView.Plugin
 {
-    class PluginLoader
+    public interface IPlugin
     {
+        public void OnLoaded();
+
+        public void OnUnloaded();
     }
 }

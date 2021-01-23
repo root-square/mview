@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MView.Test", "MView.Test\MV
 		{D63169F9-E644-4908-BDF6-F7EA42FE97FF} = {D63169F9-E644-4908-BDF6-F7EA42FE97FF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MView.Audio", "MView.Audio\MView.Audio.csproj", "{BEF4408D-47CF-403C-8A90-124C00B00BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MView.Audio", "MView.Audio\MView.Audio.csproj", "{BEF4408D-47CF-403C-8A90-124C00B00BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
