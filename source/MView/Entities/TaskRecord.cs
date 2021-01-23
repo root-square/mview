@@ -6,14 +6,6 @@ namespace MView.Entities
 {
     public class TaskRecord
     {
-        public TaskType Type { get; set; }
-
-        public PackIconMaterialKind IconKind { get; set; }
-
-        public DateTime DateTime { get; set; }
-
-        public string Details { get; set; }
-
         public TaskRecord(TaskType type, string details)
         {
             Type = type;
@@ -37,5 +29,13 @@ namespace MView.Entities
                 IconKind = PackIconMaterialKind.ScriptText;
             }
         }
+
+        public TaskType Type { get; set; }
+
+        public PackIconMaterialKind IconKind { get; set; }
+
+        public DateTime DateTime { get; set; }
+
+        public string Details { get; set; }
     }
 }

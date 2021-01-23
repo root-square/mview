@@ -1,34 +1,84 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\mview_icon_outline.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\LICENSE" />
+    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\README.md" />
+    <None Remove="Resources\avalondock_layout.config" />
+    <None Remove="Resources\icon_audiofile.png" />
+    <None Remove="Resources\icon_basedirectory.png" />
+    <None Remove="Resources\icon_data.png" />
+    <None Remove="Resources\icon_directory.png" />
+    <None Remove="Resources\icon_encrypted.png" />
+    <None Remove="Resources\icon_file.png" />
+    <None Remove="Resources\icon_image.png" />
+    <None Remove="Resources\icon_savedata.png" />
     <None Remove="Resources\mview_favicon_16.png" />
     <None Remove="Resources\mview_favicon_32.png" />
     <None Remove="Resources\mview_favicon_64.png" />
     <None Remove="Resources\mview_favicon_grayscale_16.png" />
     <None Remove="Resources\mview_icon.ico" />
     <None Remove="Resources\mview_icon_outline.ico" />
+    <None Remove="Resources\splash.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.50.0" />
+    <PackageReference Include="AvalonEdit" Version="6.0.1" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.50.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.50.1" />
     <PackageReference Include="HandyControls" Version="3.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.8.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MView.Audio\MView.Audio.csproj" />
+    <ProjectReference Include="..\MView.Core\MView.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\avalondock_layout.config" />
+    <Resource Include="Resources\icon_audiofile.png" />
+    <Resource Include="Resources\icon_basedirectory.png" />
+    <Resource Include="Resources\icon_data.png" />
+    <Resource Include="Resources\icon_directory.png" />
+    <Resource Include="Resources\icon_encrypted.png" />
+    <Resource Include="Resources\icon_file.png" />
+    <Resource Include="Resources\icon_image.png" />
+    <Resource Include="Resources\icon_savedata.png" />
     <Resource Include="Resources\mview_favicon_16.png" />
     <Resource Include="Resources\mview_favicon_32.png" />
     <Resource Include="Resources\mview_favicon_64.png" />
     <Resource Include="Resources\mview_favicon_grayscale_16.png" />
     <Resource Include="Resources\mview_icon.ico" />
     <Resource Include="Resources\mview_icon_outline.ico" />
+    <Resource Include="Resources\splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 
 </Project>

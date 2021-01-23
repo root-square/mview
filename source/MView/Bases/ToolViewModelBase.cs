@@ -6,18 +6,14 @@ namespace MView.Bases
 {
 	public class ToolViewModelBase : PaneViewModelBase
 	{
-		#region Fields
+		#region ::Fields::
 
 		private bool _isVisible = true;
 
 		#endregion
 
-		#region Constructor
+		#region ::Constructor::
 
-		/// <summary>
-		/// Class constructor
-		/// </summary>
-		/// <param name="name"></param>
 		public ToolViewModelBase(string name)
 		{
 			Name = name;
@@ -26,7 +22,7 @@ namespace MView.Bases
 
 		#endregion
 
-		#region Properties
+		#region ::Properties::
 
 		public string Name { get; private set; }
 

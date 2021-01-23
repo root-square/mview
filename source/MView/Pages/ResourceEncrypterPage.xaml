@@ -1,0 +1,96 @@
+﻿<Page x:Class="MView.Pages.ResourceEncrypterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:converters="clr-namespace:MView.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MView.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Resource Encrypter">
+
+    <Page.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </Page.Resources>
+
+    <Grid>
+        <hc:ScrollViewer VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical" Margin="20 14 20 14">
+                <!--Save Directory Selector-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Text="Save Directory"/>
+                    <hc:TextBox Grid.Column="1" ShowClearButton="True" hc:InfoElement.Placeholder="Save directory"
+                                Text="{Binding SaveDirectory}"/>
+                    <Button Grid.Column="2" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."
+                            Command="{Binding SaveDirectoryCommand}"/>
+                </Grid>
+
+                <!--Encryption Key Selector-->
+                <Grid Margin="0 8 0 8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Text="Encryption Key"/>
+                    <hc:TextBox Grid.Column="1" ShowClearButton="True" hc:InfoElement.Placeholder="Encryption key"
+                                Text="{Binding EncryptionKey}"/>
+                    <Button Grid.Column="2" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."
+                            Command="{Binding EncryptionKeyCommand}"/>
+                </Grid>
+
+                <Separator/>
+
+                <!--Type Selector-->
+                <Grid Margin="0 8 0 8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Text="Type"/>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <RadioButton Content="RPG Maker MV" IsChecked="{Binding IsUseRMMV}" />
+                        <RadioButton Margin="40 0 0 0" Content="RPG Maker MZ" IsChecked="{Binding IsUseRMMV, Converter={StaticResource InverseBooleanConverter}}"/>
+                    </StackPanel>
+                </Grid>
+
+                <Separator/>
+
+                <!--Backup Directory Selector-->
+                <Grid Margin="0 8 0 4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Text="Backup Directory"/>
+                    <hc:TextBox Grid.Column="1" ShowClearButton="True" hc:InfoElement.Placeholder="Backup directory"
+                                Text="{Binding BackupDirectory}" IsEnabled="{Binding IsBackupFiles}"/>
+                    <Button Grid.Column="2" HorizontalAlignment="Stretch" Margin="4 0 0 0" Content="..."
+                            Command="{Binding BackupDirectoryCommand}" IsEnabled="{Binding IsBackupFiles}"/>
+                </Grid>
+
+                <CheckBox HorizontalAlignment="Left" Margin="0 8 0 0" Content="Backup files" IsChecked="{Binding IsBackupFiles, Mode=TwoWay}"/>
+                <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" Margin="0 8 0 8" FontSize="12" Opacity=".68" TextWrapping="Wrap" Text="※ Automatically backup files before tasks begin. This may take a long time."/>
+
+                <Separator/>
+
+                <!--Encrypt Functions-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+                    <Button Content="Encrypt" Command="{Binding EncryptCommand}"/>
+                </StackPanel>
+            </StackPanel>
+        </hc:ScrollViewer>
+    </Grid>
+</Page>

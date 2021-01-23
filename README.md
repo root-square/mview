@@ -1,6 +1,16 @@
 ![Title](./data/image/title.png)
 
 ## Overview
+[![GitHub](https://img.shields.io/github/license/handbros/MView?style=flat-square)](LICENSE)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/handbros/MView?style=flat-square)](https://github.com/handbros/MView)
+[![GitHub issues](https://img.shields.io/github/issues/handbros/MView?style=flat-square)](https://github.com/handbros/MView/issues "Go to GitHub issues page.")
+
+| |master|test|
+|------|------|------|
+|Code Quality(Codacy)|[![Codacy branch grade](https://img.shields.io/codacy/grade/47dffba2896f4048954a0b6fdfca7215/master?logo=Codacy&logoColor=white&style=flat-square)](https://www.codacy.com/gh/handbros/MView/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=handbros/MView&amp;utm_campaign=Badge_Grade)|[![Codacy branch grade](https://img.shields.io/codacy/grade/47dffba2896f4048954a0b6fdfca7215/develop?logo=Codacy&logoColor=white&style=flat-square)](https://www.codacy.com/gh/handbros/MView/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=handbros/MView&amp;utm_campaign=Badge_Grade)|
+|Build State(AppVeyor CI)|[![AppVeyor branch](https://img.shields.io/appveyor/build/junimiso04/mview/master?logo=AppVeyor&logoColor=white&style=flat-square)](https://ci.appveyor.com/project/junimiso04/mview)|[![AppVeyor branch](https://img.shields.io/appveyor/build/junimiso04/MView/test?logo=AppVeyor&logoColor=white&style=flat-square)](https://ci.appveyor.com/project/junimiso04/mview)|
+
+## Description
 MView is a RPG Maker MV resource editor.
 
 ## Features

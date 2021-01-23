@@ -9,6 +9,7 @@ namespace MView
     {
         #region ::Singleton Members::
 
+        [NonSerialized]
         private static History _instance;
 
         public static History Instance

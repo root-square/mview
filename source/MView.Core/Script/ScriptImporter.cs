@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MView.Core.Extension;
+using MView.Core.Script.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +13,7 @@ namespace MView.Core.Script
     /// </summary>
     public class ScriptImporter
     {
+        // TODO : 예외처리하기.
         private List<JPathCollection> _jPathCollections = new List<JPathCollection>();
 
         /// <summary>

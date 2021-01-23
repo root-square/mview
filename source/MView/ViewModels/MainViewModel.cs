@@ -2,13 +2,16 @@
 using MView.Bases;
 using MView.Commands;
 using MView.Entities;
+using MView.Extensions;
 using MView.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace MView.ViewModels
 {
@@ -16,11 +19,16 @@ namespace MView.ViewModels
     {
         #region ::Fields::
 
+        private Settings _settings = MView.Settings.Instance;
         private History _history = History.Instance;
+        private ObservableCollection<TaskRecordGroup> _taskHistory;
 
         private bool _windowVisibility = true;
 
-        private ObservableCollection<TaskRecordGroup> _taskHistory;
+        private ICommand _workspaceCommand;
+        private ICommand _toolboxCommand;
+        private ICommand _settingsCommand;
+        private ICommand _informationCommand;
 
         #endregion
 
@@ -28,6 +36,7 @@ namespace MView.ViewModels
 
         public MainViewModel()
         {
+            // Load task history.
             _taskHistory = new ObservableCollection<TaskRecordGroup>();
             RefreshTaskHistoryItems();
         }
@@ -63,6 +72,38 @@ namespace MView.ViewModels
             }
         }
 
+        public ICommand WorkspaceCommand
+        {
+            get
+            {
+                return (_workspaceCommand) ?? (_workspaceCommand = new DelegateCommand(Workspace));
+            }
+        }
+
+        public ICommand ToolboxCommand
+        {
+            get
+            {
+                return (_toolboxCommand) ?? (_toolboxCommand = new DelegateCommand(Toolbox));
+            }
+        }
+
+        public ICommand SettingsCommand
+        {
+            get
+            {
+                return (_settingsCommand) ?? (_settingsCommand = new DelegateCommand(Settings));
+            }
+        }
+
+        public ICommand InformationCommand
+        {
+            get
+            {
+                return (_informationCommand) ?? (_informationCommand = new DelegateCommand(Information));
+            }
+        }
+
         #endregion
 
         #region ::Methods::
@@ -83,18 +124,14 @@ namespace MView.ViewModels
 
             foreach (TaskRecord record in _history.TaskRecordList)
             {
-                Debug.WriteLine("Record Catched.");
-
                 TimeSpan timeDifference = currentTime - record.DateTime;
                 if (timeDifference.Days < 1)
                 {
                     today.Group.Add(record);
-                    Debug.WriteLine("Input Today.");
                 }
                 else if (timeDifference.Days == 1)
                 {
                     yesterday.Group.Add(record);
-                    Debug.WriteLine("Input Yesterday.");
                 }
                 else if (timeDifference.Days > 7)
                 {
@@ -138,65 +175,19 @@ namespace MView.ViewModels
 
         #endregion
 
-        #region ::Commands::
-
-        private ICommand _workspaceCommand;
-
-        public ICommand WorkspaceCommand
-        {
-            get
-            {
-                return (_workspaceCommand) ?? (_workspaceCommand = new DelegateCommand(Workspace));
-            }
-        }
-
-        private ICommand _toolboxCommand;
-
-        public ICommand ToolboxCommand
-        {
-            get
-            {
-                return (_toolboxCommand) ?? (_toolboxCommand = new DelegateCommand(Toolbox));
-            }
-        }
-
-        private ICommand _settingsCommand;
-
-        public ICommand SettingsCommand
-        {
-            get
-            {
-                return (_settingsCommand) ?? (_settingsCommand = new DelegateCommand(Settings));
-            }
-        }
-
-        private ICommand _informationCommand;
-
-        public ICommand InformationCommand
-        {
-            get
-            {
-                return (_informationCommand) ?? (_informationCommand = new DelegateCommand(Information));
-            }
-        }
-
-        #endregion
-
         #region ::Command Actions::
 
-        public void Workspace()
+        public async void Workspace()
         {
             Window window = new WorkspaceWindow();
-            WindowVisibility = false;
-            window.Show();
-            WindowVisibility = true;
+            bool? result = await window.ShowDialogAsync();
         }
 
         public void Toolbox()
         {
             Window window = new ToolboxWindow();
             WindowVisibility = false;
-            window.Show();
+            window.ShowDialog();
             WindowVisibility = true;
         }
 
@@ -212,7 +203,7 @@ namespace MView.ViewModels
         {
             Window window = new InformationWindow();
             WindowVisibility = false;
-            window.Show();
+            window.ShowDialog();
             WindowVisibility = true;
         }
 

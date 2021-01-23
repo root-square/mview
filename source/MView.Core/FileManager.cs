@@ -62,9 +62,9 @@ namespace MView.Core
 
                 return files;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 

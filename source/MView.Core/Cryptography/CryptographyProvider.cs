@@ -1,6 +1,10 @@
-﻿using System;
+﻿using MView.Core.Extension;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MView.Core.Cryptography
 {
@@ -25,6 +29,11 @@ namespace MView.Core.Cryptography
         /// RPG MV encrypted resource file header.
         /// </summary>
         private static readonly string[] HEADER_MV = new string[] { "52", "50", "47", "4D", "56", "00", "00", "00", "00", "03", "01", "00", "00", "00", "00", "00" };
+
+        /// <summary>
+        /// OGG Vorbis file header.
+        /// </summary>
+        private static readonly string[] HEADER_OGG = new string[] { "4F", "67", "67", "53", "00", "02", "00", "00", "00", "00", "00", "00", "00", "00" };
 
         /// <summary>
         /// MPEG-4 Part.14 audio file header.
@@ -70,9 +79,9 @@ namespace MView.Core.Cryptography
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -133,9 +142,9 @@ namespace MView.Core.Cryptography
                     fs.Write(file, 0, file.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -188,9 +197,9 @@ namespace MView.Core.Cryptography
                     fs.Write(file, 0, file.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -263,9 +272,191 @@ namespace MView.Core.Cryptography
                     fs.Write(contents, 0, contents.Length);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
+            }
+        }
+
+        // Encrypted File Structure : RPG Maker MV Header(16Byte) -> Original Header that encrypted by XOR operation(16Byte) -> File Contents
+
+        // Ogg File Structure : Signature(4Byte)[OggS] -> Version(1Byte)[0x00] -> Flags(1Byte)[0x02, Beginning Of Stream] -> GranulePosition(8Byte)[00000000]
+        // -> SerialNumber(4Byte)[Random] -> Checksum(4Byte) -> TotalSegments(1Byte)
+
+        // Restore Procedure : Remove 32Byte on the top -> Insert a 14Byte header from the original file at the top -> Rest 2Bytes are filled randomly
+
+        /// <summary>
+        /// Recover the header of the files: *.rpgmvo.
+        /// </summary>
+        /// <param name="filePath">The path to the file to restore the header.</param>
+        /// <param name="savePath">The path where the completed file will be saved.</param>
+        public static void RestoreOggHeader(string filePath, string savePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
+                }
+
+                if (!Directory.Exists(Path.GetDirectoryName(savePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                }
+
+                // Checks extension.
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (extension != ".rpgmvo" && extension != ".ogg_")
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
+                }
+
+                byte[] file = File.ReadAllBytes(filePath);
+
+                int offset = 0;
+                offset += 16; // Skip RPG MV Header.
+
+                var header = (Signature: "", SerialNumber: 0, TotalSegments: 1);
+
+                // OGG Header.
+                offset += 4;
+                offset += 22;
+                header.TotalSegments = file.ReadByte(offset);
+
+                offset += 2;
+                offset += header.TotalSegments;
+
+                // OGG Vorbis Header.
+                offset += 27;
+                offset += 1;
+                offset += header.TotalSegments;
+
+                bool isLittleEndian = BitConverter.IsLittleEndian;
+
+                // OGG Data Header.
+                byte[] signatureBytes = file.ReadByte(offset, 4);
+                header.Signature = Encoding.ASCII.GetString(signatureBytes);
+
+                if (header.Signature == "OggS")
+                {
+                    offset += 4;
+                }
+                else
+                {
+                    throw new InvalidDataException("Failed to parse the OGG Header.");
+                }
+
+                // Serial number.
+                offset += 2;
+                offset += 8;
+
+                byte[] serialNumber = isLittleEndian ? file.ReadUInt32LE(offset) : file.ReadUInt32BE(offset);
+
+                // Sort serial number to LE or BE.
+                if (isLittleEndian)
+                {
+                    Array.Reverse(serialNumber);
+                }
+                else
+                {
+                    Array.Sort(serialNumber);
+                }
+
+                // Convert string array to byte array.
+                byte[] oggSignature = new byte[14];
+
+                for (int index = 0; index < oggSignature.Length; index++)
+                {
+                    oggSignature[index] = HEADER_OGG[index].HexToByte();
+                }
+
+                // Concat header.
+                byte[] oggHeader = new byte[oggSignature.Length + serialNumber.Length];
+                Array.Copy(oggSignature, 0, oggHeader, 0, oggSignature.Length);
+                Array.Copy(serialNumber, 0, oggHeader, oggSignature.Length, serialNumber.Length);
+
+                // Loads encrypted file and skips RPG Maker MV encryption header area.
+                int contentsOffset = serialNumber.Length - 2;
+
+                byte[] contents = file.Skip(32 + contentsOffset).ToArray();
+
+                // Save decrypted file.
+                using (FileStream fs = new FileStream(savePath, FileMode.Create))
+                {
+                    fs.Write(oggHeader, 0, oggHeader.Length);
+                    fs.Write(contents, 0, contents.Length);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recover the header of the files: *.rpgmvm, *.rpgmvw, *.rpgmvp. And returns a restored file.
+        /// </summary>
+        /// <param name="filePath">The path to the file to restore the header.</param>
+        public static byte[] GetRestoredFile(string filePath)
+        {
+            try
+            {
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException("The file you are trying to decrypt header does not exist.");
+                }
+
+                // Checks extension.
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                if (!EncryptedExtensions.Contains(extension) && (extension == ".rpgmvo" || extension == ".ogg_"))
+                {
+                    throw new NotSupportedException("Incompatible file format used.");
+                }
+
+                // Finds and sets header.
+                string[] headerHexArray = null;
+
+                if (extension == ".rpgmvm" || extension == ".m4a_")
+                {
+                    headerHexArray = HEADER_M4A;
+                }
+                else if (extension == ".rpgmvw" || extension == ".wav_")
+                {
+                    headerHexArray = HEADER_WAV;
+                }
+                else if (extension == ".rpgmvp" || extension == ".png_")
+                {
+                    headerHexArray = HEADER_PNG;
+                }
+                else
+                {
+                    throw new NotSupportedException("Not supported file extension.");
+                }
+
+                // Writes a header as byte array.
+                byte[] header = new byte[16];
+
+                for (int index = 0; index < header.Length; index++)
+                {
+                    header[index] = headerHexArray[index].HexToByte();
+                }
+
+                // Loads encrypted file and skips RPG Maker MV encryption header area.
+                byte[] file = File.ReadAllBytes(filePath);
+                byte[] contents = file.Skip(32).ToArray();
+
+                // Copy and return decrypted file.
+                byte[] result = new byte[header.Length + contents.Length];
+                Array.Copy(header, 0, result, 0, header.Length);
+                Array.Copy(contents, 0, result, header.Length, contents.Length);
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
