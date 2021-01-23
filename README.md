@@ -1,8 +1,8 @@
+![Title](./data/image/title.png)
+
 [![GitHub](https://img.shields.io/github/license/handbros/MView?style=flat-square)](LICENSE)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/handbros/MView?style=flat-square)](https://github.com/handbros/MView)
 [![GitHub issues](https://img.shields.io/github/issues/handbros/MView?style=flat-square)](https://github.com/handbros/MView/issues "Go to GitHub issues page.")
-
-![Title](./data/image/title.png)
 
 | |master|test|
 |------|------|------|
