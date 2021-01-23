@@ -197,7 +197,7 @@
                                           ItemsSource="{Binding Items}" SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
                                     <TreeView.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding OpenFileCommand}" Header="Open">
+                                            <MenuItem Header="Open">
                                                 <MenuItem.Icon>
                                                     <iconPacks:PackIconMaterial Width="14" Height="14" VerticalAlignment="Center" Opacity=".68" Kind="RedoVariant"/>
                                                 </MenuItem.Icon>

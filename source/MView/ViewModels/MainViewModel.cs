@@ -2,6 +2,7 @@
 using MView.Bases;
 using MView.Commands;
 using MView.Entities;
+using MView.Extensions;
 using MView.Windows;
 using System;
 using System.Collections.ObjectModel;
@@ -176,12 +177,10 @@ namespace MView.ViewModels
 
         #region ::Command Actions::
 
-        public void Workspace()
+        public async void Workspace()
         {
             Window window = new WorkspaceWindow();
-            WindowVisibility = false;
-            window.ShowDialog();
-            WindowVisibility = true;
+            bool? result = await window.ShowDialogAsync();
         }
 
         public void Toolbox()
