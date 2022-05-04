@@ -2,83 +2,41 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\mview_icon_outline.ico</ApplicationIcon>
-    <Platforms>AnyCPU;x64;x86</Platforms>
-    <Configurations>Debug;Release</Configurations>
+    <ApplicationIcon>assets/mview_icon_outline.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\LICENSE" />
-    <None Remove="C:\Users\user\.nuget\packages\naudio.vorbis\1.2.0\contentFiles\any\netstandard2.0\README.md" />
-    <None Remove="Resources\avalondock_layout.config" />
-    <None Remove="Resources\icon_audiofile.png" />
-    <None Remove="Resources\icon_basedirectory.png" />
-    <None Remove="Resources\icon_data.png" />
-    <None Remove="Resources\icon_directory.png" />
-    <None Remove="Resources\icon_encrypted.png" />
-    <None Remove="Resources\icon_file.png" />
-    <None Remove="Resources\icon_image.png" />
-    <None Remove="Resources\icon_savedata.png" />
-    <None Remove="Resources\mview_favicon_16.png" />
-    <None Remove="Resources\mview_favicon_32.png" />
-    <None Remove="Resources\mview_favicon_64.png" />
-    <None Remove="Resources\mview_favicon_grayscale_16.png" />
-    <None Remove="Resources\mview_icon.ico" />
-    <None Remove="Resources\mview_icon_outline.ico" />
-    <None Remove="Resources\splash.png" />
+    <None Remove="Assets\mview_favicon_16.png" />
+    <None Remove="Assets\mview_favicon_32.png" />
+    <None Remove="Assets\mview_favicon_64.png" />
+    <None Remove="Assets\mview_icon.ico" />
+    <None Remove="Assets\mview_icon_outline.ico" />
+    <None Remove="C:\Users\junim\.nuget\packages\naudio.vorbis\1.5.0\contentFiles\any\netstandard2.0\README.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.50.1" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.50.1" />
-    <PackageReference Include="HandyControls" Version="3.0.0" />
-    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.8.0" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
+    <PackageReference Include="MaterialDesignColors" Version="2.0.6" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+    <PackageReference Include="NAudio" Version="2.0.1" />
+    <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="VirtualTreeView" Version="0.4.1" />
+    <PackageReference Include="WPFHexaEditor" Version="2.1.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MView.Audio\MView.Audio.csproj" />
-    <ProjectReference Include="..\MView.Core\MView.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\avalondock_layout.config" />
-    <Resource Include="Resources\icon_audiofile.png" />
-    <Resource Include="Resources\icon_basedirectory.png" />
-    <Resource Include="Resources\icon_data.png" />
-    <Resource Include="Resources\icon_directory.png" />
-    <Resource Include="Resources\icon_encrypted.png" />
-    <Resource Include="Resources\icon_file.png" />
-    <Resource Include="Resources\icon_image.png" />
-    <Resource Include="Resources\icon_savedata.png" />
-    <Resource Include="Resources\mview_favicon_16.png" />
-    <Resource Include="Resources\mview_favicon_32.png" />
-    <Resource Include="Resources\mview_favicon_64.png" />
-    <Resource Include="Resources\mview_favicon_grayscale_16.png" />
-    <Resource Include="Resources\mview_icon.ico" />
-    <Resource Include="Resources\mview_icon_outline.ico" />
-    <Resource Include="Resources\splash.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Utilities\" />
+    <Resource Include="Assets\mview_favicon_16.png" />
+    <Resource Include="Assets\mview_favicon_32.png" />
+    <Resource Include="Assets\mview_favicon_64.png" />
+    <Content Include="Assets\mview_icon.ico" />
+    <Content Include="Assets\mview_icon_outline.ico" />
   </ItemGroup>
 
 </Project>

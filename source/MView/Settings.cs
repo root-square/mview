@@ -1,4 +1,4 @@
-﻿using MView.Entities;
+﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,85 +7,52 @@ using System.Threading.Tasks;
 
 namespace MView
 {
-    public class Settings
+    public class Settings : PropertyChangedBase
     {
-        #region ::Singleton Members::
+        // Constants
+        public readonly static string[] KnownExtensions = new string[] { ".png", ".ogg", ".m4a", ".wav", ".rpgmvp", ".rpgmvo", ".rpgmvm", ".rpgmvw", ".png_", ".ogg_", ".m4a_", ".wav_" };
 
-        [NonSerialized]
-        private static Settings _instance;
+        public readonly static string[] ImageExtensions = new string[] { ".png", ".rpgmvp", ".png_" };
 
-        public static Settings Instance
+        public readonly static string[] AudioExtensions = new string[] { ".ogg", ".m4a", ".wav", ".rpgmvo", ".rpgmvm", ".rpgmvw", ".ogg_", ".m4a_", ".wav_" };
+
+        public readonly static string Path = @"data\settings.json";
+
+        // Variables
+        private bool _useDarkTheme = true;
+
+        public bool UseDarkTheme
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new Settings();
-                }
-
-                return _instance;
-            }
+            get => _useDarkTheme;
             set
             {
-                _instance = value;
+                Set(ref _useDarkTheme, value);
+                App.ApplyTheme(value);
             }
         }
 
-        #endregion
+        private bool _useMultiThreading = true;
 
-        #region ::Consts::
-
-        public const string SettingsPath = "./MView/settings.json";
-
-        public const string HistoryPath = "./MView/history.json";
-
-        public const string LayoutPath = "./MView/layout.config";
-
-        public static readonly string[] AvailableExtensions = new string[] { ".rpgmvo", ".rpgmvm", ".rpgmvw", ".rpgmvp", ".ogg_", ".m4a_", ".wav_", ".png_", ".ogg", ".m4a", ".wav", ".png", ".json", ".rpgsave", ".script" }; 
-
-        #endregion
-
-        #region ::Constructors::
-
-        public Settings()
+        public bool UseMultiThreading
         {
-            IsSkipUpdates = false;
-
-            ThemeStyle = ThemeStyle.Light;
+            get => _useMultiThreading;
+            set => Set(ref _useMultiThreading, value);
         }
 
-        #endregion
+        private int _numberOfThreads = 4;
 
-        #region ::Application Flags::
+        public int NumberOfThreads
+        {
+            get => _numberOfThreads;
+            set => Set(ref _numberOfThreads, value);
+        }
 
-        public bool IsSkipUpdates { get; set; }
-
-        #endregion
-
-        #region ::General::
-
-        public ThemeStyle ThemeStyle { get; set; }
-
-        #endregion
-
-        #region ::Add-on::
-
-        #endregion
-
-        #region ::Cryptography Manager::
-
-        #endregion
-
-        #region ::Data Manager::
-
-        #endregion
-
-        #region ::Save Data Manager::
-
-        #endregion
-
-        #region ::Script Manager::
-
-        #endregion
+        // Methods
+        public void DeepCopyFrom(Settings settings)
+        {
+            UseDarkTheme = settings.UseDarkTheme;
+            UseMultiThreading = settings.UseMultiThreading;
+            NumberOfThreads = settings.NumberOfThreads;
+        }
     }
 }

@@ -1,11 +1,9 @@
-﻿
-using AvalonDock.Themes;
-using HandyControl.Data;
-using HandyControl.Themes;
-using HandyControl.Tools;
-using MView.Core;
-using MView.Entities;
-using MView.Windows;
+﻿using Caliburn.Micro;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using MView.Utilities.Text;
+using Serilog;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,8 +12,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace MView
 {
@@ -24,106 +24,118 @@ namespace MView
     /// </summary>
     public partial class App : Application
     {
-        private void UpdateSkin(SkinType skin)
+        private readonly static bool _debugMode = true;
+
+        public static bool DebugMode
         {
-            this.Dispatcher.Invoke(() =>
-            {
-                SharedResourceDictionary.SharedDictionaries.Clear();
-                Resources.MergedDictionaries.Add(ResourceHelper.GetSkin(skin));
-                Resources.MergedDictionaries.Add(new ResourceDictionary
-                {
-                    Source = new Uri("pack://application:,,,/HandyControl;component/Themes/Theme.xaml")
-                });
-                Current.MainWindow?.OnApplyTemplate();
-            });
+            get => _debugMode;
+        }
+
+        private static LogBroker _logBroker = new LogBroker();
+
+        public static LogBroker LogBroker
+        {
+            get => _logBroker;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            InitializeLogger();
+
+            ReadSettings(); // The theme is applied by the deep copy function.
+
             base.OnStartup(e);
-
-            // Initialize the splash screen and set it as the application main window.
-            var splashScreen = new SplashWindow();
-            this.MainWindow = splashScreen;
-            splashScreen.Show();
-
-            // In order to ensure the UI stays responsive, we need to do the work on a different thread.
-            Task.Factory.StartNew(() =>
-            {
-                // Load settings.
-                string settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.SettingsPath);
-
-                if (File.Exists(settingsPath))
-                {
-                    string settingsJson = FileManager.ReadTextFile(settingsPath, Encoding.UTF8);
-                    Settings.Instance = JsonSerializer.Deserialize<Settings>(settingsJson);
-                }
-
-                // Load history.
-                string historyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.HistoryPath);
-
-                if (File.Exists(settingsPath))
-                {
-                    string historyJson = FileManager.ReadTextFile(historyPath, Encoding.UTF8);
-                    History.Instance = JsonSerializer.Deserialize<History>(historyJson);
-                }
-
-                // Load Workspace.
-                Workspace.Instance = new Workspace();
-
-                // Load theme.
-                if (Settings.Instance.ThemeStyle == ThemeStyle.Light)
-                {
-                    UpdateSkin(SkinType.Default);
-                    Workspace.Instance.SelectedTheme = new Vs2013LightTheme();
-                }
-                else
-                {
-                    UpdateSkin(SkinType.Dark);
-                    Workspace.Instance.SelectedTheme = new Vs2013DarkTheme();
-                }
-
-                // Since we're not on the UI thread once we're done we need to use the Dispatcher to create and show the main window.
-                this.Dispatcher.Invoke(() =>
-                {
-                    // Initialize the main window, set it as the application main window and close the splash screen.
-                    var mainWindow = new MainWindow();
-                    this.MainWindow = mainWindow;
-                    mainWindow.Show();
-                    splashScreen.Close();
-                });
-            });
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            WriteSettings();
+
             base.OnExit(e);
+        }
 
-            // In order to ensure the UI stays responsive, we need to do the work on a different thread.
-            Task.Factory.StartNew(() =>
+        private void InitializeLogger()
+        {
+            string fileName = @"data\logs\log-.log";
+            string outputTemplateString = "{Timestamp:HH:mm:ss.ms} ({ThreadId}) [{Level}] {Message}{NewLine}{Exception}";
+
+            var log = new LoggerConfiguration()
+                .Enrich.WithProperty("ThreadId", Thread.CurrentThread.ManagedThreadId)
+                .WriteTo.Sink(_logBroker)
+                .WriteTo.File(fileName, restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: outputTemplateString, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 100000)
+                .CreateLogger();
+
+            Log.Logger = log;
+
+            Log.Information("The logger has been initialized.");
+        }
+
+        public static void ReadSettings()
+        {
+            if (File.Exists(Settings.Path))
             {
-                // Save settings
-                string settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.SettingsPath);
+                string json = TextManager.ReadTextFile(Settings.Path, Encoding.UTF8);
 
-                if (!Directory.Exists(Path.GetDirectoryName(settingsPath)))
+                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(settingsPath));
+                    var settings = JsonSerializer.Deserialize<Settings>(stream);
+                    IoC.Get<Settings>().DeepCopyFrom(settings ?? new Settings());
                 }
+            }
+        }
 
-                string settingsJson = JsonSerializer.Serialize(Settings.Instance);
-                FileManager.WriteTextFile(settingsPath, settingsJson, Encoding.UTF8);
+        public static void WriteSettings()
+        {
+            var settings = IoC.Get<Settings>();
 
-                // Save history
-                string historyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.HistoryPath);
+            using (MemoryStream stream = new MemoryStream())
+            {
+                // Serialize the settings.
+                JsonSerializerOptions options = new JsonSerializerOptions();
+                options.IgnoreReadOnlyFields = true;
+                options.IgnoreReadOnlyProperties = true;
 
-                if (!Directory.Exists(Path.GetDirectoryName(historyPath)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(historyPath));
-                }
+                JsonSerializer.Serialize(stream, settings, options);
 
-                string historyJson = JsonSerializer.Serialize(Settings.Instance);
-                FileManager.WriteTextFile(historyPath, historyJson, Encoding.UTF8);
-            });
+                // Write a JSON string into the settings file.
+                string json = Encoding.UTF8.GetString(stream.ToArray());
+                TextManager.WriteTextFile(Settings.Path, json, Encoding.UTF8);
+            }
+        }
+
+        public static void ApplyTheme(bool useDarkTheme = false)
+        {
+            var paletteHelper = new PaletteHelper();
+
+            ResourceDictionary brushes = new ResourceDictionary();
+
+            if (useDarkTheme)
+            {
+                ITheme theme = paletteHelper.GetTheme();
+                theme.SetBaseTheme(Theme.Dark);
+                theme.SetPrimaryColor(SwatchHelper.Lookup[(MaterialDesignColor)PrimaryColor.Blue]);
+                theme.SetSecondaryColor(SwatchHelper.Lookup[(MaterialDesignColor)SecondaryColor.Blue]);
+                paletteHelper.SetTheme(theme);
+
+                brushes.Source = new Uri(@"../Assets/Resources/Brushes.Dark.xaml", UriKind.Relative);
+            }
+            else
+            {
+                ITheme theme = paletteHelper.GetTheme();
+                theme.SetBaseTheme(Theme.Light);
+                theme.SetPrimaryColor(SwatchHelper.Lookup[(MaterialDesignColor)PrimaryColor.Blue]);
+                theme.SetSecondaryColor(SwatchHelper.Lookup[(MaterialDesignColor)SecondaryColor.Blue]);
+                paletteHelper.SetTheme(theme);
+
+                brushes.Source = new Uri(@"../Assets/Resources/Brushes.Light.xaml", UriKind.Relative);
+            }
+
+            App.Current.Resources.MergedDictionaries.Add(brushes);
+
+            // Re-register the icons dictionary to change icons' color.
+            ResourceDictionary icons = new ResourceDictionary();
+            icons.Source = new Uri(@"../Assets/Resources/Icons.xaml", UriKind.Relative);
+            App.Current.Resources.MergedDictionaries.Add(icons);
         }
     }
 }

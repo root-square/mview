@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="PickUiBackgroundColor">#FF202020</Color>
+    <SolidColorBrush x:Key="PickUiBackground" Color="{DynamicResource PickUiBackgroundColor}" />
+    <Color x:Key="PickUiSecondBackgroundColor">#FF262626</Color>
+    <SolidColorBrush x:Key="PickUiSecondBackground" Color="{DynamicResource PickUiSecondBackgroundColor}" />
+    <Color x:Key="PickUiSearchBoxBackgroundColor">#FF303030</Color>
+    <SolidColorBrush x:Key="PickUiSearchBoxBackground" Color="{DynamicResource PickUiSearchBoxBackgroundColor}" />
+    <Color x:Key="PickUiPopupBoxBackgroundColor">#FF303030</Color>
+    <SolidColorBrush x:Key="PickUiPopupBoxBackground" Color="{DynamicResource PickUiPopupBoxBackgroundColor}" />
+    <Color x:Key="PickUiProgressBarBackgroundColor">#FF303030</Color>
+    <SolidColorBrush x:Key="PickUiProgressBarBackground" Color="{DynamicResource PickUiProgressBarBackgroundColor}" />
+    <Color x:Key="PickUiCommandBarBackgroundColor">#FF303030</Color>
+    <SolidColorBrush x:Key="PickUiCommandBarBackground" Color="{DynamicResource PickUiDialogCommandBarBackgroundColor}" />
+
+    <Color x:Key="PickUiButtonHoverColor">#FF292929</Color>
+    <SolidColorBrush x:Key="PickUiButtonHover" Color="{DynamicResource PickUiButtonHoverColor}" />
+    <Color x:Key="PickUiButtonRippleColor">#FF323232</Color>
+    <SolidColorBrush x:Key="PickUiButtonRipple" Color="{DynamicResource PickUiButtonRippleColor}" />
+
+    <Color x:Key="PickUiForegroundUltraLightColor">#616161</Color>
+    <SolidColorBrush x:Key="PickUiForegroundUltraLight" Color="{DynamicResource PickUiForegroundUltraLightColor}" />
+    <Color x:Key="PickUiForegroundLightColor">#89FFFFFF</Color>
+    <SolidColorBrush x:Key="PickUiForegroundLight" Color="{DynamicResource PickUiForegroundLightColor}" />
+    <Color x:Key="PickUiForegroundColor">#DDFFFFFF</Color>
+    <SolidColorBrush x:Key="PickUiForeground" Color="{DynamicResource PickUiForegroundColor}" />
+
+    <Color x:Key="PickUiDividerColor">#FF343434</Color>
+    <SolidColorBrush x:Key="PickUiDivider" Color="{DynamicResource PickUiDividerColor}" />
+    <Color x:Key="PickUiDividerLightColor">#FF303030</Color>
+    <SolidColorBrush x:Key="PickUiDividerLight" Color="{DynamicResource PickUiDividerLightColor}" />
+
+    <Color x:Key="PickUiPrimaryColor">#1976d2</Color>
+    <SolidColorBrush x:Key="PickUiPrimary" Color="{DynamicResource PickUiPrimaryColor}" />
+
+    <Color x:Key="PickUiAccentColor">#FF2962FF</Color>
+    <SolidColorBrush x:Key="PickUiAccent" Color="{DynamicResource PickUiAccentColor}" />
+</ResourceDictionary>

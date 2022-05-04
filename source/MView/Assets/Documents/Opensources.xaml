@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FlowDocument x:Key="OpensourcesDocument">
+        <List MarkerOffset="25" MarkerStyle="Disc">
+            <ListItem>
+                <Paragraph>tesseract</Paragraph>
+                <Paragraph>Apache License, Version 2.0</Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>TransPick Engine Version :</Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>OpenCV Version :</Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>WebView2 Version :</Paragraph>
+            </ListItem>
+            <ListItem>
+                <Paragraph>Tesseract Data Version :</Paragraph>
+            </ListItem>
+        </List>
+    </FlowDocument>
+</ResourceDictionary>

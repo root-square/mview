@@ -1,0 +1,36 @@
+﻿<Window x:Class="MView.Views.Dialogs.NoTPickerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MView.Views.Dialogs"
+        xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:caliburn="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Style="{StaticResource PickUiFixedDialogWindow}"
+        Foreground="{DynamicResource PickUiForeground}"
+        WindowStartupLocation="CenterScreen"
+        Title="Number of Threads" Height="200" Width="500" SizeToContent="WidthAndHeight">
+    <Grid Margin="20 10 20 20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" Margin="16 16 16 0" MinWidth="400">
+                <Slider Orientation="Horizontal" TickPlacement="BottomRight" TickFrequency="1" SelectionStart="4" SelectionEnd="8" IsSelectionRangeEnabled="True"
+                        materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
+                        Minimum="1" Maximum="10" Value="{Binding NumberOfThreads, Mode=TwoWay}" />
+
+                <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 10 0 0" Text="※ The recommended range: 4~8 Thread" TextWrapping="Wrap" Opacity=".68"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource PickUiForegroundLight}" Content="CANCEL" caliburn:Message.Attach="Cancel()"/>
+            <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="8 0 0 0" Content="OK" caliburn:Message.Attach="Confirm($view)"/>
+        </StackPanel>
+    </Grid>
+</Window>
