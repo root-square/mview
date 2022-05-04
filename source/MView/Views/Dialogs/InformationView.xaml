@@ -20,7 +20,7 @@
             </StackPanel>
 
             <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 8 0 0" HorizontalAlignment="Center" Text="A RPG Maker MV/MZ Resource Viewer" />
-            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Center" Text="Version: 2022" />
+            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Center" Text="Version: 2" />
             <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Center" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
         </StackPanel>
     </Grid>

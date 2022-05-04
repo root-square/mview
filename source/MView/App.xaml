@@ -19,6 +19,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MView;component/Assets/Documents/Opensources.xaml" />
 
                 <!--Resources-->
+                <ResourceDictionary Source="pack://application:,,,/MView;component/Assets/Resources/Brushes.Dark.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MView;component/Assets/Resources/Converters.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MView;component/Assets/Resources/Icons.xaml" />
 

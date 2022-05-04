@@ -37,7 +37,6 @@ namespace MView.ViewModels
                 if (value != null)
                 {
                     Set(ref _selectedItem, value);
-                    Log.Information($"SI Changed : {value?.Name}");
                 }
             }
         }
@@ -110,9 +109,11 @@ namespace MView.ViewModels
 
                     progressDialog.ProgressBarStyle = ProgressBarStyle.ProgressBar;
 
+                    List<string> extensions = Settings.KnownExtensions.ToList();
+
                     for (int i = 0; i < selectedFiles.Length; i++)
                     {
-                        IndexedItem? item = IndexingManager.GetFileItem(new FileInfo(selectedFiles[i]), !indexAllExtensions);
+                        IndexedItem? item = IndexingManager.GetFile(new FileInfo(selectedFiles[i]), indexAllExtensions ? null : extensions);
 
                         if (item != null)
                         {
@@ -193,14 +194,13 @@ namespace MView.ViewModels
 
                     progressDialog.ProgressBarStyle = ProgressBarStyle.ProgressBar;
 
+                    List<string> extensions = Settings.KnownExtensions.ToList();
+
                     for (int i = 0; i < selectedPaths.Length; i++)
                     {
-                        IndexedItem? item = IndexingManager.GetFolderItem(new DirectoryInfo(selectedPaths[i]), !indexAllExtensions);
+                        List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), indexAllExtensions ? null : extensions);
 
-                        if (item != null)
-                        {
-                            IndexedItems.Add(item);
-                        }
+                        IndexedItems.AddRange(items);
 
                         int progress = i / selectedPaths.Length * 100;
                         progressDialog.ReportProgress(progress, null, string.Format(System.Globalization.CultureInfo.CurrentCulture, "Indexing selected folders: {0}%", progress));

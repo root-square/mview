@@ -11,90 +11,72 @@ namespace MView.Utilities.Indexing
     public static class IndexingManager
     {
         /// <summary>
-        /// Returns a file item.
+        /// Index a file.
         /// </summary>
-        /// <param name="file">The file info.</param>
-        /// <param name="checkExtension">Whether to check file exteion.</param>
-        /// <returns>The directory item.</returns>
-        public static IndexedItem? GetFileItem(FileInfo file, bool checkExtension = false)
+        /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
+        /// <returns>Indexed file item</returns>
+        public static IndexedItem? GetFile(FileInfo file, List<string>? extensions)
         {
-            // Check a extension of a file. 
-            if (checkExtension)
+            if (extensions == null)
             {
-                if (!Settings.KnownExtensions.Any(p => p.Equals(file.Extension, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return null;
-                }
+                extensions = new List<string>();
             }
 
-            // Index
-            IndexedItem item = new IndexedItem();
+            if (!extensions.Any(e => e.Equals(file.Extension, StringComparison.OrdinalIgnoreCase)))
+            {
+                return null;
+            }
 
-            item.Type = IndexedItemType.File;
-            item.Name = file.Name;
-            item.FullName = file.FullName;
-            item.Size = file.Length;
+            IndexedItem item = new IndexedItem();
             item.IsSelected = true;
-            item.SubItems = new List<IndexedItem>();
+            item.FileName = file.Name;
+            item.FullPath = file.FullName;
+            item.ParentPath = Directory.GetParent(file.FullName).FullName;
 
             return item;
         }
 
         /// <summary>
-        /// Returns a folder item.
+        /// Index all files that exist within the directory.
         /// </summary>
-        /// <param name="directory">The directory info to get information.</param>
-        /// <returns>The directory item.</returns>
-        public static IndexedItem? GetFolderItem(DirectoryInfo directory, bool checkExtension = false)
+        /// <param name="directory">Directory to index.</param>
+        /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
+        /// <returns>Indexed file list</returns>
+        public static List<IndexedItem> GetFiles(DirectoryInfo directory, List<string>? extensions)
         {
-            IndexedItem item = new IndexedItem();
+            List<IndexedItem> items = new List<IndexedItem>();
 
-            item.Type = IndexedItemType.Folder;
-            item.Name = directory.Name;
-            item.FullName = directory.FullName;
-            item.IsSelected = true;
-
-            try
-            {
-                var subDirectories = directory.EnumerateDirectories();
-
-                foreach (DirectoryInfo subDirectory in subDirectories)
-                {
-                    IndexedItem? dirItem = GetFolderItem(subDirectory, checkExtension);
-
-                    if (dirItem?.SubItems.Count > 0)
-                    {
-                        dirItem.Parent = item;
-                        item.SubItems.Add(dirItem);
-                    }
-                }
-            }
-            catch { }
-
+            // Index files in current directory.
             try
             {
                 var files = directory.EnumerateFiles();
 
                 foreach (FileInfo file in files)
                 {
-                    IndexedItem? fileItem = GetFileItem(file, checkExtension);
+                    IndexedItem? item = GetFile(file, extensions);
 
-                    if (fileItem != null)
+                    if (item != null)
                     {
-                        fileItem.Parent = item;
-                        item.SubItems.Add(fileItem);
+                        items.Add(item);
                     }
                 }
             }
             catch { }
 
-            if (item.SubItems.Count == 0)
+            // Re-index files in sub-directory.
+            try
             {
-                return null;
+                var subDirectories = directory.EnumerateDirectories();
+
+                foreach (DirectoryInfo subDirectory in subDirectories)
+                {
+                    List<IndexedItem> subItems = GetFiles(subDirectory, extensions);
+                    items.AddRange(subItems);
+                }
             }
+            catch { }
 
-            return item;
+            return items;
         }
-
     }
 }
