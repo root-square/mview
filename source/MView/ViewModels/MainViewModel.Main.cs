@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace MView.ViewModels
@@ -45,6 +46,10 @@ namespace MView.ViewModels
         public MainViewModel()
         {
             ConnectToLogBroker();
+
+            // Initialize the IndexedItemsCVS : In MainViewModel.Explorer
+            IndexedItemsCVS.Source = IndexedItems;
+            IndexedItemsCVS.GroupDescriptions.Add(new PropertyGroupDescription("ParentPath"));
         }
 
         private void ConnectToLogBroker()

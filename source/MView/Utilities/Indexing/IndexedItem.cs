@@ -25,14 +25,6 @@ namespace MView.Utilities.Indexing
             set => Set(ref _fileName, value);
         }
 
-        private string _parentPath = string.Empty;
-
-        public string ParentPath
-        {
-            get => _parentPath;
-            set => Set(ref _parentPath, value);
-        }
-
         private string _fullPath = string.Empty;
 
         public string FullPath
@@ -41,12 +33,28 @@ namespace MView.Utilities.Indexing
             set => Set(ref _fullPath, value);
         }
 
+        private string _parentPath = string.Empty;
+
+        public string ParentPath
+        {
+            get => _parentPath;
+            set => Set(ref _parentPath, value);
+        }
+
         private long _size = 0;
 
         public long Size
         {
             get => _size;
             set => Set(ref _size, value);
+        }
+
+        private string _sizeString = string.Empty;
+
+        public string SizeString
+        {
+            get => _sizeString;
+            set => Set(ref _sizeString, value);
         }
     }
 }

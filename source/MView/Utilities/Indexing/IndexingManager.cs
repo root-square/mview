@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using MView.Utilities.Text;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,10 +22,12 @@ namespace MView.Utilities.Indexing
             {
                 extensions = new List<string>();
             }
-
-            if (!extensions.Any(e => e.Equals(file.Extension, StringComparison.OrdinalIgnoreCase)))
+            else
             {
-                return null;
+                if (!extensions.Any(e => e.Equals(file.Extension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return null;
+                }
             }
 
             IndexedItem item = new IndexedItem();
@@ -32,6 +35,8 @@ namespace MView.Utilities.Indexing
             item.FileName = file.Name;
             item.FullPath = file.FullName;
             item.ParentPath = Directory.GetParent(file.FullName).FullName;
+            item.Size = file.Length;
+            item.SizeString = UnitConverter.GetFileSizeString(file.Length);
 
             return item;
         }
@@ -61,7 +66,10 @@ namespace MView.Utilities.Indexing
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
+            }
 
             // Re-index files in sub-directory.
             try
@@ -74,7 +82,10 @@ namespace MView.Utilities.Indexing
                     items.AddRange(subItems);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
+            }
 
             return items;
         }

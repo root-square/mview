@@ -12,12 +12,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 
 namespace MView.ViewModels
 {
     public partial class MainViewModel
     {
         #region ::Variables::
+
+        private CollectionViewSource _indexedItemsCVS = new CollectionViewSource();
+
+        public CollectionViewSource IndexedItemsCVS
+        {
+            get => _indexedItemsCVS;
+            set => Set(ref _indexedItemsCVS, value);
+        }
 
         private BindableCollection<IndexedItem> _indexedItems = new BindableCollection<IndexedItem>();
 
@@ -107,8 +116,6 @@ namespace MView.ViewModels
                 progressDialog.DoWork += (sender, e) => {
                     Thread.Sleep(1000);
 
-                    progressDialog.ProgressBarStyle = ProgressBarStyle.ProgressBar;
-
                     List<string> extensions = Settings.KnownExtensions.ToList();
 
                     for (int i = 0; i < selectedFiles.Length; i++)
@@ -119,12 +126,9 @@ namespace MView.ViewModels
                         {
                             IndexedItems.Add(item);
                         }
-
-                        int progress = i / selectedFiles.Length * 100;
-                        progressDialog.ReportProgress(progress, null, string.Format(System.Globalization.CultureInfo.CurrentCulture, "Indexing selected files: {0}%", progress));
                     }
 
-                    Log.Information($"{IndexedItems.Count} files have been indexed.");
+                    Log.Information($"{IndexedItems.Count} items have been indexed.");
                 };
 
                 progressDialog.Show();
@@ -192,8 +196,6 @@ namespace MView.ViewModels
                 progressDialog.DoWork += (sender, e) => {
                     Thread.Sleep(1000);
 
-                    progressDialog.ProgressBarStyle = ProgressBarStyle.ProgressBar;
-
                     List<string> extensions = Settings.KnownExtensions.ToList();
 
                     for (int i = 0; i < selectedPaths.Length; i++)
@@ -201,12 +203,9 @@ namespace MView.ViewModels
                         List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), indexAllExtensions ? null : extensions);
 
                         IndexedItems.AddRange(items);
-
-                        int progress = i / selectedPaths.Length * 100;
-                        progressDialog.ReportProgress(progress, null, string.Format(System.Globalization.CultureInfo.CurrentCulture, "Indexing selected folders: {0}%", progress));
                     }
 
-                    Log.Information($"{IndexedItems.Count} folders have been indexed.");
+                    Log.Information($"{IndexedItems.Count} items have been indexed.");
                 };
 
                 progressDialog.Show();

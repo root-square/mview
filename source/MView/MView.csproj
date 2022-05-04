@@ -27,7 +27,6 @@
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
     <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="VirtualTreeView" Version="0.4.1" />
     <PackageReference Include="WPFHexaEditor" Version="2.1.7" />
   </ItemGroup>
 
