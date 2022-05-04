@@ -200,6 +200,57 @@ namespace MView.Utilities
             }
         }
 
+        public static string Estimate(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The file does not exist.");
+            }
+
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                // Copy encrypted bytes.
+                byte[] targetBytes = new byte[16];
+
+                originalStream.Position = 16;
+                originalStream.Read(targetBytes, 0, 16);
+
+                // Select the general header.
+                string extension = Path.GetExtension(filePath).ToLower();
+
+                byte[] header;
+
+                if (extension == ".rpgmvp" || extension == ".png_")
+                {
+                    header = HEADER_PNG;
+                }
+                else if (extension == ".rpgmvm" || extension == ".m4a_")
+                {
+                    header = HEADER_M4A;
+                }
+                else if (extension == ".rpgmvw" || extension == ".wav_")
+                {
+                    header = HEADER_WAV;
+                }
+                else
+                {
+                    throw new NotSupportedException("Incompatible file format is used.");
+                }
+
+                // Calculate a original key.
+                byte[] keyBytes = new byte[16];
+
+                for (int i = 0; i < 16; i++)
+                {
+                    keyBytes[i] = (byte)(targetBytes[i] ^ header[i]);
+                }
+
+                string key = keyBytes.ByteArrayToString();
+
+                return key;
+            }
+        }
+
         /// <summary>
         /// Restore a header of a encrypted RPG Maker MV/MZ resource file.
         /// </summary>

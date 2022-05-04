@@ -8,6 +8,16 @@ namespace MView.Extensions
 {
     public static class ByteExtension
     {
+        public static string ByteArrayToString(this byte[] hexBytes)
+        {
+            string result = string.Empty;
+
+            foreach (byte c in hexBytes)
+                result += c.ToString("x2").ToUpper();
+
+            return result;
+        }
+
         public static byte ReadByte(this byte[] array, int offset)
         {
             byte[] skipped = array.Skip(offset).ToArray();
