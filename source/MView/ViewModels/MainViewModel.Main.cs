@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;
 using MView.ViewModels.Dialogs;
@@ -85,7 +86,7 @@ namespace MView.ViewModels
 
         public async void Estimate()
         {
-
+            
         }
 
         public async void Restore()
