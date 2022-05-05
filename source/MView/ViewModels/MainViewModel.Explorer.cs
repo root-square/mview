@@ -6,6 +6,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,21 +21,9 @@ namespace MView.ViewModels
     {
         #region ::Variables::
 
-        private CollectionViewSource _indexedItemsCVS = new CollectionViewSource();
+        public BindableCollection<IndexedItem> IndexedItems { get; set; } = new BindableCollection<IndexedItem>();
 
-        public CollectionViewSource IndexedItemsCVS
-        {
-            get => _indexedItemsCVS;
-            set => Set(ref _indexedItemsCVS, value);
-        }
-
-        private BindableCollection<IndexedItem> _indexedItems = new BindableCollection<IndexedItem>();
-
-        public BindableCollection<IndexedItem> IndexedItems
-        {
-            get => _indexedItems;
-            set => Set(ref _indexedItems, value);
-        }
+        public CollectionViewSource ItemCollectionViewSource { get; set; } = new CollectionViewSource();
 
         private IndexedItem _selectedItem = new IndexedItem();
 
@@ -46,8 +35,17 @@ namespace MView.ViewModels
                 if (value != null)
                 {
                     Set(ref _selectedItem, value);
+                    MessageBox.Show(value.FileName);
                 }
             }
+        }
+
+        private BindableCollection<IndexedItem> _selectedItems = new BindableCollection<IndexedItem>();
+
+        public BindableCollection<IndexedItem> SelectedItems
+        {
+            get => _selectedItems;
+            set => Set(ref _selectedItems, value);
         }
 
         #endregion
@@ -227,7 +225,7 @@ namespace MView.ViewModels
         // List
         public void Select()
         {
-            SelectedItem.IsSelected = false;
+
         }
 
         public void SelectAll()

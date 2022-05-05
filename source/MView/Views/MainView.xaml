@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MView.Views"
+        xmlns:behaviors="clr-namespace:MView.Behaviors"
         xmlns:indexing="clr-namespace:MView.Utilities.Indexing"
         xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:caliburn="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
@@ -98,7 +99,12 @@
                     <Grid Grid.Row="1">
                         <ListView Padding="0,0,0,10"
                                   VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                  DataContext="{Binding IndexedItemsCVS}" ItemsSource="{Binding IsAsync=True}">
+                                  ItemsSource="{Binding ItemCollectionViewSource.View, IsAsync=True}"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Behaviors>
+                                <behaviors:ListViewMultiSelectionBehavior SelectedItems="{Binding SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </i:Interaction.Behaviors>
+                            
                             <ListView.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.ContainerStyle>
@@ -295,7 +301,7 @@
                             <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
                                        AllowContextMenu="True" ReadOnlyMode="True"
                                        StatusBarVisibility="Hidden"
-                                       FileName="{Binding SelectedItem.FullName, UpdateSourceTrigger=PropertyChanged}">
+                                       FileName="{Binding SelectedItem.FullPath, UpdateSourceTrigger=PropertyChanged}">
                                 <hexedit:HexEditor.Resources>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                         <Setter Property="Foreground" Value="{DynamicResource PickUiForeground}"/>

@@ -48,8 +48,8 @@ namespace MView.ViewModels
             ConnectToLogBroker();
 
             // Initialize the IndexedItemsCVS : In MainViewModel.Explorer
-            IndexedItemsCVS.Source = IndexedItems;
-            IndexedItemsCVS.GroupDescriptions.Add(new PropertyGroupDescription("ParentPath"));
+            ItemCollectionViewSource.Source = IndexedItems;
+            ItemCollectionViewSource.GroupDescriptions.Add(new PropertyGroupDescription("ParentPath"));
         }
 
         private void ConnectToLogBroker()
