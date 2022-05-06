@@ -1,5 +1,7 @@
-﻿using MView.Utilities.Indexing;
+﻿using MView.Utilities;
+using MView.Utilities.Indexing;
 using MView.Utilities.Text;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,12 +33,28 @@ namespace MView.ViewModels
             set => Set(ref _isAudioPlayerVisible, value);
         }
 
-        private ImageSource? _imageViewerSource = null;
+        private Stream _sourceStream = Stream.Null;
 
-        public ImageSource? ImageViewerSource
+        public Stream SourceStream
         {
-            get => _imageViewerSource;
-            set => Set(ref _imageViewerSource, value);
+            get => _sourceStream;
+            set => Set(ref _sourceStream, value);
+        }
+
+        private Stream _imageViewerStream = Stream.Null;
+
+        public Stream ImageViewerStream
+        {
+            get => _imageViewerStream;
+            set => Set(ref _imageViewerStream, value);
+        }
+
+        private Stream _audioPlayerStream = Stream.Null;
+
+        public Stream AudioPlayerStream
+        {
+            get => _audioPlayerStream;
+            set => Set(ref _audioPlayerStream, value);
         }
 
         private bool _showMetadata = true;
@@ -47,9 +65,11 @@ namespace MView.ViewModels
             set => Set(ref _showMetadata, value);
         }
 
-        private string? _metadata = "Metadata";
+        private StringBuilder _metadataBuilder = new StringBuilder();
 
-        public string? Metadata
+        private string _metadata = String.Empty;
+
+        public string Metadata
         {
             get => _metadata;
             set => Set(ref _metadata, value);
@@ -59,24 +79,32 @@ namespace MView.ViewModels
 
         #region ::Metadata::
 
-        public void WriteMetadata(string text)
+        public void AppendMetadata(string text)
         {
-            Metadata += text;
+            _metadataBuilder.Append(text);
         }
 
-        public void WriteMetadataWithLineFeed(string text)
+        public void AppendMetadataLine(string text)
         {
-            if (!string.IsNullOrEmpty(_metadata))
+            string metadata = _metadataBuilder.ToString();
+
+            if (!string.IsNullOrEmpty(metadata) &&!metadata.EndsWith(Environment.NewLine))
             {
-                Metadata += "\r\n";
+                _metadataBuilder.Append("\r\n");
             }
 
-            Metadata += text;
+            _metadataBuilder.Append(text);
         }
 
         public void ClearMetadata()
         {
-            Metadata = string.Empty;
+            _metadataBuilder.Clear();
+            BuildMetadata();
+        }
+
+        public void BuildMetadata()
+        {
+            Metadata = _metadataBuilder.ToString();
         }
 
         #endregion
@@ -95,46 +123,119 @@ namespace MView.ViewModels
 
         #region ::Viewer::
 
-        public async Task RefreshViewer()
+        public async Task RefreshViewerAsync()
         {
-            /*var task = Task.Factory.StartNew(() =>
+            var task = Task.Factory.StartNew(() =>
             {
-                if (_selectedItem != null && _selectedItem.Type == IndexedItemType.File)
+                if (!File.Exists(_selectedItem.FullPath))
                 {
-                    // Refresh the metadata.
-                    ClearMetadata();
-                    WriteMetadataWithLineFeed($"* Name : {_selectedItem.Name}");
-                    WriteMetadataWithLineFeed($"* Full Name : {_selectedItem.FullName}");
-                    WriteMetadataWithLineFeed($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size} Byte)");
+                    Log.Warning("The selected file does not exist.");
+                    return;
+                }
 
-                    // Hide viewers.
-                    IsImageViewerVisible = false;
-                    IsAudioPlayerVisible = false;
+                // Hide viewers.
+                IsImageViewerVisible = false;
+                IsAudioPlayerVisible = false;
 
-                    if (Settings.KnownExtensions.Any(p => p.Equals(Path.GetExtension(_selectedItem.Name), StringComparison.OrdinalIgnoreCase)))
+                // Write a metadata.
+                ClearMetadata();
+
+                AppendMetadataLine($"* File Name : {_selectedItem.FileName}");
+                AppendMetadataLine($"* Full Path : {_selectedItem.FullPath}");
+                AppendMetadataLine($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size} Byte)");
+
+                string extension = Path.GetExtension(_selectedItem.FileName);
+
+                if (Settings.KnownExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    // Dispose all streams.
+                    if (_sourceStream != null && _sourceStream != Stream.Null)
                     {
-                        if (Settings.ImageExtensions.Any(p => p.Equals(Path.GetExtension(_selectedItem.Name), StringComparison.OrdinalIgnoreCase)))
-                        {
-                            // Dispose the image stream to release memories.
-                            (ImageViewerSource as BitmapImage)?.StreamSource.Dispose();
+                        _sourceStream.Dispose();
+                    }
 
+                    if (_imageViewerStream != null && _imageViewerStream != Stream.Null)
+                    {
+                        _imageViewerStream.Dispose();
+                    }
 
+                    if (_audioPlayerStream != null && _audioPlayerStream != Stream.Null)
+                    {
+                        _audioPlayerStream.Dispose();
+                    }
 
-                            IsImageViewerVisible = true;
-                        }
-                        else
-                        {
-                            IsAudioPlayerVisible = true;
-                        }
+                    if (CryptographyProvider.EXTENSIONS_ENCRYPTED.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        SourceStream = CryptographyProvider.GetRestoredFileStream(_selectedItem.FullPath);
+                    }
+                    else if (CryptographyProvider.EXTENSIONS_DECRYPTED.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        SourceStream = new FileStream(_selectedItem.FullPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                     }
                     else
                     {
-                        WriteMetadataWithLineFeed($"* This format is not supported.");
+                        throw new Exception("No extensions found.");
+                    }
+
+                    // Show a viewer.
+                    if (Settings.ImageExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        // Refresh the image viewer stream.
+                        ImageViewerStream = SourceStream;
+
+                        // Show the image viewer.
+                        IsImageViewerVisible = true;
+                    }
+                    else
+                    {
+                        // Refresh the audio player stream.
+                        AudioPlayerStream = SourceStream;
+
+                        // Show the audio player.
+                        IsAudioPlayerVisible = true;
                     }
                 }
+                else
+                {
+                    AppendMetadataLine($"* This format is not supported.");
+                }
+
+                Log.Information("The viewer has been refreshed.");
+                BuildMetadata();
             });
 
-            await task;*/
+            await task;
+        }
+
+        public void ResetViewer()
+        {
+            // Dispose all streams.
+            if (_sourceStream != null && _sourceStream != Stream.Null)
+            {
+                _sourceStream.Dispose();
+                SourceStream = Stream.Null;
+            }
+
+            if (_imageViewerStream != null && _imageViewerStream != Stream.Null)
+            {
+                _imageViewerStream.Dispose();
+                ImageViewerStream = Stream.Null;
+            }
+
+            if (_audioPlayerStream != null && _audioPlayerStream != Stream.Null)
+            {
+                _audioPlayerStream.Dispose();
+                AudioPlayerStream = Stream.Null;
+            }
+
+            // Hide viewers.
+            IsImageViewerVisible = false;
+            IsAudioPlayerVisible = false;
+
+            // Clear the metadata.
+            ClearMetadata();
+
+            Log.Information("The viewer has been resetted.");
         }
 
         #endregion

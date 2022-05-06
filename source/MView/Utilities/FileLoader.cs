@@ -16,14 +16,9 @@ namespace MView.Utilities
             return File.ReadAllBytes(filePath);
         }
 
-        public static MemoryStream LoadFileToStream(string filePath)
-        {
-            return new MemoryStream(File.ReadAllBytes(filePath));
-        }
-
         public static ImageSource LoadImage(string filePath)
         {
-            using (MemoryStream stream = LoadFileToStream(filePath))
+            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
@@ -35,7 +30,7 @@ namespace MView.Utilities
             }
         }
 
-        public static ImageSource LoadImageFromStream(Stream stream)
+        public static BitmapImage LoadImageFromStream(Stream stream)
         {
             BitmapImage img = new BitmapImage();
             img.BeginInit();

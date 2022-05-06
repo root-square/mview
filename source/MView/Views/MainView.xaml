@@ -78,9 +78,9 @@
         <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 1 0 1">
             <Grid Background="{DynamicResource PickUiSecondBackground}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
                 
                 <!--Explorer-->
@@ -109,21 +109,23 @@
                                 <GroupStyle>
                                     <GroupStyle.ContainerStyle>
                                         <Style TargetType="{x:Type GroupItem}">
-                                            <Setter Property="Margin" Value="0,0,0,5"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander IsExpanded="True" BorderBrush="#FFA4B97F" BorderThickness="0,0,0,1">
+                                                        <Expander Margin="0 0 0 1" materialDesign:ExpanderAssist.HorizontalHeaderPadding="20,10,20,10" IsExpanded="True">
                                                             <Expander.Header>
                                                                 <DockPanel>
-                                                                    <TextBlock FontWeight="Bold" Text="Parent: "/>
+                                                                    <TextBlock FontWeight="Bold" Text="("/>
                                                                     <TextBlock FontWeight="Bold" Text="{Binding ItemCount}"/>
+                                                                    <TextBlock FontWeight="Bold" Text=") "/>
                                                                     <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
                                                                 </DockPanel>
                                                             </Expander.Header>
                                                             
                                                             <Expander.Content>
-                                                                <ItemsPresenter />
+                                                                <Grid Background="{DynamicResource PickUiSecondBackground}">
+                                                                    <ItemsPresenter />
+                                                                </Grid>
                                                             </Expander.Content>
                                                         </Expander>
                                                     </ControlTemplate>
@@ -212,71 +214,75 @@
 
                             <!--Image-->
                             <Grid Visibility="{Binding IsImageViewerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Image VerticalAlignment="Center" HorizontalAlignment="Center"
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <Image VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None"
                                     RenderOptions.BitmapScalingMode="HighQuality"
-                                    Source="{Binding ImageViewerSource, UpdateSourceTrigger=PropertyChanged}">
-                                </Image>
+                                    Source="{Binding ImageViewerStream, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StreamToBitmapSourceConverter}}">
+                                    </Image>
+                                </ScrollViewer>
                             </Grid>
                             
                             <!--Audio-->
                             <Grid Visibility="{Binding IsAudioPlayerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <materialDesign:Card Background="{DynamicResource PickUiBackground}" Foreground="{DynamicResource PickUiForeground}"
-                                                     VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                     Width="500" Height="Auto" Padding="8" UniformCornerRadius="10"
-                                                     materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                                    <Grid Margin="20">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="1*"/>
-                                        </Grid.RowDefinitions>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <Border Background="{DynamicResource PickUiBackground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="1" CornerRadius="8"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center" Padding="8"
+                                            Width="500" Height="Auto">
+                                        <Grid Margin="20 20 20 10">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="20"/>
+                                                <RowDefinition Height="1*"/>
+                                            </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Slider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                            <Slider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                                                 Margin="0 0 0 4" VerticalAlignment="Center"
                                                 materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
                                                 Minimum="0" Maximum="50" Value="35" />
 
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" HorizontalAlignment="Left" Text="00:00:00" />
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="00:00:00" />
 
-                                        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignCaptionTextBlock}" HorizontalAlignment="Right" Text="00:10:00" />
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Right" Text="00:10:00" />
 
-                                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Stop">
-                                                <materialDesign:PackIcon Kind="Stop" Opacity=".90" />
-                                            </Button>
-                                            <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Play">
-                                                <materialDesign:PackIcon Kind="Play" />
-                                            </Button>
-                                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Pause">
-                                                <materialDesign:PackIcon Kind="Pause" Opacity=".90" />
-                                            </Button>
-                                        </StackPanel>
+                                            <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Stop">
+                                                    <materialDesign:PackIcon Kind="Stop" Opacity=".90" />
+                                                </Button>
+                                                <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Play">
+                                                    <materialDesign:PackIcon Kind="Play" />
+                                                </Button>
+                                                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Pause">
+                                                    <materialDesign:PackIcon Kind="Pause" Opacity=".90" />
+                                                </Button>
+                                            </StackPanel>
 
-                                        <Grid Grid.Row="2" Grid.Column="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Row="2" Grid.Column="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                                            <materialDesign:PackIcon VerticalAlignment="Center" Margin="0 0 10 0" Kind="VolumeVibrate" />
-                                            <Slider Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="100"
+                                                <materialDesign:PackIcon VerticalAlignment="Center" Margin="0 0 10 0" Kind="VolumeVibrate" />
+                                                <Slider Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="100"
                                                     materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
                                                     Value="100" />
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                </materialDesign:Card>
+                                    </Border>
+                                </ScrollViewer>
                             </Grid>
 
+                            <!--Metadata-->
                             <Border Background="{DynamicResource PickUiBackground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="1" CornerRadius="4"
-                                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Opacity=".70"
+                                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Opacity=".70" MaxWidth="800"
                                     Visibility="{Binding ShowMetadata, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock Foreground="{DynamicResource PickUiForegroundLight}" FontSize="14" FontWeight="Regular" FontFamily="Segoe UI" Margin="10" TextAlignment="Left" TextWrapping="Wrap"
+                                <TextBlock Foreground="{DynamicResource PickUiForegroundLight}" FontSize="14" FontWeight="Regular" FontFamily="Segoe UI" Margin="10" TextAlignment="Left" TextWrapping="WrapWithOverflow"
                                        Text="{Binding Metadata}"/>
                             </Border>
                         </Grid>
@@ -301,7 +307,7 @@
                             <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
                                        AllowContextMenu="True" ReadOnlyMode="True"
                                        StatusBarVisibility="Hidden"
-                                       FileName="{Binding SelectedItem.FullPath, UpdateSourceTrigger=PropertyChanged}">
+                                       Stream="{Binding SourceStream, UpdateSourceTrigger=PropertyChanged}">
                                 <hexedit:HexEditor.Resources>
                                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                         <Setter Property="Foreground" Value="{DynamicResource PickUiForeground}"/>

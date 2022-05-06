@@ -68,7 +68,7 @@ namespace MView
         {
             MessageBox.Show(ex.Exception.Message, "An unknown error has occurred", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            Log.Warning(ex.Exception, "An unknown error has occurred.");
+            Log.Fatal(ex.Exception, "An unknown error has occurred.");
         }
     }
 }

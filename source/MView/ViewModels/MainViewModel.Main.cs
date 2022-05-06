@@ -89,9 +89,62 @@ namespace MView.ViewModels
             }
         }
 
-        public async void Estimate()
+        public void Estimate()
         {
-            
+            try
+            {
+                if (_selectedItem != null)
+                {
+                    // Check the file.
+                    if (!File.Exists(_selectedItem.FullPath))
+                    {
+                        Log.Error($"The file does not exist.");
+                        MessageBox.Show($"The file does not exist.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    string[] targetExtensions = new string[] { ".rpgmvp", ".rpgmvm", ".rpgmvw", ".png_", ".m4a_", ".wav_" };
+
+                    string extension = Path.GetExtension(_selectedItem.FileName);
+
+                    if (targetExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        string key = CryptographyProvider.Estimate(_selectedItem.FullPath);
+
+                        Log.Information($"The operation completed successfully(KEY : {key}).");
+
+                        using (TaskDialog taskDialog = new TaskDialog())
+                        {
+                            taskDialog.WindowTitle = "MView";
+                            taskDialog.MainInstruction = "The operation completed successfully.";
+                            taskDialog.Content = $"The encryption key estimated based on the file is '{key}'.";
+                            taskDialog.Footer = "The estimated encryption key may not match the actual one.";
+                            taskDialog.FooterIcon = TaskDialogIcon.Warning;
+
+                            TaskDialogButton copyButton = new TaskDialogButton(ButtonType.Custom) { Text = "Copy" };
+                            TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                            taskDialog.Buttons.Add(copyButton);
+                            taskDialog.Buttons.Add(okButton);
+
+                            TaskDialogButton button = taskDialog.ShowDialog();
+
+                            if (button == copyButton)
+                            {
+                                Clipboard.SetText(key);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Log.Warning($"\'{_selectedItem.FileName}\' is an unsupported format.");
+                        MessageBox.Show($"\'{_selectedItem.FileName}\' is an unsupported format.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
+            }
         }
 
         public async void Restore()

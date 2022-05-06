@@ -35,7 +35,7 @@ namespace MView.ViewModels
                 if (value != null)
                 {
                     Set(ref _selectedItem, value);
-                    MessageBox.Show(value.FileName);
+                    RefreshViewerAsync().ConfigureAwait(false).GetAwaiter();
                 }
             }
         }
@@ -62,12 +62,6 @@ namespace MView.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // Clear the collection.
-                IndexedItems.Clear();
-
-                // Add the selected files.
-                string[] selectedFiles = openFileDialog.FileNames;
-
                 // Check whether to index all file extensions.
                 bool indexAllExtensions = false;
 
@@ -79,8 +73,8 @@ namespace MView.ViewModels
                     taskDialog.Footer = "Some errors can occur if files that are not RPG MV/MZ resources are processed in MView.";
                     taskDialog.FooterIcon = TaskDialogIcon.Warning;
 
-                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Yes);
-                    TaskDialogButton noButton = new TaskDialogButton(ButtonType.No);
+                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text = "Yes" };
+                    TaskDialogButton noButton = new TaskDialogButton(ButtonType.Custom) { Text = "No" };
                     taskDialog.Buttons.Add(yesButton);
                     taskDialog.Buttons.Add(noButton);
 
@@ -99,6 +93,12 @@ namespace MView.ViewModels
                         return;
                     }
                 }
+
+                // Clear the collection.
+                IndexedItems.Clear();
+
+                // Add the selected files.
+                string[] selectedFiles = openFileDialog.FileNames;
 
                 // Process
                 ProgressDialog progressDialog = new ProgressDialog()
@@ -142,12 +142,6 @@ namespace MView.ViewModels
 
             if (folderBrowserDialog.ShowDialog() == true)
             {
-                // Clear the collection.
-                IndexedItems.Clear();
-
-                // Add the selected files.
-                string[] selectedPaths = folderBrowserDialog.SelectedPaths;
-
                 // Check whether to index all file extensions.
                 bool indexAllExtensions = false;
 
@@ -159,8 +153,8 @@ namespace MView.ViewModels
                     taskDialog.Footer = "Some errors can occur if files that are not RPG MV/MZ resources are processed in MView.";
                     taskDialog.FooterIcon = TaskDialogIcon.Warning;
 
-                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Yes);
-                    TaskDialogButton noButton = new TaskDialogButton(ButtonType.No);
+                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text= "Yes" };
+                    TaskDialogButton noButton = new TaskDialogButton(ButtonType.Custom) { Text = "No" };
                     taskDialog.Buttons.Add(yesButton);
                     taskDialog.Buttons.Add(noButton);
 
@@ -179,6 +173,12 @@ namespace MView.ViewModels
                         return;
                     }
                 }
+
+                // Clear the collection.
+                IndexedItems.Clear();
+
+                // Add the selected files.
+                string[] selectedPaths = folderBrowserDialog.SelectedPaths;
 
                 // Process
                 ProgressDialog progressDialog = new ProgressDialog()
@@ -212,9 +212,7 @@ namespace MView.ViewModels
 
         public void ClearFiles()
         {
-            IndexedItems.Clear();
-
-            Log.Information($"Indexed items are cleared.");
+            DeleteAll();
         }
 
         public void Exit()
@@ -225,37 +223,59 @@ namespace MView.ViewModels
         // List
         public void Select()
         {
-
+            foreach (var item in SelectedItems)
+            {
+                item.IsSelected = true;
+            }
         }
 
         public void SelectAll()
         {
-
+            foreach (var item in IndexedItems)
+            {
+                item.IsSelected = true;
+            }
         }
 
         public void Deselect()
         {
-            
+            foreach (var item in SelectedItems)
+            {
+                item.IsSelected = false;
+            }
         }
 
         public void DeselectAll()
         {
-
+            foreach (var item in IndexedItems)
+            {
+                item.IsSelected = false;
+            }
         }
 
         public void Reverse()
         {
-
+            foreach (var item in IndexedItems)
+            {
+                item.IsSelected = !item.IsSelected;
+            }
         }
 
         public void Delete()
         {
+            List<IndexedItem> targetItems = SelectedItems.ToList();
 
+            foreach (var item in targetItems)
+            {
+                IndexedItems.Remove(item);
+            }
         }
 
         public void DeleteAll()
         {
-
+            IndexedItems.Clear();
+            ResetViewer();
+            GC.Collect();
         }
 
         #endregion

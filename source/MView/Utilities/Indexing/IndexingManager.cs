@@ -34,7 +34,7 @@ namespace MView.Utilities.Indexing
             item.IsSelected = true;
             item.FileName = file.Name;
             item.FullPath = file.FullName;
-            item.ParentPath = Directory.GetParent(file.FullName).FullName;
+            item.ParentPath = Path.GetDirectoryName(file.FullName) ?? "NULL";
             item.Size = file.Length;
             item.SizeString = UnitConverter.GetFileSizeString(file.Length);
 
@@ -54,9 +54,7 @@ namespace MView.Utilities.Indexing
             // Index files in current directory.
             try
             {
-                var files = directory.EnumerateFiles();
-
-                foreach (FileInfo file in files)
+                foreach (FileInfo file in directory.EnumerateFiles())
                 {
                     IndexedItem? item = GetFile(file, extensions);
 
@@ -74,9 +72,7 @@ namespace MView.Utilities.Indexing
             // Re-index files in sub-directory.
             try
             {
-                var subDirectories = directory.EnumerateDirectories();
-
-                foreach (DirectoryInfo subDirectory in subDirectories)
+                foreach (DirectoryInfo subDirectory in directory.EnumerateDirectories())
                 {
                     List<IndexedItem> subItems = GetFiles(subDirectory, extensions);
                     items.AddRange(subItems);

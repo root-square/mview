@@ -4,4 +4,5 @@
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:ComparisonConverter x:Key="ComparisonConverter"/>
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <converters:StreamToBitmapSourceConverter x:Key="StreamToBitmapSourceConverter"/>
 </ResourceDictionary>

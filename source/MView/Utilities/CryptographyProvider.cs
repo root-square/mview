@@ -103,7 +103,7 @@ namespace MView.Utilities
                 throw new InvalidDataException("The key must be 32 characters long.");
             }
 
-            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (FileStream outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.ReadWrite))
             {
                 // Copy the file and inject the RMMV header.
@@ -166,7 +166,7 @@ namespace MView.Utilities
                 throw new InvalidDataException("The key must be 32 characters long.");
             }
 
-            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (FileStream outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.ReadWrite))
             {
                 // Copy the file.
@@ -207,7 +207,7 @@ namespace MView.Utilities
                 throw new FileNotFoundException("The file does not exist.");
             }
 
-            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 // Copy encrypted bytes.
                 byte[] targetBytes = new byte[16];
@@ -265,7 +265,7 @@ namespace MView.Utilities
 
             try
             {
-                if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png" || extension == ".m4a" || extension == ".wav")
+                if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png_" || extension == ".m4a_" || extension == ".wav_")
                 {
                     stream = RestoreInternal(filePath);
                 }
@@ -299,28 +299,17 @@ namespace MView.Utilities
         {
             string extension = Path.GetExtension(filePath).ToLower();
 
-            Stream stream = Stream.Null;
-
-            try
+            if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png_" || extension == ".m4a_" || extension == ".wav_")
             {
-                if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png" || extension == ".m4a" || extension == ".wav")
-                {
-                    stream = RestoreInternal(filePath);
-                }
-                else if (extension == ".rpgmvo" || extension == ".ogg_")
-                {
-                    stream = RestoreOggInternal(filePath);
-                }
-                else
-                {
-                    throw new NotSupportedException("Incompatible file format is used.");
-                }
-
-                return stream;
+                return RestoreInternal(filePath);
             }
-            finally
+            else if (extension == ".rpgmvo" || extension == ".ogg_")
             {
-                stream.Dispose();
+                return RestoreOggInternal(filePath);
+            }
+            else
+            {
+                throw new NotSupportedException("Incompatible file format is used.");
             }
         }
 
@@ -340,7 +329,7 @@ namespace MView.Utilities
 
             MemoryStream outputStream = new MemoryStream();
 
-            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 // Copy the file.
                 outputStream.SetLength(originalStream.Length - HEADER_MV.Length);
@@ -399,7 +388,7 @@ namespace MView.Utilities
 
             MemoryStream outputStream = new MemoryStream();
 
-            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 // Check the extension.
                 string extension = Path.GetExtension(filePath).ToLower();
@@ -458,11 +447,11 @@ namespace MView.Utilities
 
                 if (isLittleEndian)
                 {
-                    Array.Reverse(serialNumber); // LE
+                    Array.Reverse(serialNumber); // Convert to LE.
                 }
                 else
                 {
-                    Array.Sort(serialNumber); // BE
+                    Array.Sort(serialNumber); // Convert to BE.
                 }
 
                 // Compose the header.
