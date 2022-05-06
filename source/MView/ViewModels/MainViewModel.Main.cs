@@ -69,23 +69,37 @@ namespace MView.ViewModels
         // Task
         public async void Encrypt()
         {
-            EncryptorViewModel viewModel = IoC.Get<EncryptorViewModel>();
-            bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
-
-            if (dialogResult == true)
+            try
             {
+                EncryptorViewModel viewModel = IoC.Get<EncryptorViewModel>();
+                bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
 
+                if (dialogResult == true)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
             }
         }
 
         public async void Decrypt()
         {
-            DecrypterViewModel viewModel = IoC.Get<DecrypterViewModel>();
-            bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
-
-            if (dialogResult == true)
+            try
             {
+                DecrypterViewModel viewModel = IoC.Get<DecrypterViewModel>();
+                bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
 
+                if (dialogResult == true)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
             }
         }
 
@@ -113,6 +127,7 @@ namespace MView.ViewModels
 
                         Log.Information($"The operation completed successfully(KEY : {key}).");
 
+                        // Show a result dialog.
                         using (TaskDialog taskDialog = new TaskDialog())
                         {
                             taskDialog.WindowTitle = "MView";
@@ -128,6 +143,7 @@ namespace MView.ViewModels
 
                             TaskDialogButton button = taskDialog.ShowDialog();
 
+                            // Copy the key to the clipboard.
                             if (button == copyButton)
                             {
                                 Clipboard.SetText(key);
@@ -149,12 +165,19 @@ namespace MView.ViewModels
 
         public async void Restore()
         {
-            RestorerViewModel viewModel = IoC.Get<RestorerViewModel>();
-            bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
-
-            if (dialogResult == true)
+            try
             {
+                RestorerViewModel viewModel = IoC.Get<RestorerViewModel>();
+                bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
 
+                if (dialogResult == true)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
             }
         }
 
@@ -162,25 +185,32 @@ namespace MView.ViewModels
 
         public async void PickNoT()
         {
-            var settings = IoC.Get<Settings>();
-            int initialValue = settings.NumberOfThreads;
-
-            NoTPickerViewModel viewModel = IoC.Get<NoTPickerViewModel>();
-            viewModel.NumberOfThreads = initialValue;
-
-            bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
-
-            if (dialogResult == true)
+            try
             {
-                if (viewModel.NumberOfThreads <= 0 || viewModel.NumberOfThreads > 10)
-                {
-                    settings.NumberOfThreads = initialValue;
-                    MessageBox.Show("Out of range.", "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    return;
-                }
+                var settings = IoC.Get<Settings>();
+                int initialValue = settings.NumberOfThreads;
 
-                settings.NumberOfThreads = viewModel.NumberOfThreads;
-                MessageBox.Show($"The number of threads is set to {viewModel.NumberOfThreads}.", "MView", MessageBoxButton.OK, MessageBoxImage.Information);
+                NoTPickerViewModel viewModel = IoC.Get<NoTPickerViewModel>();
+                viewModel.NumberOfThreads = initialValue;
+
+                bool? dialogResult = await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
+
+                if (dialogResult == true)
+                {
+                    if (viewModel.NumberOfThreads <= 0 || viewModel.NumberOfThreads > 10)
+                    {
+                        settings.NumberOfThreads = initialValue;
+                        MessageBox.Show("Out of range.", "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+
+                    settings.NumberOfThreads = viewModel.NumberOfThreads;
+                    MessageBox.Show($"The number of threads is set to {viewModel.NumberOfThreads}.", "MView", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, "An unexpected exception has occured.");
             }
         }
 
