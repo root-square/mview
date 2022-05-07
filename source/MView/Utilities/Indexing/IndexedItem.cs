@@ -33,12 +33,20 @@ namespace MView.Utilities.Indexing
             set => Set(ref _fullPath, value);
         }
 
-        private string _parentPath = string.Empty;
+        private string _rootDirectory = string.Empty;
 
-        public string ParentPath
+        public string RootDirectory
         {
-            get => _parentPath;
-            set => Set(ref _parentPath, value);
+            get => _rootDirectory;
+            set => Set(ref _rootDirectory, value);
+        }
+
+        private string _parentDirectory = string.Empty;
+
+        public string ParentDirectory
+        {
+            get => _parentDirectory;
+            set => Set(ref _parentDirectory, value);
         }
 
         private long _size = 0;

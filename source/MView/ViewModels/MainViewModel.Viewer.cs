@@ -1,6 +1,8 @@
 ﻿using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;
+using NAudio.Vorbis;
+using NAudio.Wave;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -17,6 +20,7 @@ namespace MView.ViewModels
     {
         #region ::Variables::
 
+        // Viewer visibility
         private bool _isImageViewerVisible = false;
 
         public bool IsImageViewerVisible
@@ -33,6 +37,7 @@ namespace MView.ViewModels
             set => Set(ref _isAudioPlayerVisible, value);
         }
 
+        // Source stream.
         private Stream _sourceStream = Stream.Null;
 
         public Stream SourceStream
@@ -41,22 +46,86 @@ namespace MView.ViewModels
             set => Set(ref _sourceStream, value);
         }
 
-        private Stream _imageViewerStream = Stream.Null;
+        // Image
+        private Stream _imageStream = Stream.Null;
 
-        public Stream ImageViewerStream
+        public Stream ImageStream
         {
-            get => _imageViewerStream;
-            set => Set(ref _imageViewerStream, value);
+            get => _imageStream;
+            set => Set(ref _imageStream, value);
         }
 
-        private Stream _audioPlayerStream = Stream.Null;
+        // Audio
+        private IWavePlayer? _wavePlayer = null;
 
-        public Stream AudioPlayerStream
+        public IWavePlayer? WavePlayer
         {
-            get => _audioPlayerStream;
-            set => Set(ref _audioPlayerStream, value);
+            get => _wavePlayer;
+            set => Set(ref _wavePlayer, value);
         }
 
+        private WaveStream? _waveStream = null;
+
+        public WaveStream? WaveStream
+        {
+            get => _waveStream;
+            set => Set(ref _waveStream, value);
+        }
+
+        private Timer _refreshTimer = new Timer(1000);
+
+        public TimeSpan CurrentTime
+        {
+            get
+            {
+                if (_waveStream != null)
+                {
+                    return _waveStream.CurrentTime;
+                }
+                else
+                {
+                    return TimeSpan.Zero;
+                }
+            }
+            set
+            {
+                if (_waveStream != null)
+                {
+                    _waveStream.CurrentTime = value;
+                    NotifyOfPropertyChange("CurrentTime");
+                }
+            }
+        }
+
+        public TimeSpan TotalTime
+        {
+            get
+            {
+                if (_waveStream != null)
+                {
+                    return _waveStream.TotalTime;
+                }
+                else
+                {
+                    return TimeSpan.Zero;
+                }
+            }
+        }
+
+        public float AudioVolume
+        {
+            get => _wavePlayer?.Volume ?? 100.0F;
+            set
+            {
+                if (WavePlayer != null)
+                {
+                    WavePlayer.Volume = value;
+                    NotifyOfPropertyChange("AudioVolume");
+                }
+            }
+        }
+
+        // Metadata
         private bool _showMetadata = true;
 
         public bool ShowMetadata
@@ -107,17 +176,123 @@ namespace MView.ViewModels
             Metadata = _metadataBuilder.ToString();
         }
 
-        #endregion
+        public async Task RefreshMetadataAsync()
+        {
+            var task = Task.Factory.StartNew(() =>
+            {
+                if (!File.Exists(_selectedItem.FullPath))
+                {
+                    Log.Warning("The selected file does not exist.");
+                    return;
+                }
 
-        #region ::Image::
+                // Write a metadata.
+                ClearMetadata();
 
+                AppendMetadataLine($"* File Name : {_selectedItem.FileName}");
+                AppendMetadataLine($"* Full Path : {_selectedItem.FullPath}");
+                AppendMetadataLine($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size} Byte)");
 
+                string extension = Path.GetExtension(_selectedItem.FileName);
+
+                if (!Settings.KnownExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    AppendMetadataLine($"* This format is not supported.");
+                }
+
+                Log.Information("The metadata has been refreshed.");
+                BuildMetadata();
+            });
+
+            await task;
+        }
 
         #endregion
 
         #region ::Audio::
 
+        private void InitializeAudio(Stream stream, bool isVorbis = false)
+        {
+            // Dispose the previous player.
+            if (_wavePlayer != null)
+            {
+                _wavePlayer.Dispose();
+                _wavePlayer = null;
+            }
 
+            // Initialize a player.
+            _wavePlayer = new WaveOut();
+
+            // Read a audio file.
+            if (isVorbis)
+            {
+                _waveStream = new VorbisWaveReader(stream, true);
+            }
+            else
+            {
+                _waveStream = new StreamMediaFoundationReader(stream);
+            }
+
+            _wavePlayer.Init(_waveStream);
+
+            // Refresh times.
+            _waveStream.CurrentTime = TimeSpan.Zero;
+
+            NotifyOfPropertyChange("CurrentTime");
+            NotifyOfPropertyChange("TotalTime");
+
+            // Add events.
+            _wavePlayer.PlaybackStopped += (sender, e) =>
+            {
+                _waveStream.CurrentTime = TimeSpan.Zero;
+
+                NotifyOfPropertyChange("CurrentTime");
+                NotifyOfPropertyChange("TotalTime");
+            };
+
+            // Initialize the refresh timer.
+            if (_refreshTimer != null)
+            {
+                _refreshTimer.Dispose();
+            }
+
+            _refreshTimer = new Timer(1000);
+
+            _refreshTimer.Elapsed += (sender, e) =>
+            {
+                if (_wavePlayer.PlaybackState == PlaybackState.Playing)
+                {
+                    NotifyOfPropertyChange("CurrentTime");
+                }
+            };
+        }
+
+        public void PlayAudio()
+        {
+            if (_wavePlayer != null && _wavePlayer.PlaybackState != PlaybackState.Playing && _refreshTimer != null)
+            {
+                _wavePlayer.Play();
+                _refreshTimer.Start();
+            }
+        }
+
+        public void PauseAudio()
+        {
+            if (_wavePlayer != null && _wavePlayer.PlaybackState == PlaybackState.Playing && _refreshTimer != null)
+            {
+                _wavePlayer.Pause();
+                _refreshTimer.Stop();
+            }
+        }
+
+        public void StopAudio()
+        {
+            if (_wavePlayer != null && _wavePlayer.PlaybackState == PlaybackState.Playing && _refreshTimer != null)
+            {
+                _wavePlayer.Stop();
+                _refreshTimer.Stop();
+            }
+        }
 
         #endregion
 
@@ -125,7 +300,7 @@ namespace MView.ViewModels
 
         public async Task RefreshViewerAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Factory.StartNew(async () =>
             {
                 if (!File.Exists(_selectedItem.FullPath))
                 {
@@ -137,13 +312,6 @@ namespace MView.ViewModels
                 IsImageViewerVisible = false;
                 IsAudioPlayerVisible = false;
 
-                // Write a metadata.
-                ClearMetadata();
-
-                AppendMetadataLine($"* File Name : {_selectedItem.FileName}");
-                AppendMetadataLine($"* Full Path : {_selectedItem.FullPath}");
-                AppendMetadataLine($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size} Byte)");
-
                 string extension = Path.GetExtension(_selectedItem.FileName);
 
                 if (Settings.KnownExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
@@ -154,19 +322,15 @@ namespace MView.ViewModels
                         _sourceStream.Dispose();
                     }
 
-                    if (_imageViewerStream != null && _imageViewerStream != Stream.Null)
+                    if (_imageStream != null && _imageStream != Stream.Null)
                     {
-                        _imageViewerStream.Dispose();
+                        _imageStream.Dispose();
                     }
 
-                    if (_audioPlayerStream != null && _audioPlayerStream != Stream.Null)
-                    {
-                        _audioPlayerStream.Dispose();
-                    }
-
+                    // Get a file stream;
                     if (CryptographyProvider.EXTENSIONS_ENCRYPTED.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
                     {
-                        SourceStream = CryptographyProvider.GetRestoredFileStream(_selectedItem.FullPath);
+                        SourceStream = await CryptographyProvider.GetRestoredFileAsync(_selectedItem.FullPath);
                     }
                     else if (CryptographyProvider.EXTENSIONS_DECRYPTED.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
                     {
@@ -181,7 +345,7 @@ namespace MView.ViewModels
                     if (Settings.ImageExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
                     {
                         // Refresh the image viewer stream.
-                        ImageViewerStream = SourceStream;
+                        ImageStream = SourceStream;
 
                         // Show the image viewer.
                         IsImageViewerVisible = true;
@@ -189,19 +353,17 @@ namespace MView.ViewModels
                     else
                     {
                         // Refresh the audio player stream.
-                        AudioPlayerStream = SourceStream;
+                        string[] oggVorbisExtensions = new string[] { ".ogg", ".rpgmvo", ".ogg_" };
+
+                        bool isVorbis = oggVorbisExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase));
+                        InitializeAudio(_sourceStream, isVorbis);
 
                         // Show the audio player.
                         IsAudioPlayerVisible = true;
                     }
                 }
-                else
-                {
-                    AppendMetadataLine($"* This format is not supported.");
-                }
 
                 Log.Information("The viewer has been refreshed.");
-                BuildMetadata();
             });
 
             await task;
@@ -216,16 +378,10 @@ namespace MView.ViewModels
                 SourceStream = Stream.Null;
             }
 
-            if (_imageViewerStream != null && _imageViewerStream != Stream.Null)
+            if (_imageStream != null && _imageStream != Stream.Null)
             {
-                _imageViewerStream.Dispose();
-                ImageViewerStream = Stream.Null;
-            }
-
-            if (_audioPlayerStream != null && _audioPlayerStream != Stream.Null)
-            {
-                _audioPlayerStream.Dispose();
-                AudioPlayerStream = Stream.Null;
+                _imageStream.Dispose();
+                ImageStream = Stream.Null;
             }
 
             // Hide viewers.

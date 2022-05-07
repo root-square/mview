@@ -57,23 +57,26 @@ namespace MView.Utilities
         /// </summary>
         /// <param name="stream">The file stream.</param>
         /// <returns>Validity of the file</returns>
-        public static bool VerifyFakeHeader(Stream stream)
+        public static async Task<bool> VerifyFakeHeaderAsync(string filePath)
         {
-            // Get the RMMV signature area.
-            byte[] targetBytes = new byte[16];
-            stream.Position = 0;
-            stream.Read(targetBytes, 0, 16);
-
-            // Compare bytes.
-            for (int index = 0; index < 16; index++)
+            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                if (targetBytes[index] != HEADER_MV[index])
-                {
-                    return false;
-                }
-            }
+                // Get the RMMV signature area.
+                byte[] targetBytes = new byte[16];
+                stream.Position = 0;
+                await stream.ReadAsync(targetBytes, 0, 16);
 
-            return true;
+                // Compare bytes.
+                for (int index = 0; index < 16; index++)
+                {
+                    if (targetBytes[index] != HEADER_MV[index])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
         }
 
         // Encrypted File Structure : RPG Maker MV Header(16Byte) -> Original Header that encrypted by XOR operation(16Byte) -> File Contents
@@ -85,7 +88,7 @@ namespace MView.Utilities
         /// <param name="filePath">The path to the file to encrypt.</param>
         /// <param name="outputPath">The path where the file is saved.</param>
         /// <param name="key">The key to encrypt the file. It requires MD5 hash.</param>
-        public static void Encrypt(string filePath, string outputPath, string key)
+        public static async Task EncryptAsync(string filePath, string outputPath, string key)
         {
             if (!File.Exists(filePath))
             {
@@ -110,10 +113,10 @@ namespace MView.Utilities
                 outputStream.SetLength(originalStream.Length + HEADER_MV.Length);
 
                 outputStream.Position = 0;
-                outputStream.Write(HEADER_MV, 0, HEADER_MV.Length);
+                await outputStream.WriteAsync(HEADER_MV, 0, HEADER_MV.Length);
 
                 originalStream.Position = 0;
-                originalStream.CopyTo(outputStream, 4096);
+                await originalStream.CopyToAsync(outputStream, 4096);
 
                 // Make key bytes.
                 byte[] keyBytes = new byte[16];
@@ -128,7 +131,7 @@ namespace MView.Utilities
                 // Encrypt 16 bytes.
                 byte[] targetBytes = new byte[16];
                 outputStream.Position = HEADER_MV.Length;
-                outputStream.Read(targetBytes, 0, 16);
+                await outputStream.ReadAsync(targetBytes, 0, 16);
 
                 outputStream.Position = HEADER_MV.Length;
 
@@ -148,7 +151,7 @@ namespace MView.Utilities
         /// <param name="filePath">The path to the file to decrypt.</param>
         /// <param name="outputPath">The path where the file is saved.</param>
         /// <param name="key">The key to encrypt the file. It requires MD5 hash.</param>
-        public static void Decrypt(string filePath, string outputPath, string key)
+        public static async Task DecryptAsync(string filePath, string outputPath, string key)
         {
             if (!File.Exists(filePath))
             {
@@ -174,7 +177,7 @@ namespace MView.Utilities
 
                 originalStream.Position = HEADER_MV.Length;
                 outputStream.Position = 0;
-                originalStream.CopyTo(outputStream, 4096);
+                await originalStream.CopyToAsync(outputStream, 4096);
 
                 // Make key bytes.
                 byte[] keyBytes = new byte[16];
@@ -189,7 +192,7 @@ namespace MView.Utilities
                 // Encrypt 16 bytes.
                 byte[] targetBytes = new byte[16];
                 outputStream.Position = 0;
-                outputStream.Read(targetBytes, 0, 16);
+                await outputStream.ReadAsync(targetBytes, 0, 16);
 
                 outputStream.Position = 0; // Back to the zero.
 
@@ -200,7 +203,7 @@ namespace MView.Utilities
             }
         }
 
-        public static string Estimate(string filePath)
+        public static async Task<string> EstimateAsync(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -213,7 +216,7 @@ namespace MView.Utilities
                 byte[] targetBytes = new byte[16];
 
                 originalStream.Position = 16;
-                originalStream.Read(targetBytes, 0, 16);
+                await originalStream.ReadAsync(targetBytes, 0, 16);
 
                 // Select the general header.
                 string extension = Path.GetExtension(filePath).ToLower();
@@ -257,7 +260,7 @@ namespace MView.Utilities
         /// <param name="filePath">The path to the file to restore.</param>
         /// <param name="outputPath">The path where the file is saved.</param>
         /// <exception cref="NotSupportedException"></exception>
-        public static void Restore(string filePath, string outputPath)
+        public static async Task RestoreAsync(string filePath, string outputPath)
         {
             string extension = Path.GetExtension(filePath).ToLower();
 
@@ -267,11 +270,11 @@ namespace MView.Utilities
             {
                 if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png_" || extension == ".m4a_" || extension == ".wav_")
                 {
-                    stream = RestoreInternal(filePath);
+                    stream = await RestoreInternalAsync(filePath);
                 }
                 else if (extension == ".rpgmvo" || extension == ".ogg_")
                 {
-                    stream = RestoreOggInternal(filePath);
+                    stream = await RestoreOggInternalAsync(filePath);
                 }
                 else
                 {
@@ -281,7 +284,7 @@ namespace MView.Utilities
                 using (FileStream outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.ReadWrite))
                 {
                     outputStream.SetLength(stream.Length);
-                    stream.CopyTo(outputStream);
+                    await stream.CopyToAsync(outputStream);
                 }
             }
             finally
@@ -295,17 +298,17 @@ namespace MView.Utilities
         /// </summary>
         /// <param name="filePath">The path to the file to restore.</param>
         /// <exception cref="NotSupportedException"></exception>
-        public static Stream GetRestoredFileStream(string filePath)
+        public static async Task<Stream> GetRestoredFileAsync(string filePath)
         {
             string extension = Path.GetExtension(filePath).ToLower();
 
             if (extension == ".rpgmvp" || extension == ".rpgmvm" || extension == ".rpgmvw" || extension == ".png_" || extension == ".m4a_" || extension == ".wav_")
             {
-                return RestoreInternal(filePath);
+                return await RestoreInternalAsync(filePath);
             }
             else if (extension == ".rpgmvo" || extension == ".ogg_")
             {
-                return RestoreOggInternal(filePath);
+                return await RestoreOggInternalAsync(filePath);
             }
             else
             {
@@ -320,7 +323,7 @@ namespace MView.Utilities
         /// Restore a header of a file: *.rpgmvm, *.rpgmvw, *.rpgmvp.
         /// </summary>
         /// <param name="filePath">The path to the file to restore.</param>
-        private static Stream RestoreInternal(string filePath)
+        private static async Task<Stream> RestoreInternalAsync(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -336,7 +339,7 @@ namespace MView.Utilities
 
                 originalStream.Position = HEADER_MV.Length;
                 outputStream.Position = 0;
-                originalStream.CopyTo(outputStream, 4096);
+                await originalStream.CopyToAsync(outputStream, 4096);
 
                 // Select the general header.
                 string extension = Path.GetExtension(filePath).ToLower();
@@ -362,7 +365,7 @@ namespace MView.Utilities
 
                 // Fill with the general header.
                 outputStream.Position = 0;
-                outputStream.Write(header, 0, header.Length);
+                await outputStream.WriteAsync(header, 0, header.Length);
 
                 return outputStream;
             }
@@ -379,7 +382,7 @@ namespace MView.Utilities
         /// Restore a header of a file: *.rpgmvo.
         /// </summary>
         /// <param name="filePath">The path to the file to restore.</param>
-        private static Stream RestoreOggInternal(string filePath)
+        private static async Task<Stream> RestoreOggInternalAsync(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -424,7 +427,7 @@ namespace MView.Utilities
                 // OGG Data Header.
                 byte[] signatureBytes = new byte[4];
                 originalStream.Position = offset;
-                originalStream.Read(signatureBytes, 0, 4);
+                await originalStream.ReadAsync(signatureBytes, 0, 4);
 
                 headerData.Signature = Encoding.ASCII.GetString(signatureBytes);
 
@@ -443,7 +446,7 @@ namespace MView.Utilities
 
                 byte[] serialNumber = new byte[4]; // UInt32
                 originalStream.Position = offset;
-                originalStream.Read(serialNumber, 0, 4);
+                await originalStream.ReadAsync(serialNumber, 0, 4);
 
                 if (isLittleEndian)
                 {
@@ -464,11 +467,11 @@ namespace MView.Utilities
 
                 originalStream.Position = HEADER_MV.Length;
                 outputStream.Position = 0;
-                originalStream.CopyTo(outputStream, 4096);
+                await originalStream.CopyToAsync(outputStream, 4096);
 
                 // Fix the header.
                 outputStream.Position = 0;
-                outputStream.Write(header, 0, header.Length);
+                await outputStream.WriteAsync(header, 0, header.Length);
 
                 return outputStream;
             }

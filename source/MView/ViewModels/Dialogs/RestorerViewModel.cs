@@ -13,12 +13,28 @@ namespace MView.ViewModels.Dialogs
 {
     public class RestorerViewModel : Screen
     {
-        private string _outputPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        public string OutputPath
+        public string OutputDirectory
         {
-            get => _outputPath;
-            set => Set(ref _outputPath, value);
+            get => _outputDirectory;
+            set => Set(ref _outputDirectory, value);
+        }
+
+        private bool _verifyFakeHeader = true;
+
+        public bool VerifyFakeHeader
+        {
+            get => _verifyFakeHeader;
+            set => Set(ref _verifyFakeHeader, value);
+        }
+
+        private bool _restoreAllFiles = false;
+
+        public bool RestoreAllFiles
+        {
+            get => _restoreAllFiles;
+            set => Set(ref _restoreAllFiles, value);
         }
 
         public void ExploreOutputPath()
@@ -29,7 +45,7 @@ namespace MView.ViewModels.Dialogs
 
             if (dialog.ShowDialog() == true)
             {
-                OutputPath = dialog.SelectedPath;
+                OutputDirectory = dialog.SelectedPath;
             }
         }
 

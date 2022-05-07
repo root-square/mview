@@ -24,12 +24,20 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _encryptionKey, value);
         }
 
-        private string _outputPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        public string OutputPath
+        public string OutputDirectory
         {
-            get => _outputPath;
-            set => Set(ref _outputPath, value);
+            get => _outputDirectory;
+            set => Set(ref _outputDirectory, value);
+        }
+
+        private bool _encryptAllFiles = false;
+
+        public bool EncryptAllFiles
+        {
+            get => _encryptAllFiles;
+            set => Set(ref _encryptAllFiles, value);
         }
 
         public void ExploreEncryptionKey()
@@ -74,7 +82,7 @@ namespace MView.ViewModels.Dialogs
 
             if (dialog.ShowDialog() == true)
             {
-                OutputPath = dialog.SelectedPath;
+                OutputDirectory = dialog.SelectedPath;
             }
         }
 

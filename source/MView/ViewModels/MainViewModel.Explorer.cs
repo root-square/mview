@@ -36,6 +36,7 @@ namespace MView.ViewModels
                 {
                     Set(ref _selectedItem, value);
                     RefreshViewerAsync().ConfigureAwait(false).GetAwaiter();
+                    RefreshMetadataAsync().ConfigureAwait(false).GetAwaiter();
                 }
             }
         }
@@ -50,7 +51,7 @@ namespace MView.ViewModels
 
         #endregion
 
-        #region ::Menu Interactions::
+        #region ::Workers::
 
         // File
         public void OpenFiles()
@@ -97,39 +98,37 @@ namespace MView.ViewModels
                 // Clear the collection.
                 IndexedItems.Clear();
 
-                // Add the selected files.
+                // Get selected files.
                 string[] selectedFiles = openFileDialog.FileNames;
 
                 // Process
-                ProgressDialog progressDialog = new ProgressDialog()
+                using (ProgressDialog progressDialog = new ProgressDialog())
                 {
-                    WindowTitle = "MView",
-                    Text = "MView File Indexer",
-                    Description = "Indexing selected files...",
-                    ShowTimeRemaining = true,
-                    ShowCancelButton = false,
-                    ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar
-                };
+                    progressDialog.WindowTitle = "MView";
+                    progressDialog.Text = "MView File Indexer";
+                    progressDialog.Description = "Indexing selected files...";
+                    progressDialog.ShowTimeRemaining = true;
+                    progressDialog.ShowCancelButton = false;
+                    progressDialog.ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar;
 
-                progressDialog.DoWork += (sender, e) => {
-                    Thread.Sleep(1000);
+                    progressDialog.DoWork += (sender, e) => {
+                        List<string> extensions = Settings.KnownExtensions.ToList();
 
-                    List<string> extensions = Settings.KnownExtensions.ToList();
-
-                    for (int i = 0; i < selectedFiles.Length; i++)
-                    {
-                        IndexedItem? item = IndexingManager.GetFile(new FileInfo(selectedFiles[i]), indexAllExtensions ? null : extensions);
-
-                        if (item != null)
+                        for (int i = 0; i < selectedFiles.Length; i++)
                         {
-                            IndexedItems.Add(item);
+                            IndexedItem? item = IndexingManager.GetFile(new FileInfo(selectedFiles[i]), Path.GetDirectoryName(selectedFiles[i]), indexAllExtensions ? null : extensions);
+
+                            if (item != null)
+                            {
+                                IndexedItems.Add(item);
+                            }
                         }
-                    }
 
-                    Log.Information($"{IndexedItems.Count} items have been indexed.");
-                };
+                        Log.Information($"{IndexedItems.Count} items have been indexed.");
+                    };
 
-                progressDialog.Show();
+                    progressDialog.Show();
+                }
             }
         }
 
@@ -177,36 +176,40 @@ namespace MView.ViewModels
                 // Clear the collection.
                 IndexedItems.Clear();
 
-                // Add the selected files.
+                // Get selected paths.
                 string[] selectedPaths = folderBrowserDialog.SelectedPaths;
 
                 // Process
-                ProgressDialog progressDialog = new ProgressDialog()
+                using (ProgressDialog progressDialog = new ProgressDialog())
                 {
-                    WindowTitle = "MView",
-                    Text = "MView File Indexer",
-                    Description = "Indexing selected folders...",
-                    ShowTimeRemaining = true,
-                    ShowCancelButton = false,
-                    ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar
-                };
+                    progressDialog.WindowTitle = "MView";
+                    progressDialog.Text = "MView File Indexer";
+                    progressDialog.Description = "Indexing selected folders...";
+                    progressDialog.ShowTimeRemaining = true;
+                    progressDialog.ShowCancelButton = false;
+                    progressDialog.ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar;
 
-                progressDialog.DoWork += (sender, e) => {
-                    Thread.Sleep(1000);
+                    progressDialog.DoWork += (sender, e) => {
+                        List<string> extensions = Settings.KnownExtensions.ToList();
 
-                    List<string> extensions = Settings.KnownExtensions.ToList();
+                        for (int i = 0; i < selectedPaths.Length; i++)
+                        {
+                            if (Path.GetDirectoryName(selectedPaths[i]) == Path.GetPathRoot(selectedPaths[i]))
+                            {
+                                Log.Warning($"The root directory has been selected. Skip the directory.");
+                                continue;
+                            }
 
-                    for (int i = 0; i < selectedPaths.Length; i++)
-                    {
-                        List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), indexAllExtensions ? null : extensions);
+                            List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), Path.GetDirectoryName(selectedPaths[i]), indexAllExtensions ? null : extensions);
 
-                        IndexedItems.AddRange(items);
-                    }
+                            IndexedItems.AddRange(items);
+                        }
 
-                    Log.Information($"{IndexedItems.Count} items have been indexed.");
-                };
+                        Log.Information($"{IndexedItems.Count} items have been indexed.");
+                    };
 
-                progressDialog.Show();
+                    progressDialog.Show();
+                }
             }
         }
 

@@ -25,12 +25,12 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _encryptionKey, value);
         }
 
-        private string _outputPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string _outputDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-        public string OutputPath
+        public string OutputDirectory
         {
-            get => _outputPath;
-            set => Set(ref _outputPath, value);
+            get => _outputDirectory;
+            set => Set(ref _outputDirectory, value);
         }
 
         private bool _verifyFakeHeader = true;
@@ -39,6 +39,14 @@ namespace MView.ViewModels.Dialogs
         {
             get => _verifyFakeHeader;
             set => Set(ref _verifyFakeHeader, value);
+        }
+
+        private bool _decryptAllFiles = false;
+
+        public bool DecryptAllFiles
+        {
+            get => _decryptAllFiles;
+            set => Set(ref _decryptAllFiles, value);
         }
 
         public void ExploreEncryptionKey()
@@ -83,7 +91,7 @@ namespace MView.ViewModels.Dialogs
 
             if (dialog.ShowDialog() == true)
             {
-                OutputPath = dialog.SelectedPath;
+                OutputDirectory = dialog.SelectedPath;
             }
         }
 

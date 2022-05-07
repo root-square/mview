@@ -53,9 +53,9 @@
                     <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="30" Padding="8 4 8 4"
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
-                             materialDesign:HintAssist.Hint="Output Path" Cursor="Arrow">
+                             materialDesign:HintAssist.Hint="Output Directory">
                         <TextBox.Text>
-                            <Binding Path="OutputPath" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding Path="OutputDirectory" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <domain:DirectoryValidationRule xmlns:domain="clr-namespace:MView.Validators" ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
@@ -69,6 +69,7 @@
                 <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 10 0 0" Text="※ A 'data/System.json' file is required to get encryption key." Opacity=".68"/>
 
                 <CheckBox Margin="0 10 0 0" Content="Verify the fake header(RPG MV/MZ signature header)" IsChecked="{Binding VerifyFakeHeader, Mode=TwoWay}"/>
+                <CheckBox Margin="0 4 0 0" Content="Decrypt all files" IsChecked="{Binding DecryptAllFiles, Mode=TwoWay}"/>
             </StackPanel>
         </ScrollViewer>
 

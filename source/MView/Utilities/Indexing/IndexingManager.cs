@@ -16,7 +16,7 @@ namespace MView.Utilities.Indexing
         /// </summary>
         /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
         /// <returns>Indexed file item</returns>
-        public static IndexedItem? GetFile(FileInfo file, List<string>? extensions)
+        public static IndexedItem? GetFile(FileInfo file, string? rootDirectory, List<string>? extensions)
         {
             if (extensions == null)
             {
@@ -34,7 +34,8 @@ namespace MView.Utilities.Indexing
             item.IsSelected = true;
             item.FileName = file.Name;
             item.FullPath = file.FullName;
-            item.ParentPath = Path.GetDirectoryName(file.FullName) ?? "NULL";
+            item.RootDirectory = rootDirectory ?? "NULL";
+            item.ParentDirectory = Path.GetDirectoryName(file.FullName) ?? "NULL";
             item.Size = file.Length;
             item.SizeString = UnitConverter.GetFileSizeString(file.Length);
 
@@ -47,7 +48,7 @@ namespace MView.Utilities.Indexing
         /// <param name="directory">Directory to index.</param>
         /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
         /// <returns>Indexed file list</returns>
-        public static List<IndexedItem> GetFiles(DirectoryInfo directory, List<string>? extensions)
+        public static List<IndexedItem> GetFiles(DirectoryInfo directory, string? rootDirectory, List<string>? extensions)
         {
             List<IndexedItem> items = new List<IndexedItem>();
 
@@ -56,7 +57,7 @@ namespace MView.Utilities.Indexing
             {
                 foreach (FileInfo file in directory.EnumerateFiles())
                 {
-                    IndexedItem? item = GetFile(file, extensions);
+                    IndexedItem? item = GetFile(file, rootDirectory, extensions);
 
                     if (item != null)
                     {
@@ -74,7 +75,7 @@ namespace MView.Utilities.Indexing
             {
                 foreach (DirectoryInfo subDirectory in directory.EnumerateDirectories())
                 {
-                    List<IndexedItem> subItems = GetFiles(subDirectory, extensions);
+                    List<IndexedItem> subItems = GetFiles(subDirectory, rootDirectory, extensions);
                     items.AddRange(subItems);
                 }
             }
