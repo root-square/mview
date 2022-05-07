@@ -29,14 +29,6 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _verifyFakeHeader, value);
         }
 
-        private bool _restoreAllFiles = false;
-
-        public bool RestoreAllFiles
-        {
-            get => _restoreAllFiles;
-            set => Set(ref _restoreAllFiles, value);
-        }
-
         public void ExploreOutputPath()
         {
             VistaFolderBrowserDialog dialog = new VistaFolderBrowserDialog();

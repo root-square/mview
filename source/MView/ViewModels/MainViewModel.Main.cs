@@ -103,7 +103,7 @@ namespace MView.ViewModels
                     // Get selected items.
                     List<IndexedItem> selectedItems;
 
-                    if (viewModel.EncryptAllFiles)
+                    if (viewModel.EncryptAllFileFormats)
                     {
                         selectedItems = IndexedItems.Where(p => p.IsSelected == true).ToList();
                     }
@@ -275,7 +275,7 @@ namespace MView.ViewModels
                     // Get selected items.
                     List<IndexedItem> selectedItems;
 
-                    if (viewModel.DecryptAllFiles)
+                    if (viewModel.DecryptAllFileFormats)
                     {
                         selectedItems = IndexedItems.Where(p => p.IsSelected == true).ToList();
                     }
@@ -491,16 +491,7 @@ namespace MView.ViewModels
                     _stopwatch.Restart(); // Start
 
                     // Get selected items.
-                    List<IndexedItem> selectedItems;
-
-                    if (viewModel.RestoreAllFiles)
-                    {
-                        selectedItems = IndexedItems.Where(p => p.IsSelected == true).ToList();
-                    }
-                    else
-                    {
-                        selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
-                    }
+                    List<IndexedItem> selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
 
                     // Set the number of threads.
                     int numberOfThreads = 0;

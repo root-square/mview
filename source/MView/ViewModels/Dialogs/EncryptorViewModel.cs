@@ -40,12 +40,12 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _encryptWithRMMZExtensions, value);
         }
 
-        private bool _encryptAllFiles = false;
+        private bool _encryptAllFileFormats = false;
 
-        public bool EncryptAllFiles
+        public bool EncryptAllFileFormats
         {
-            get => _encryptAllFiles;
-            set => Set(ref _encryptAllFiles, value);
+            get => _encryptAllFileFormats;
+            set => Set(ref _encryptAllFileFormats, value);
         }
 
         public void ExploreEncryptionKey()

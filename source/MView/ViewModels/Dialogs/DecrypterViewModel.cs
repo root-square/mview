@@ -41,12 +41,12 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _verifyFakeHeader, value);
         }
 
-        private bool _decryptAllFiles = false;
+        private bool _decryptAllFileFormats = false;
 
-        public bool DecryptAllFiles
+        public bool DecryptAllFileFormats
         {
-            get => _decryptAllFiles;
-            set => Set(ref _decryptAllFiles, value);
+            get => _decryptAllFileFormats;
+            set => Set(ref _decryptAllFileFormats, value);
         }
 
         public void ExploreEncryptionKey()
