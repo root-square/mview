@@ -200,7 +200,7 @@ namespace MView.ViewModels
                     AppendMetadataLine($"* This format is not supported.");
                 }
 
-                Log.Information("The metadata has been refreshed.");
+                Log.Information("The metadata has been refreshed(FILE : {_selectedItem.FullPath}).");
                 BuildMetadata();
             });
 
@@ -363,7 +363,7 @@ namespace MView.ViewModels
                     }
                 }
 
-                Log.Information("The viewer has been refreshed.");
+                Log.Information($"The viewer has been refreshed(FILE : {_selectedItem.FullPath}).");
             });
 
             await task;

@@ -161,11 +161,9 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Warning(ex, "An unexpected exception has occured.");
-            }
-            finally
-            {
                 IsWorking = false;
+                Log.Warning(ex, "An unexpected exception has occured.");
+                MessageBox.Show("An unexpected exception has occured.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -176,7 +174,7 @@ namespace MView.ViewModels
                 // Check the file.
                 if (!File.Exists(item.FullPath))
                 {
-                    Log.Warning("The file does not exist.");
+                    Log.Warning($"The file does not exist(FILE : {item.FullPath}).");
                     return;
                 }
 
@@ -242,7 +240,7 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "A fatal error occurred during the restore operation.");
+                Log.Fatal(ex, $"A fatal error occurred during the restore operation(FILE : {item.FullPath}).");
             }
             finally
             {
@@ -335,11 +333,9 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Warning(ex, "An unexpected exception has occured.");
-            }
-            finally
-            {
                 IsWorking = false;
+                Log.Warning(ex, "An unexpected exception has occured.");
+                MessageBox.Show("An unexpected exception has occured.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -350,7 +346,7 @@ namespace MView.ViewModels
                 // Check the file.
                 if (!File.Exists(item.FullPath))
                 {
-                    Log.Warning("The file does not exist.");
+                    Log.Warning($"The file does not exist(FILE : {item.FullPath}).");
                     return;
                 }
 
@@ -361,7 +357,7 @@ namespace MView.ViewModels
 
                     if (!verifyingResult)
                     {
-                        Log.Warning("The file is not a valid RPG Maker MV/MZ resource file.");
+                        Log.Warning($"The file is not a valid RPG Maker MV/MZ resource file(FILE : {item.FullPath}).");
                         return;
                     }
                 }
@@ -389,7 +385,7 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "A fatal error occurred during the restore operation.");
+                Log.Fatal(ex, $"A fatal error occurred during the restore operation(FILE : {item.FullPath}).");
             }
             finally
             {
@@ -406,7 +402,7 @@ namespace MView.ViewModels
                     // Check the file.
                     if (!File.Exists(_selectedItem.FullPath))
                     {
-                        Log.Error($"The file does not exist.");
+                        Log.Error($"The file does not exist(FILE : {_selectedItem.FullPath}).");
                         MessageBox.Show($"The file does not exist.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
@@ -463,10 +459,7 @@ namespace MView.ViewModels
             {
                 IsWorking = false;
                 Log.Warning(ex, "An unexpected exception has occured.");
-            }
-            finally
-            {
-                IsWorking = false;
+                MessageBox.Show("An unexpected exception has occured.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -544,11 +537,9 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Warning(ex, "An unexpected exception has occured.");
-            }
-            finally
-            {
                 IsWorking = false;
+                Log.Warning(ex, "An unexpected exception has occured.");
+                MessageBox.Show("An unexpected exception has occured.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -559,7 +550,7 @@ namespace MView.ViewModels
                 // Check the file.
                 if (!File.Exists(item.FullPath))
                 {
-                    Log.Warning("The file does not exist.");
+                    Log.Warning($"The file does not exist(FILE : {item.FullPath}).");
                     return;
                 }
 
@@ -570,7 +561,7 @@ namespace MView.ViewModels
 
                     if (!verifyingResult)
                     {
-                        Log.Warning("The file is not a valid RPG Maker MV/MZ resource file.");
+                        Log.Warning($"The file is not a valid RPG Maker MV/MZ resource file(FILE : {item.FullPath}).");
                         return;
                     }
                 }
@@ -598,7 +589,7 @@ namespace MView.ViewModels
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "A fatal error occurred during the restore operation.");
+                Log.Fatal(ex, $"A fatal error occurred during the restore operation(FILE : {item.FullPath}).");
             }
             finally
             {
