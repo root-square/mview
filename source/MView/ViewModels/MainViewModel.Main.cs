@@ -163,6 +163,10 @@ namespace MView.ViewModels
             {
                 Log.Warning(ex, "An unexpected exception has occured.");
             }
+            finally
+            {
+                IsWorking = false;
+            }
         }
 
         private async Task EncryptInternalAsync(IndexedItem item, string key, string outputDirectory, SemaphoreSlim? throttler)
@@ -294,6 +298,10 @@ namespace MView.ViewModels
             {
                 Log.Warning(ex, "An unexpected exception has occured.");
             }
+            finally
+            {
+                IsWorking = false;
+            }
         }
 
         private async Task DecryptInternalAsync(IndexedItem item, string key, string outputDirectory, bool verifyFakeHeader, SemaphoreSlim? throttler)
@@ -415,6 +423,10 @@ namespace MView.ViewModels
             {
                 Log.Warning(ex, "An unexpected exception has occured.");
             }
+            finally
+            {
+                IsWorking = false;
+            }
         }
 
         public async void Restore()
@@ -501,6 +513,10 @@ namespace MView.ViewModels
             catch (Exception ex)
             {
                 Log.Warning(ex, "An unexpected exception has occured.");
+            }
+            finally
+            {
+                IsWorking = false;
             }
         }
 
