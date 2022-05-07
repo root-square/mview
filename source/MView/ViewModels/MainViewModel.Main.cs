@@ -109,7 +109,7 @@ namespace MView.ViewModels
                     }
                     else
                     {
-                        selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
+                        selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_DECRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
                     }
 
                     // Set the number of threads.
@@ -133,7 +133,7 @@ namespace MView.ViewModels
                         // Do an async wait until we can schedule again.
                         await throttler.WaitAsync();
 
-                        tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, throttler));
+                        tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.EncryptWithRMMZExtensions, throttler));
                     }
 
                     _stopwatch.Stop(); // Stop
@@ -169,7 +169,7 @@ namespace MView.ViewModels
             }
         }
 
-        private async Task EncryptInternalAsync(IndexedItem item, string key, string outputDirectory, SemaphoreSlim? throttler)
+        private async Task EncryptInternalAsync(IndexedItem item, string key, string outputDirectory, bool encryptWithRMMZExtensions, SemaphoreSlim? throttler)
         {
             try
             {
@@ -185,11 +185,50 @@ namespace MView.ViewModels
                 string outputPath = Path.Combine(outputDirectory, relativePath);
 
                 string extension = Path.GetExtension(outputPath).ToLower();
-                int extIndex = CryptographyProvider.EXTENSIONS_DECRYPTED.ToList().IndexOf(extension);
 
-                if (extIndex != -1)
+                if (CryptographyProvider.EXTENSIONS_DECRYPTED.Contains(extension, StringComparer.OrdinalIgnoreCase))
                 {
-                    string targetExtension = CryptographyProvider.EXTENSIONS_ENCRYPTED[extIndex];
+                    string targetExtension = string.Empty;
+
+                    if (!encryptWithRMMZExtensions)
+                    {
+                        if (extension == ".png")
+                        {
+                            targetExtension = ".rpgmvp";
+                        }
+                        else if (extension == ".ogg")
+                        {
+                            targetExtension = ".rpgmvo";
+                        }
+                        else if (extension == ".m4a")
+                        {
+                            targetExtension = ".rpgmvm";
+                        }
+                        else if (extension == ".wav")
+                        {
+                            targetExtension = ".rpgmvw";
+                        }
+                    }
+                    else
+                    {
+                        if (extension == ".png")
+                        {
+                            targetExtension = ".png_";
+                        }
+                        else if (extension == ".ogg")
+                        {
+                            targetExtension = ".ogg_";
+                        }
+                        else if (extension == ".m4a")
+                        {
+                            targetExtension = ".m4a_";
+                        }
+                        else if (extension == ".wav")
+                        {
+                            targetExtension = ".wav_";
+                        }
+                    }
+
                     outputPath = Path.Combine(Path.GetDirectoryName(outputPath), Path.GetFileNameWithoutExtension(outputPath) + targetExtension);
                 }
 

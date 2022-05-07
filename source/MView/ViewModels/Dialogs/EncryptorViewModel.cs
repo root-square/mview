@@ -32,6 +32,14 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _outputDirectory, value);
         }
 
+        private bool _encryptWithRMMZExtensions = false;
+
+        public bool EncryptWithRMMZExtensions
+        {
+            get => _encryptWithRMMZExtensions;
+            set => Set(ref _encryptWithRMMZExtensions, value);
+        }
+
         private bool _encryptAllFiles = false;
 
         public bool EncryptAllFiles
