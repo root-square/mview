@@ -58,7 +58,7 @@ namespace MView.ViewModels
         {
             VistaOpenFileDialog openFileDialog = new VistaOpenFileDialog();
             openFileDialog.Title = "Please select files.";
-            openFileDialog.Filter = "RPG MV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RPG MZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Resources|*.png;*.ogg;*.m4a;*.wav|All files|*.*";
+            openFileDialog.Filter = "Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RPG MV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RPG MZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Resources|*.png;*.ogg;*.m4a;*.wav|All files|*.*";
             openFileDialog.Multiselect = true;
 
             if (openFileDialog.ShowDialog() == true)

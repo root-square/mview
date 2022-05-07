@@ -5,3 +5,5 @@ restore 오류 처리. -> OGG랑 일반 둘다 상태 이상함.
 IsWorking을 finally에서 해제하기. => 가끔 해제가 안되는 경우가 있음.
 
 MV 확장자로 암호화할지, MZ 확장자로 암호화할지 설정 추가.
+
+Encrypt all files 선택안해도 기본 확장자는 암호화 가능하게 하기.
