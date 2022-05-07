@@ -48,12 +48,22 @@ namespace MView
             set => Set(ref _numberOfThreads, value);
         }
 
+        // Preferences
+        private float _audioVolume = 1.0F;
+
+        public float AudioVolume
+        {
+            get => _audioVolume;
+            set => Set(ref _audioVolume, value);
+        }
+
         // Methods
         public void DeepCopyFrom(Settings settings)
         {
             UseDarkTheme = settings.UseDarkTheme;
             UseMultiThreading = settings.UseMultiThreading;
             NumberOfThreads = settings.NumberOfThreads;
+            AudioVolume = settings.AudioVolume;
         }
     }
 }

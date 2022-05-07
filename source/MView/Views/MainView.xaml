@@ -253,19 +253,20 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <Slider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                                                Margin="0 0 0 4" VerticalAlignment="Center"
-                                                materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
-                                                Minimum="0" Maximum="50" Value="35" />
+                                                        Margin="0 0 0 4" VerticalAlignment="Center"
+                                                        materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
+                                                        Minimum="0" Maximum="{Binding TotalTime, Converter={StaticResource TimeSpanToTotalSecondsConverter}}"
+                                                        Value="{Binding CurrentTime, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalSecondsConverter}}" />
 
-                                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="00:00:00" />
+                                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding CurrentTime, Converter={StaticResource TimeSpanToStringConverter}}" />
 
-                                                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Right" Text="00:10:00" />
+                                                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding TotalTime, Converter={StaticResource TimeSpanToStringConverter}}" />
 
                                                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Stop" caliburn:Message.Attach="StopAudio()">
                                                         <materialDesign:PackIcon Kind="Stop" Opacity=".90" />
                                                     </Button>
-                                                    <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Play" caliburn:Message.Attach="PlayAudio()">
+                                                    <Button Style="{StaticResource MaterialDesignIconButton}" Margin="4 0 4 0" ToolTip="Play" caliburn:Message.Attach="PlayAudio()">
                                                         <materialDesign:PackIcon Kind="Play" />
                                                     </Button>
                                                     <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Pause" caliburn:Message.Attach="PauseAudio()">
@@ -280,9 +281,9 @@
                                                     </Grid.ColumnDefinitions>
 
                                                     <materialDesign:PackIcon VerticalAlignment="Center" Margin="0 0 10 0" Kind="VolumeVibrate" />
-                                                    <Slider Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="100"
+                                                    <Slider Grid.Column="1" VerticalAlignment="Center" Minimum="0.0" Maximum="1.0"
                                                     materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
-                                                    Value="100" />
+                                                    Value="{Binding AudioVolume, Mode=TwoWay}" />
                                                 </Grid>
                                             </Grid>
                                         </Border>

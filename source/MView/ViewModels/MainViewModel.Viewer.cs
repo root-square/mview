@@ -1,4 +1,5 @@
-﻿using MView.Utilities;
+﻿using Caliburn.Micro;
+using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;
 using NAudio.Vorbis;
@@ -91,7 +92,16 @@ namespace MView.ViewModels
             {
                 if (_waveStream != null)
                 {
-                    _waveStream.CurrentTime = value;
+                    if (value >= _waveStream.TotalTime)
+                    {
+                        // Handle it so that it does not exceed the total time.
+                        _waveStream.CurrentTime = _waveStream.TotalTime.Subtract(TimeSpan.FromMilliseconds(500));
+                    }
+                    else
+                    {
+                        _waveStream.CurrentTime = value;
+                    }
+
                     NotifyOfPropertyChange("CurrentTime");
                 }
             }
@@ -114,12 +124,14 @@ namespace MView.ViewModels
 
         public float AudioVolume
         {
-            get => _wavePlayer?.Volume ?? 100.0F;
+            get => _wavePlayer?.Volume ?? 1.0F;
             set
             {
                 if (WavePlayer != null)
                 {
+                    IoC.Get<Settings>().AudioVolume = value;
                     WavePlayer.Volume = value;
+
                     NotifyOfPropertyChange("AudioVolume");
                 }
             }
@@ -191,7 +203,7 @@ namespace MView.ViewModels
 
                 AppendMetadataLine($"* File Name : {_selectedItem.FileName}");
                 AppendMetadataLine($"* Full Path : {_selectedItem.FullPath}");
-                AppendMetadataLine($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size} Byte)");
+                AppendMetadataLine($"* File Size : {UnitConverter.GetFileSizeString(_selectedItem.Size)}({_selectedItem.Size:N} Byte)");
 
                 string extension = Path.GetExtension(_selectedItem.FileName);
 
@@ -200,7 +212,7 @@ namespace MView.ViewModels
                     AppendMetadataLine($"* This format is not supported.");
                 }
 
-                Log.Information("The metadata has been refreshed(FILE : {_selectedItem.FullPath}).");
+                Log.Information($"The metadata has been refreshed(FILE : {_selectedItem.FullPath}).");
                 BuildMetadata();
             });
 
@@ -211,60 +223,73 @@ namespace MView.ViewModels
 
         #region ::Audio::
 
-        private void InitializeAudio(Stream stream, bool isVorbis = false)
+        private bool InitializeAudio(Stream stream, bool isVorbis = false)
         {
-            // Dispose the previous player.
-            if (_wavePlayer != null)
+            try
             {
-                _wavePlayer.Dispose();
-                _wavePlayer = null;
-            }
+                // Dispose the previous player.
+                if (_wavePlayer != null)
+                {
+                    _wavePlayer.Dispose();
+                    _wavePlayer = null;
+                }
 
-            // Initialize a player.
-            _wavePlayer = new WaveOut();
+                // Initialize a player.
+                _wavePlayer = new WaveOut();
 
-            // Read a audio file.
-            if (isVorbis)
-            {
-                _waveStream = new VorbisWaveReader(stream, true);
-            }
-            else
-            {
-                _waveStream = new StreamMediaFoundationReader(stream);
-            }
+                // Read a audio file.
+                if (isVorbis)
+                {
+                    _waveStream = new VorbisWaveReader(stream, true);
+                }
+                else
+                {
+                    _waveStream = new StreamMediaFoundationReader(stream);
+                }
 
-            _wavePlayer.Init(_waveStream);
+                _wavePlayer.Init(_waveStream);
 
-            // Refresh times.
-            _waveStream.CurrentTime = TimeSpan.Zero;
-
-            NotifyOfPropertyChange("CurrentTime");
-            NotifyOfPropertyChange("TotalTime");
-
-            // Add events.
-            _wavePlayer.PlaybackStopped += (sender, e) =>
-            {
+                // Refresh properties.
                 _waveStream.CurrentTime = TimeSpan.Zero;
 
                 NotifyOfPropertyChange("CurrentTime");
                 NotifyOfPropertyChange("TotalTime");
-            };
 
-            // Initialize the refresh timer.
-            if (_refreshTimer != null)
-            {
-                _refreshTimer.Dispose();
-            }
+                _wavePlayer.Volume = IoC.Get<Settings>().AudioVolume;
+                NotifyOfPropertyChange("AudioVolume");
 
-            _refreshTimer = new Timer(1000);
-
-            _refreshTimer.Elapsed += (sender, e) =>
-            {
-                if (_wavePlayer.PlaybackState == PlaybackState.Playing)
+                // Add events.
+                _wavePlayer.PlaybackStopped += (sender, e) =>
                 {
+                    _waveStream.CurrentTime = TimeSpan.Zero;
+
                     NotifyOfPropertyChange("CurrentTime");
+                    NotifyOfPropertyChange("TotalTime");
+                };
+
+                // Initialize the refresh timer.
+                if (_refreshTimer != null)
+                {
+                    _refreshTimer.Dispose();
                 }
-            };
+
+                _refreshTimer = new Timer(1000);
+
+                _refreshTimer.Elapsed += (sender, e) =>
+                {
+                    if (_wavePlayer.PlaybackState == PlaybackState.Playing)
+                    {
+                        NotifyOfPropertyChange("CurrentTime");
+                    }
+                };
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning(ex, $"Unable to initialize the audio player.");
+                return false;
+            }
         }
 
         public void PlayAudio()
@@ -316,16 +341,9 @@ namespace MView.ViewModels
 
                 if (Settings.KnownExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
                 {
-                    // Dispose all streams.
-                    if (_sourceStream != null && _sourceStream != Stream.Null)
-                    {
-                        _sourceStream.Dispose();
-                    }
-
-                    if (_imageStream != null && _imageStream != Stream.Null)
-                    {
-                        _imageStream.Dispose();
-                    }
+                    // Reset viewers.
+                    StopAudio();
+                    ResetViewer(false);
 
                     // Get a file stream;
                     if (CryptographyProvider.EXTENSIONS_ENCRYPTED.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase)))
@@ -356,10 +374,12 @@ namespace MView.ViewModels
                         string[] oggVorbisExtensions = new string[] { ".ogg", ".rpgmvo", ".ogg_" };
 
                         bool isVorbis = oggVorbisExtensions.Any(p => p.Equals(extension, StringComparison.OrdinalIgnoreCase));
-                        InitializeAudio(_sourceStream, isVorbis);
 
-                        // Show the audio player.
-                        IsAudioPlayerVisible = true;
+                        if (InitializeAudio(_sourceStream, isVorbis))
+                        {
+                            // Show the audio player.
+                            IsAudioPlayerVisible = true;
+                        }
                     }
                 }
 
@@ -369,7 +389,7 @@ namespace MView.ViewModels
             await task;
         }
 
-        public void ResetViewer()
+        public void ResetViewer(bool clearMetadata = true)
         {
             // Dispose all streams.
             if (_sourceStream != null && _sourceStream != Stream.Null)
@@ -384,12 +404,29 @@ namespace MView.ViewModels
                 ImageStream = Stream.Null;
             }
 
+            if (_wavePlayer != null)
+            {
+                _wavePlayer.Dispose();
+                _wavePlayer = null;
+            }
+
+            if (_waveStream != null)
+            {
+                _waveStream.Dispose();
+                _waveStream = null;
+            }
+
+            _refreshTimer.Dispose();
+
             // Hide viewers.
             IsImageViewerVisible = false;
             IsAudioPlayerVisible = false;
 
             // Clear the metadata.
-            ClearMetadata();
+            if (clearMetadata)
+            {
+                ClearMetadata();
+            }
 
             Log.Information("The viewer has been resetted.");
         }

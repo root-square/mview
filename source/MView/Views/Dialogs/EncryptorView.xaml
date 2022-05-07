@@ -11,7 +11,7 @@
         Style="{StaticResource PickUiFixedDialogWindow}"
         Foreground="{DynamicResource PickUiForeground}"
         WindowStartupLocation="CenterScreen"
-        Title="Encrypter" Height="400" Width="700" SizeToContent="WidthAndHeight">
+        Title="Encrypter" Height="340" Width="560">
     <Grid Margin="20 10 20 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
