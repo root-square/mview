@@ -1,4 +1,3 @@
-dispose 처리 : IndexMan, CryptoProv, FileLoad, VH, MVM.Exp, MVM.Main, MVM.View
 뷰어 오류 처리
 restore 오류 처리.
 결과창 추가하기.

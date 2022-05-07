@@ -20,7 +20,7 @@ using System.Windows.Media;
 
 namespace MView.ViewModels
 {
-    public partial class MainViewModel : Screen
+    public partial class MainViewModel : Screen, IDisposable
     {
         #region ::Variables::
 
@@ -547,6 +547,57 @@ namespace MView.ViewModels
         {
             InformationViewModel viewModel = IoC.Get<InformationViewModel>();
             await IoC.Get<IWindowManager>().ShowDialogAsync(viewModel).ConfigureAwait(false);
+        }
+
+        #endregion
+
+        #region ::IDisposable Members::
+
+        private bool _disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    IndexedItems.Clear();
+
+                    if (_sourceStream != null && _sourceStream != Stream.Null)
+                    {
+                        _sourceStream.Dispose();
+                        SourceStream = Stream.Null;
+                    }
+
+                    if (_imageStream != null && _imageStream != Stream.Null)
+                    {
+                        _imageStream.Dispose();
+                        ImageStream = Stream.Null;
+                    }
+
+                    if (_wavePlayer != null)
+                    {
+                        _wavePlayer.Dispose();
+                        _wavePlayer = null;
+                    }
+
+                    if (_waveStream != null)
+                    {
+                        _waveStream.Dispose();
+                        _waveStream = null;
+                    }
+
+                    _refreshTimer.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
