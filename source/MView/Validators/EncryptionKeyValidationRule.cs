@@ -13,7 +13,7 @@ namespace MView.Validators
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (Regex.IsMatch((string)value, @"[0-9a-zA-Z]{32}"))
+            if ((string)value != null && Regex.IsMatch((string)value, @"[0-9a-zA-Z]{32}"))
             {
                 return new ValidationResult(true, "The encryption key is valid.");
             }

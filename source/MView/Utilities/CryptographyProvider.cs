@@ -90,6 +90,12 @@ namespace MView.Utilities
         /// <param name="key">The key to encrypt the file. It requires MD5 hash.</param>
         public static async Task EncryptAsync(string filePath, string outputPath, string key)
         {
+            // Check the length of the key.
+            if (key.Length != 32)
+            {
+                throw new InvalidDataException("The key must be 32 characters long.");
+            }
+
             if (!File.Exists(filePath))
             {
                 throw new FileNotFoundException("The file does not exist.");
@@ -98,12 +104,6 @@ namespace MView.Utilities
             if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-            }
-
-            // Check the length of the key.
-            if (key.Length != 32)
-            {
-                throw new InvalidDataException("The key must be 32 characters long.");
             }
 
             using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -153,6 +153,12 @@ namespace MView.Utilities
         /// <param name="key">The key to encrypt the file. It requires MD5 hash.</param>
         public static async Task DecryptAsync(string filePath, string outputPath, string key)
         {
+            // Check the length of the key.
+            if (key.Length != 32)
+            {
+                throw new InvalidDataException("The key must be 32 characters long.");
+            }
+
             if (!File.Exists(filePath))
             {
                 throw new FileNotFoundException("The file does not exist.");
@@ -161,12 +167,6 @@ namespace MView.Utilities
             if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-            }
-
-            // Check the length of the key.
-            if (key.Length != 32)
-            {
-                throw new InvalidDataException("The key must be 32 characters long.");
             }
 
             using (FileStream originalStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
