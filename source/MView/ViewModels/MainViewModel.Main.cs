@@ -170,7 +170,7 @@ namespace MView.ViewModels
                 if (extIndex != -1)
                 {
                     string targetExtension = CryptographyProvider.EXTENSIONS_ENCRYPTED[extIndex];
-                    outputPath = Path.GetDirectoryName(outputPath) + Path.GetFileNameWithoutExtension(outputPath) + targetExtension;
+                    outputPath = Path.Combine(Path.GetDirectoryName(outputPath), Path.GetFileNameWithoutExtension(outputPath) + targetExtension);
                 }
 
                 // Start a task.
@@ -295,7 +295,7 @@ namespace MView.ViewModels
                 if (extIndex != -1)
                 {
                     string targetExtension = CryptographyProvider.EXTENSIONS_DECRYPTED[extIndex];
-                    outputPath = Path.GetDirectoryName(outputPath) + Path.GetFileNameWithoutExtension(outputPath) + targetExtension;
+                    outputPath = Path.Combine(Path.GetDirectoryName(outputPath), Path.GetFileNameWithoutExtension(outputPath) + targetExtension);
                 }
 
                 // Start a task.
@@ -489,7 +489,7 @@ namespace MView.ViewModels
                 if (extIndex != -1)
                 {
                     string targetExtension = CryptographyProvider.EXTENSIONS_DECRYPTED[extIndex];
-                    outputPath = Path.GetDirectoryName(outputPath) + Path.GetFileNameWithoutExtension(outputPath) + targetExtension;
+                    outputPath = Path.Combine(Path.GetDirectoryName(outputPath), Path.GetFileNameWithoutExtension(outputPath) + targetExtension);
                 }
 
                 // Start a task.
