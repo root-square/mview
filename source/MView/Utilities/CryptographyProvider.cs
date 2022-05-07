@@ -283,8 +283,10 @@ namespace MView.Utilities
 
                 using (FileStream outputStream = new FileStream(outputPath, FileMode.Create, FileAccess.ReadWrite))
                 {
+                    stream.Position = 0;
+                    outputStream.Position = 0;
                     outputStream.SetLength(stream.Length);
-                    await stream.CopyToAsync(outputStream);
+                    await stream.CopyToAsync(outputStream, 4096);
                 }
             }
             finally
