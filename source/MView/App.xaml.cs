@@ -56,7 +56,7 @@ namespace MView
 
         private void InitializeLogger()
         {
-            string fileName = @"data\logs\log-.log";
+            string fileName = Path.Combine(Environment.CurrentDirectory, @"data\logs\log-.log");
             string outputTemplateString = "{Timestamp:HH:mm:ss.ms} ({ThreadId}) [{Level}] {Message}{NewLine}{Exception}";
 
             var log = new LoggerConfiguration()
@@ -72,9 +72,9 @@ namespace MView
 
         public static void ReadSettings()
         {
-            if (File.Exists(Settings.Path))
+            if (File.Exists(Settings.SettingsPath))
             {
-                string json = TextManager.ReadTextFile(Settings.Path, Encoding.UTF8);
+                string json = TextManager.ReadTextFile(Settings.SettingsPath, Encoding.UTF8);
 
                 using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
                 {
@@ -99,7 +99,7 @@ namespace MView
 
                 // Write a JSON string into the settings file.
                 string json = Encoding.UTF8.GetString(stream.ToArray());
-                TextManager.WriteTextFile(Settings.Path, json, Encoding.UTF8);
+                TextManager.WriteTextFile(Settings.SettingsPath, json, Encoding.UTF8);
             }
         }
 

@@ -133,7 +133,7 @@ namespace MView.ViewModels
                         // Do an async wait until we can schedule again.
                         await throttler.WaitAsync();
 
-                        tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.EncryptWithRMMZExtensions, throttler));
+                        tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, viewModel.EncryptWithRMMZExtensions, throttler));
                     }
 
                     _stopwatch.Stop(); // Stop
@@ -152,10 +152,23 @@ namespace MView.ViewModels
                         taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
                         taskDialog.FooterIcon = TaskDialogIcon.Information;
 
+                        TaskDialogButton openFolderButton = new TaskDialogButton(ButtonType.Custom) { Text = "Open the folder" };
+                        TaskDialogButton viewLogsButton = new TaskDialogButton(ButtonType.Custom) { Text = "View logs" };
                         TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(openFolderButton);
+                        taskDialog.Buttons.Add(viewLogsButton);
                         taskDialog.Buttons.Add(okButton);
 
                         TaskDialogButton button = taskDialog.ShowDialog();
+
+                        if (button == openFolderButton)
+                        {
+                            Process.Start("explorer.exe", viewModel.OutputDirectory);
+                        }
+                        else if (button == viewLogsButton)
+                        {
+                            Process.Start("explorer.exe", Path.Combine(Environment.CurrentDirectory, @"data\logs"));
+                        }
                     }
                 }
             }
@@ -167,7 +180,7 @@ namespace MView.ViewModels
             }
         }
 
-        private async Task EncryptInternalAsync(IndexedItem item, string key, string outputDirectory, bool encryptWithRMMZExtensions, SemaphoreSlim? throttler)
+        private async Task EncryptInternalAsync(IndexedItem item, string key, string outputDirectory, bool verifyFakeHeader, bool encryptWithRMMZExtensions, SemaphoreSlim? throttler)
         {
             try
             {
@@ -176,6 +189,18 @@ namespace MView.ViewModels
                 {
                     Log.Warning($"The file does not exist(FILE : {item.FullPath}).");
                     return;
+                }
+
+                // Verify the fake header of the file.
+                if (verifyFakeHeader)
+                {
+                    bool verifyingResult = await CryptographyProvider.VerifyFakeHeaderAsync(item.FullPath);
+
+                    if (verifyingResult)
+                    {
+                        Log.Warning($"This file is already encrypted(FILE : {item.FullPath}).");
+                        return;
+                    }
                 }
 
                 // Build variables.
@@ -324,10 +349,23 @@ namespace MView.ViewModels
                         taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
                         taskDialog.FooterIcon = TaskDialogIcon.Information;
 
+                        TaskDialogButton openFolderButton = new TaskDialogButton(ButtonType.Custom) { Text = "Open the folder" };
+                        TaskDialogButton viewLogsButton = new TaskDialogButton(ButtonType.Custom) { Text = "View logs" };
                         TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(openFolderButton);
+                        taskDialog.Buttons.Add(viewLogsButton);
                         taskDialog.Buttons.Add(okButton);
 
                         TaskDialogButton button = taskDialog.ShowDialog();
+
+                        if (button == openFolderButton)
+                        {
+                            Process.Start("explorer.exe", viewModel.OutputDirectory);
+                        }
+                        else if (button == viewLogsButton)
+                        {
+                            Process.Start("explorer.exe", Path.Combine(Environment.CurrentDirectory, @"data\logs"));
+                        }
                     }
                 }
             }
@@ -528,10 +566,23 @@ namespace MView.ViewModels
                         taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
                         taskDialog.FooterIcon = TaskDialogIcon.Information;
 
+                        TaskDialogButton openFolderButton = new TaskDialogButton(ButtonType.Custom) { Text = "Open the folder" };
+                        TaskDialogButton viewLogsButton = new TaskDialogButton(ButtonType.Custom) { Text = "View logs" };
                         TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(openFolderButton);
+                        taskDialog.Buttons.Add(viewLogsButton);
                         taskDialog.Buttons.Add(okButton);
 
                         TaskDialogButton button = taskDialog.ShowDialog();
+
+                        if (button == openFolderButton)
+                        {
+                            Process.Start("explorer.exe", viewModel.OutputDirectory);
+                        }
+                        else if (button == viewLogsButton)
+                        {
+                            Process.Start("explorer.exe", Path.Combine(Environment.CurrentDirectory, @"data\logs"));
+                        }
                     }
                 }
             }

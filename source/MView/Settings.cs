@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace MView
 
         public readonly static string[] AudioExtensions = new string[] { ".ogg", ".m4a", ".wav", ".rpgmvo", ".rpgmvm", ".rpgmvw", ".ogg_", ".m4a_", ".wav_" };
 
-        public readonly static string Path = @"data\settings.json";
+        public readonly static string SettingsPath = Path.Combine(Environment.CurrentDirectory, @"data\settings.json");
 
         // Variables
         private bool _useDarkTheme = true;

@@ -32,6 +32,14 @@ namespace MView.ViewModels.Dialogs
             set => Set(ref _outputDirectory, value);
         }
 
+        private bool _verifyFakeHeader = true;
+
+        public bool VerifyFakeHeader
+        {
+            get => _verifyFakeHeader;
+            set => Set(ref _verifyFakeHeader, value);
+        }
+
         private bool _encryptWithRMMZExtensions = false;
 
         public bool EncryptWithRMMZExtensions

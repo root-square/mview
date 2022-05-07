@@ -67,8 +67,9 @@
 
                 <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 10 0 0" Text="※ A 'data/System.json' file is required to get encryption key." Opacity=".68"/>
 
-                <CheckBox Margin="0 10 0 0" Content="Encrypt with RPG Maker MZ extensions" IsChecked="{Binding EncryptWithRMMZExtensions, Mode=TwoWay}"/>
-                <CheckBox Margin="0 10 0 0" Content="Encrypt all file formats" IsChecked="{Binding EncryptAllFileFormats, Mode=TwoWay}"/>
+                <CheckBox Margin="0 10 0 0" Content="Verify the fake header(RPG MV/MZ signature header)" IsChecked="{Binding VerifyFakeHeader, Mode=TwoWay}"/>
+                <CheckBox Margin="0 4 0 0" Content="Encrypt with RPG Maker MZ extensions" IsChecked="{Binding EncryptWithRMMZExtensions, Mode=TwoWay}"/>
+                <CheckBox Margin="0 4 0 0" Content="Encrypt all file formats" IsChecked="{Binding EncryptAllFileFormats, Mode=TwoWay}"/>
             </StackPanel>
         </ScrollViewer>
 
