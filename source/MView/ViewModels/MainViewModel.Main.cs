@@ -453,13 +453,15 @@ namespace MView.ViewModels
                     }
                     else
                     {
+                        IsWorking = false;
                         Log.Warning($"\'{_selectedItem.FileName}\' is an unsupported format.");
-                        MessageBox.Show($"\'{_selectedItem.FileName}\' is an unsupported format.", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"\'{_selectedItem.FileName}\' is an unsupported format.\r\n(Supported formats: *.rpgmvp, *.rpgmvm, *.rpgmvw, *.png_, *.m4a_, *.wav_)", "MView", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Log.Warning(ex, "An unexpected exception has occured.");
             }
             finally
