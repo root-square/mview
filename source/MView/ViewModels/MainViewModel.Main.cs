@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MView.Entities;
 using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;
@@ -112,35 +113,51 @@ namespace MView.ViewModels
                         selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
                     }
 
+                    // Set the number of threads.
+                    int numberOfThreads = 0;
+
                     if (settings.UseMultiThreading)
                     {
-                        // Distribute tasks to threads.
-                        var tasks = new List<Task>();
-                        var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
-
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            // Do an async wait until we can schedule again.
-                            await throttler.WaitAsync();
-
-                            tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, throttler));
-                        }
-
-                        await Task.WhenAll(tasks);
+                        numberOfThreads = settings.NumberOfThreads;
                     }
                     else
                     {
-                        // Non multi-threading mode.
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            await EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, null);
-                        }
+                        numberOfThreads = 1;
+                    }
+
+                    // Distribute tasks to threads.
+                    var tasks = new List<Task>();
+                    var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
+
+                    foreach (IndexedItem item in selectedItems)
+                    {
+                        // Do an async wait until we can schedule again.
+                        await throttler.WaitAsync();
+
+                        tasks.Add(EncryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, throttler));
                     }
 
                     _stopwatch.Stop(); // Stop
                     IsWorking = false;
 
                     Log.Information($"The operation completed successfully({_stopwatch.ElapsedMilliseconds}ms).");
+
+                    // --------------------------------------------------------------------------------
+
+                    // Show a result dialog.
+                    using (TaskDialog taskDialog = new TaskDialog())
+                    {
+                        taskDialog.WindowTitle = "MView";
+                        taskDialog.MainInstruction = "The operation completed successfully.";
+                        taskDialog.Content = $"ELAPSED TIME : {_stopwatch.ElapsedMilliseconds}ms";
+                        taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
+                        taskDialog.FooterIcon = TaskDialogIcon.Information;
+
+                        TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(okButton);
+
+                        TaskDialogButton button = taskDialog.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
@@ -203,7 +220,7 @@ namespace MView.ViewModels
                     Settings settings = IoC.Get<Settings>();
 
                     // Check the number of threads.
-                    if (settings.NumberOfThreads < 0 || settings.NumberOfThreads > 10)
+                    if (settings.UseMultiThreading && (settings.NumberOfThreads < 0 || settings.NumberOfThreads > 10))
                     {
                         Log.Fatal("The number of threads out of range.");
                         return;
@@ -225,35 +242,53 @@ namespace MView.ViewModels
                         selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
                     }
 
+                    // Set the number of threads.
+                    int numberOfThreads = 0;
+
                     if (settings.UseMultiThreading)
                     {
-                        // Distribute tasks to threads.
-                        var tasks = new List<Task>();
-                        var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
-
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            // Do an async wait until we can schedule again.
-                            await throttler.WaitAsync();
-
-                            tasks.Add(DecryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, throttler));
-                        }
-
-                        await Task.WhenAll(tasks);
+                        numberOfThreads = settings.NumberOfThreads;
                     }
                     else
                     {
-                        // Non multi-threading mode.
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            await DecryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, null);
-                        }
+                        numberOfThreads = 1;
                     }
+
+                    // Distribute tasks to threads.
+                    var tasks = new List<Task>();
+                    var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
+
+                    foreach (IndexedItem item in selectedItems)
+                    {
+                        // Do an async wait until we can schedule again.
+                        await throttler.WaitAsync();
+
+                        tasks.Add(DecryptInternalAsync(item, viewModel.EncryptionKey, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, throttler));
+                    }
+
+                    await Task.WhenAll(tasks);
 
                     _stopwatch.Stop(); // Stop
                     IsWorking = false;
 
                     Log.Information($"The operation completed successfully({_stopwatch.ElapsedMilliseconds}ms).");
+
+                    // --------------------------------------------------------------------------------
+
+                    // Show a result dialog.
+                    using (TaskDialog taskDialog = new TaskDialog())
+                    {
+                        taskDialog.WindowTitle = "MView";
+                        taskDialog.MainInstruction = "The operation completed successfully.";
+                        taskDialog.Content = $"ELAPSED TIME : {_stopwatch.ElapsedMilliseconds}ms";
+                        taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
+                        taskDialog.FooterIcon = TaskDialogIcon.Information;
+
+                        TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(okButton);
+
+                        TaskDialogButton button = taskDialog.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
@@ -351,7 +386,7 @@ namespace MView.ViewModels
                         {
                             taskDialog.WindowTitle = "MView";
                             taskDialog.MainInstruction = "The operation completed successfully.";
-                            taskDialog.Content = $"The encryption key estimated based on the file is '{key}'.";
+                            taskDialog.Content = $"ELAPSED TIME : {_stopwatch.ElapsedMilliseconds}ms\r\nKEY : {key}";
                             taskDialog.Footer = "The estimated encryption key may not match the actual one.";
                             taskDialog.FooterIcon = TaskDialogIcon.Warning;
 
@@ -365,9 +400,7 @@ namespace MView.ViewModels
                             // Copy the key to the clipboard.
                             if (button == copyButton)
                             {
-                                string result = string.Empty;
-                                result += $"KEY: {key}\r\n";
-
+                                string result = $"{key}";
                                 Clipboard.SetText(result);
                             }
                         }
@@ -419,35 +452,51 @@ namespace MView.ViewModels
                         selectedItems = IndexedItems.Where(p => p.IsSelected == true && CryptographyProvider.EXTENSIONS_ENCRYPTED.Contains(Path.GetExtension(p.FileName), StringComparer.OrdinalIgnoreCase)).ToList();
                     }
 
+                    // Set the number of threads.
+                    int numberOfThreads = 0;
+
                     if (settings.UseMultiThreading)
                     {
-                        // Distribute tasks to threads.
-                        var tasks = new List<Task>();
-                        var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
-
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            // Do an async wait until we can schedule again.
-                            await throttler.WaitAsync();
-
-                            tasks.Add(RestoreInternalAsync(item, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, throttler));
-                        }
-
-                        await Task.WhenAll(tasks);
+                        numberOfThreads = settings.NumberOfThreads;
                     }
                     else
                     {
-                        // Non multi-threading mode.
-                        foreach (IndexedItem item in selectedItems)
-                        {
-                            await RestoreInternalAsync(item, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, null);
-                        }
+                        numberOfThreads = 1;
+                    }
+
+                    // Distribute tasks to threads.
+                    var tasks = new List<Task>();
+                    var throttler = new SemaphoreSlim(settings.NumberOfThreads, settings.NumberOfThreads);
+
+                    foreach (IndexedItem item in selectedItems)
+                    {
+                        // Do an async wait until we can schedule again.
+                        await throttler.WaitAsync();
+
+                        tasks.Add(RestoreInternalAsync(item, viewModel.OutputDirectory, viewModel.VerifyFakeHeader, throttler));
                     }
 
                     _stopwatch.Stop(); // Stop
                     IsWorking = false;
 
                     Log.Information($"The operation completed successfully({_stopwatch.ElapsedMilliseconds}ms).");
+
+                    // --------------------------------------------------------------------------------
+
+                    // Show a result dialog.
+                    using (TaskDialog taskDialog = new TaskDialog())
+                    {
+                        taskDialog.WindowTitle = "MView";
+                        taskDialog.MainInstruction = "The operation completed successfully.";
+                        taskDialog.Content = $"ELAPSED TIME : {_stopwatch.ElapsedMilliseconds}ms";
+                        taskDialog.Footer = "If an unknown error occurs, please report it to the developer.";
+                        taskDialog.FooterIcon = TaskDialogIcon.Information;
+
+                        TaskDialogButton okButton = new TaskDialogButton(ButtonType.Custom) { Text = "OK" };
+                        taskDialog.Buttons.Add(okButton);
+
+                        TaskDialogButton button = taskDialog.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)
