@@ -11,7 +11,7 @@
         Style="{StaticResource PickUiFixedDialogWindow}"
         Foreground="{DynamicResource PickUiForeground}"
         WindowStartupLocation="CenterScreen"
-        Title="Number of Threads" Height="200" Width="500" SizeToContent="WidthAndHeight">
+        Title="The Number of Threads" Height="200" Width="500" SizeToContent="WidthAndHeight">
     <Grid Margin="20 10 20 20">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
