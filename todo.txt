@@ -2,8 +2,6 @@ dispose 처리 : IndexMan, CryptoProv, FileLoad, VH, MVM.Exp, MVM.Main, MVM.View
 뷰어 오류 처리
 restore 오류 처리.
 결과창 추가하기.
-암호키 직접 입력 가능하게 수정하기.
-암호키 VR 추가하기.
 오디오 뷰어 테스트 필요.
 
 파일 암복호화 정확성 테스트 필요.

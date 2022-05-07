@@ -30,12 +30,11 @@
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
                              materialDesign:HintAssist.Hint="Encryption Key"
-                             materialDesign:TextFieldAssist.HasClearButton="True"
-                             IsReadOnly="True">
+                             materialDesign:TextFieldAssist.HasClearButton="True">
                         <TextBox.Text>
                             <Binding Path="EncryptionKey" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <domain:NotEmptyValidationRule xmlns:domain="clr-namespace:MView.Validators" ValidatesOnTargetUpdated="True" />
+                                    <domain:EncryptionKeyValidationRule xmlns:domain="clr-namespace:MView.Validators" ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
