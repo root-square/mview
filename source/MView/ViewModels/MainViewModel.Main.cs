@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using MView.Entities;
 using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;

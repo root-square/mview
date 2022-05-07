@@ -101,6 +101,12 @@ namespace MView.ViewModels
                 // Get selected files.
                 string[] selectedFiles = openFileDialog.FileNames;
 
+                if (selectedFiles.Length < 1)
+                {
+                    Log.Warning("Plesae select some files.");
+                    return;
+                }
+
                 // Process
                 using (ProgressDialog progressDialog = new ProgressDialog())
                 {
@@ -179,6 +185,12 @@ namespace MView.ViewModels
                 // Get selected paths.
                 string[] selectedPaths = folderBrowserDialog.SelectedPaths;
 
+                if (selectedPaths.Length < 1)
+                {
+                    Log.Warning("Plesae select some folders.");
+                    return;
+                }
+
                 // Process
                 using (ProgressDialog progressDialog = new ProgressDialog())
                 {
@@ -200,7 +212,9 @@ namespace MView.ViewModels
                                 continue;
                             }
 
-                            List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), Path.GetDirectoryName(selectedPaths[i]), indexAllExtensions ? null : extensions);
+                            string? rootDirectory = selectedPaths.Length == 1 ? selectedPaths[i] : Path.GetDirectoryName(selectedPaths[i]);
+
+                            List<IndexedItem> items = IndexingManager.GetFiles(new DirectoryInfo(selectedPaths[i]), rootDirectory, indexAllExtensions ? null : extensions);
 
                             IndexedItems.AddRange(items);
                         }
