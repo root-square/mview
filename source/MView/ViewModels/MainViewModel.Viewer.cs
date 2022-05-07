@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using static NAudio.Wave.MediaFoundationReader;
 
 namespace MView.ViewModels
 {
@@ -235,7 +236,14 @@ namespace MView.ViewModels
                 }
 
                 // Initialize a player.
-                _wavePlayer = new WaveOut();
+                if (isVorbis)
+                {
+                    _wavePlayer = new WaveOut();
+                }
+                else
+                {
+                    _wavePlayer = new WaveOutEvent();
+                }
 
                 // Read a audio file.
                 if (isVorbis)
@@ -244,6 +252,9 @@ namespace MView.ViewModels
                 }
                 else
                 {
+                    MediaFoundationReaderSettings settings = new MediaFoundationReaderSettings();
+                    settings.RepositionInRead = true;
+
                     _waveStream = new StreamMediaFoundationReader(stream);
                 }
 
