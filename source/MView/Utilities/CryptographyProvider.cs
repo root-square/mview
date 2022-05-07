@@ -424,8 +424,6 @@ namespace MView.Utilities
                 offset += 1;
                 offset += headerData.TotalSegments;
 
-                bool isLittleEndian = BitConverter.IsLittleEndian;
-
                 // OGG Data Header.
                 byte[] signatureBytes = new byte[4];
                 originalStream.Position = offset;
@@ -450,13 +448,19 @@ namespace MView.Utilities
                 originalStream.Position = offset;
                 await originalStream.ReadAsync(serialNumber, 0, 4);
 
-                if (isLittleEndian)
+                if (BitConverter.IsLittleEndian)
                 {
-                    Array.Reverse(serialNumber); // Convert to LE.
+                    if (serialNumber[0] < serialNumber[3])
+                    {
+                        Array.Reverse(serialNumber); // Convert to LE.
+                    }
                 }
                 else
                 {
-                    Array.Sort(serialNumber); // Convert to BE.
+                    if (serialNumber[0] > serialNumber[3])
+                    {
+                        Array.Reverse(serialNumber); // Convert to LE.
+                    }
                 }
 
                 // Compose the header.
