@@ -317,6 +317,7 @@
 
                             <Grid Grid.Row="1">
                                 <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
+                                       Focusable="False"
                                        AllowContextMenu="True" ReadOnlyMode="True"
                                        StatusBarVisibility="Hidden"
                                        Stream="{Binding SourceStream, UpdateSourceTrigger=PropertyChanged}">

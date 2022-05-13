@@ -20,7 +20,7 @@ namespace MView
         public readonly static string SettingsPath = Path.Combine(Environment.CurrentDirectory, @"data\settings.json");
 
         // Variables
-        private bool _useDarkTheme = true;
+        private bool _useDarkTheme = false;
 
         public bool UseDarkTheme
         {
