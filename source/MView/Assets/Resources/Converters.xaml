@@ -4,6 +4,7 @@
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:ComparisonConverter x:Key="ComparisonConverter"/>
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <converters:StreamToBackgroundBrushConverter x:Key="StreamToBackgroundBrushConverter"/>
     <converters:StreamToBitmapSourceConverter x:Key="StreamToBitmapSourceConverter"/>
     <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
     <converters:TimeSpanToTotalSecondsConverter x:Key="TimeSpanToTotalSecondsConverter"/>

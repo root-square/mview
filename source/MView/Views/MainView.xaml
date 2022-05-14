@@ -226,10 +226,12 @@
                                 <!--Image-->
                                 <Grid Visibility="{Binding IsImageViewerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <Image VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None"
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True" Background="{Binding ImageStream, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StreamToBackgroundBrushConverter}}">
+                                            <Image x:Name="ImageBox" SnapsToDevicePixels="True" Stretch="None"
                                     RenderOptions.BitmapScalingMode="HighQuality"
                                     Source="{Binding ImageStream, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StreamToBitmapSourceConverter}}">
-                                        </Image>
+                                            </Image>
+                                        </Grid>
                                     </ScrollViewer>
                                 </Grid>
 

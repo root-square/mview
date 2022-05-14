@@ -7,6 +7,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>assets/mview_icon_outline.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
