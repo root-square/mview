@@ -40,7 +40,7 @@ namespace MView
             set => Set(ref _useMultiThreading, value);
         }
 
-        private int _numberOfThreads = 4;
+        private int _numberOfThreads = 8;
 
         public int NumberOfThreads
         {

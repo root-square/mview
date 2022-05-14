@@ -37,7 +37,7 @@ namespace MView
             _container
                 .Singleton<MainViewModel>()
                 .PerRequest<NoTPickerViewModel>()
-                .PerRequest<InformationViewModel>()
+                .Singleton<InformationViewModel>()
                 .PerRequest<EncryptorViewModel>()
                 .PerRequest<DecrypterViewModel>()
                 .PerRequest<RestorerViewModel>();

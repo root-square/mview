@@ -11,17 +11,39 @@
         Style="{StaticResource PickUiFixedDialogWindow}"
         Foreground="{DynamicResource PickUiForeground}"
         WindowStartupLocation="CenterScreen"
-        Title="Information" Height="350" Width="600">
+        Title="Information" Height="550" Width="800">
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="0 0 0 50" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image Width="64" Height="64" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}" Margin="4 0 0 0" VerticalAlignment="Center" Text="MView" />
-            </StackPanel>
+        <Border BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 1 0 0">
+            <TabControl Style="{StaticResource MaterialDesignFilledTabControl}" TabStripPlacement="Left"
+                    materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ColorZoneAssist.Background="{DynamicResource PickUiSecondBackground}"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                <TabItem Header="Application">
+                    <Border BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 0 0 1">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20 20 20 10">
+                                <Image Width="64" Height="64" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}" Margin="4 0 0 0" VerticalAlignment="Center" Text="MView" />
+                            </StackPanel>
 
-            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 8 0 0" HorizontalAlignment="Center" Text="A RPG Maker MV/MZ Resource Viewer" />
-            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Center" Text="Version 2" />
-            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Center" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
-        </StackPanel>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="20 0 20 20">
+                                <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" HorizontalAlignment="Left" Text="A RPG Maker MV/MZ Resource Viewer" />
+                                <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Left" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Opensources">
+                    <FlowDocumentScrollViewer x:Name="OssViewer" Document="{StaticResource OpensourcesDocument}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Unloaded">
+                                <caliburn:ActionMessage MethodName="OnViewerUnloaded">
+                                    <caliburn:Parameter Value="{Binding ElementName=OssViewer}"/>
+                                </caliburn:ActionMessage>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </FlowDocumentScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
     </Grid>
 </Window>
