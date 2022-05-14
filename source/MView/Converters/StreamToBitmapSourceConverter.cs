@@ -31,6 +31,11 @@ namespace MView.Converters
                     Log.Error(ex, "The file is not in the correct image format.");
                     return new BitmapImage();
                 }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "An unknown error occurred while loading the image.");
+                    return new BitmapImage();
+                }
             }
             else
             {
