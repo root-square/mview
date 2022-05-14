@@ -32,6 +32,14 @@ namespace MView
             }
         }
 
+        private bool _useBackFiller = true;
+
+        public bool UseBackFiller
+        {
+            get => _useBackFiller;
+            set => Set(ref _useBackFiller, value);
+        }
+
         private bool _useMultiThreading = true;
 
         public bool UseMultiThreading

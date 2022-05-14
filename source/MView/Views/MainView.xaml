@@ -74,7 +74,9 @@
                     <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="App">
                         <MenuItem Header="Dark Theme" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
                         <Separator />
-                        <MenuItem Header="Multi-threading" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
+                        <MenuItem Header="Use Back Filler" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
+                        <Separator />
+                        <MenuItem Header="Use Multi-threading" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
                         <MenuItem Header="Number of Threads" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>
                         <Separator />
                         <MenuItem Header="Information" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>

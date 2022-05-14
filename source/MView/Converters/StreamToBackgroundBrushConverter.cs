@@ -1,4 +1,5 @@
-﻿using MView.Utilities;
+﻿using Caliburn.Micro;
+using MView.Utilities;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace MView.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (!IoC.Get<Settings>().UseBackFiller)
+            {
+                return new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+            }
+
             Stream stream = (Stream)value;
 
             if (stream != null && stream != Stream.Null)
