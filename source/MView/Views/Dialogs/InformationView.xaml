@@ -18,23 +18,26 @@
                     materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ColorZoneAssist.Background="{DynamicResource PickUiSecondBackground}"
                         materialDesign:ShadowAssist.ShadowDepth="Depth1">
                 <TabItem Header="Application">
-                    <Border BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 0 0 1">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20 20 20 10">
-                                <Image Width="64" Height="64" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}" Margin="4 0 0 0" VerticalAlignment="Center" Text="MView" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="20 0 20 20">
-                                <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" HorizontalAlignment="Left" Text="A RPG Maker MV/MZ Resource Viewer" />
-                                <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Left" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
-                            </StackPanel>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20 20 20 10">
+                            <Image Width="64" Height="64" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}" Margin="4 0 0 0" VerticalAlignment="Center" Text="MView" />
                         </StackPanel>
-                    </Border>
+
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="20 0 20 20">
+                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" HorizontalAlignment="Left" Text="A RPG Maker MV/MZ Resource Viewer" />
+                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Left" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
+                        </StackPanel>
+                    </StackPanel>
                 </TabItem>
                 <TabItem Header="Opensources">
-                    <FlowDocumentScrollViewer x:Name="OssViewer" Document="{StaticResource OpensourcesDocument}">
+                    <FlowDocumentScrollViewer x:Name="OssViewer">
                         <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <caliburn:ActionMessage MethodName="OnViewerLoaded">
+                                    <caliburn:Parameter Value="{Binding ElementName=OssViewer}"/>
+                                </caliburn:ActionMessage>
+                            </i:EventTrigger>
                             <i:EventTrigger EventName="Unloaded">
                                 <caliburn:ActionMessage MethodName="OnViewerUnloaded">
                                     <caliburn:Parameter Value="{Binding ElementName=OssViewer}"/>
