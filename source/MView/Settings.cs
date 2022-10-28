@@ -69,6 +69,7 @@ namespace MView
         public void DeepCopyFrom(Settings settings)
         {
             UseDarkTheme = settings.UseDarkTheme;
+            UseBackFiller = settings.UseBackFiller;
             UseMultiThreading = settings.UseMultiThreading;
             NumberOfThreads = settings.NumberOfThreads;
             AudioVolume = settings.AudioVolume;
