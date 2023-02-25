@@ -7,6 +7,7 @@
     <p align="center">
         <a target="_blank" href="https://github.com/handbros/mview/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/handbros/mview/release.yml?branch=main"></a>
         <a target="_blank" href="https://github.com/handbros/mview/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/handbros/mview"></a>
+        <a target="_blank" href="https://github.com/handbros/mview/releases/latest"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/handbros/mview/total"></a>
         <a target="_blank" href="https://github.com/handbros/mview/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/handbros/mview"></a>
     </p>
 </p>
