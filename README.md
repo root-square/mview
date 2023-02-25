@@ -1,6 +1,6 @@
 <p align="center">
     <h1 align="center">
-        <img src="https://raw.githubusercontent.com/handbros/mview/main/docs/images/mview-icon.ico" width="50" height="50">
+        <img src="https://raw.githubusercontent.com/handbros/mview/main/docs/images/mview_icon.ico" width="50" height="50">
         <p>MView</p>
     </h1>
     <p align="center"><b>A RPG Maker MV/MZ Resource Editor</b></p>
