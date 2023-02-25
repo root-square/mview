@@ -1,3 +1,9 @@
+# MView License
+ * Do not translate or localize.
+ * MView Contributors reserves all rights not expressly granted herein, whether by implication, estoppel or otherwise.
+
+## Full Text
+```
 MIT License
 
 Copyright (c) 2023 MView Contributors
@@ -19,3 +25,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+```
