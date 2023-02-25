@@ -1,26 +1,36 @@
-![Title](./data/image/title.png)
+<p align="center">
+    <h1 align="center">
+        <img src="https://raw.githubusercontent.com/handbros/mview/main/docs/images/mview-icon.ico" width="50" height="50">
+        <p>MView</p>
+    </h1>
+    <p align="center"><b>A RPG Maker MV/MZ Resource Editor</b></p>
+    <p align="center">
+        <a target="_blank" href="https://github.com/handbros/mview/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/handbros/mview/release.yml?branch=main"></a>
+        <a target="_blank" href="https://github.com/handbros/mview/releases/latest"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/handbros/mview"></a>
+        <a target="_blank" href="https://github.com/handbros/mview/blob/main/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/handbros/mview"></a>
+    </p>
+</p>
 
-## Overview
-[![GitHub](https://img.shields.io/github/license/handbros/MView?style=flat-square)](LICENSE)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/handbros/MView?style=flat-square)](https://github.com/handbros/MView)
-[![GitHub issues](https://img.shields.io/github/issues/handbros/MView?style=flat-square)](https://github.com/handbros/MView/issues "Go to GitHub issues page.")
-![GitHub all releases](https://img.shields.io/github/downloads/handbros/MView/total?style=flat-square)
+## Usage
+[See the documentaion](../docs/GUIDE.md) for instructions on how to use it.
 
-## Description
-MView is a RPG Maker MV resource editor.
+## Build
+### Requirements
+ * __OS__ : Windows 10 or higher version(include server edtions)
+ * __Tools__
+   * [PowerShell 7](https://github.com/PowerShell/PowerShell)
+   * [Visual Studio 2022](https://visualstudio.microsoft.com/)(include 'Desktop development with C++' and '.NET desktop development' workload)
+   * [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download)
 
-## Features
- * Multiple files and folders loadable.
- * **(MV)** RPGMVO, RPGMVM, RPGMVW, RPGMVP / **(MZ)** ogg_, m4a_, wav_, png_ files cryptography functions supported.
- 
-## Disclaimer
-This project just provides several solutions for RPG Maker MV(MZ). The user is responsible for any legal problems caused by using this.
+### Guide
+1. Open a PowerShell terminal from `./scripts`.
+2. Run the commands below.
+```pwsh
+Set-ExecutionPolicy Unrestricted
+./publish.ps1 -target MView/MView.csproj -publishProfile (x64|arm64).pubxml -excludeSymbols $(true|false)
+```
 
-## Licenses
-The source code of MView is freely available under the MIT license. However, for the third-party libraries used for this, the licenses for each library are followed.
+## License
+The contents are freely available under the [MIT License](http://opensource.org/licenses/MIT).
 
-## Contributors
-**Main developer&Maintainer** - June
-
-## Contact
-If you have any questions about this repository, please use GitHub Issues.
+The licenses of third-party libraries can be found [here](https://github.com/handbros/mview/blob/main/docs/THIRD_PARTY_NOTICES.md).
