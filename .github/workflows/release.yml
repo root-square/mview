@@ -1,0 +1,128 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      product-name:
+        description: 'Product name'
+        required: true
+        default: 'MView'
+        type: string
+      product-version:
+        description: 'Product version'
+        required: true
+        default: '1.0.0'
+        type: string
+      file-desc:
+        description: 'File description'
+        required: true
+        default: 'MView'
+        type: string
+      file-version:
+        description: 'File version'
+        required: true
+        default: '1.0.0'
+        type: string
+      company:
+        description: 'Company'
+        required: true
+        default: 'MView Contributors'
+        type: string
+      copyright:
+        description: 'Copyright'
+        required: true
+        default: 'Copyright (c) 2023 MView Contributors all rights reserved.'
+        type: string
+      remove-debug-symbols:
+        description: 'Remove debug symbols'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-2022
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Setup .NET 7 SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+        
+      - name: Build for x64
+        run: |
+          ./scripts/publish.ps1 -target MView/MView.csproj -publishprofile x64.pubxml -productName "${{ inputs.product-name }}" -productVersion "${{ inputs.product-version }}" -fileDesc "${{ inputs.file-desc }}" -fileVersion "${{ inputs.file-version }}" -company "${{ inputs.company }}" -copyright "${{ inputs.copyright }}" -excludeSymbols $${{ inputs.remove-debug-symbols }}
+        shell: pwsh
+        
+      - name: Build for ARM64
+        run: |
+          ./scripts/publish.ps1 -target MView/MView.csproj -publishprofile arm64.pubxml -productName "${{ inputs.product-name }}" -productVersion "${{ inputs.product-version }}" -fileDesc "${{ inputs.file-desc }}" -fileVersion "${{ inputs.file-version }}" -company "${{ inputs.company }}" -copyright "${{ inputs.copyright }}" -excludeSymbols $${{ inputs.remove-debug-symbols }}
+        shell: pwsh
+        
+      - name: Copy licenses
+        run: |
+          New-Item -Path "./src/MView/bin/publish/x64" -Name "docs" -ItemType "directory"
+          New-Item -Path "./src/MView/bin/publish/arm64" -Name "docs" -ItemType "directory"
+          Copy-Item -Path "./docs/*" -Destination "./src/MView/bin/publish/x64/docs"
+          Copy-Item -Path "./docs/*" -Destination "./src/MView/bin/publish/arm64/docs"
+        shell: pwsh
+        
+      - name: Compress build outputs
+        run: |
+          Compress-Archive -Path ./src/MView/bin/publish/x64/* -DestinationPath ./x64.zip -Force
+          Compress-Archive -Path ./src/MView/bin/publish/arm64/* -DestinationPath ./arm64.zip -Force
+        shell: pwsh
+        
+      - name: Upload build outputs
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-outputs
+          path: |
+            ./x64.zip
+            ./arm64.zip        
+  
+  release:
+    needs: build
+    name: Release to GitHub
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download build outputs
+        uses: actions/download-artifact@v3
+        with:
+          name: build-outputs
+          
+      - id: create-release
+        name: Create a release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ inputs.file-version }}
+          release_name: v${{ inputs.file-version }}
+          draft: false
+          prerelease: false
+          
+      - name: Upload the x64 build output
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./x64.zip
+          asset_name: mview-x64-${{ inputs.file-version }}.zip
+          asset_content_type: application/zip
+          
+      - name: Upload the ARM64 build output
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: ./arm64.zip
+          asset_name: mview-arm64-${{ inputs.file-version }}.zip
+          asset_content_type: application/zip
