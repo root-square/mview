@@ -56,21 +56,9 @@ namespace MView.ViewModels
 
         public MainViewModel()
         {
-            ConnectToLogBroker();
-
             // Initialize the IndexedItemsCVS : In MainViewModel.Explorer
             ItemCollectionViewSource.Source = IndexedItems;
             ItemCollectionViewSource.GroupDescriptions.Add(new PropertyGroupDescription("ParentDirectory"));
-        }
-
-        private void ConnectToLogBroker()
-        {
-            App.LogBroker.LogEmittedEvent += (log) =>
-            {
-                StatusText = log;
-            };
-
-            Log.Information("The Main VM has established a connection to the Log Broker.");
         }
 
         #endregion

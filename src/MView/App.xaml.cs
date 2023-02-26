@@ -31,13 +31,6 @@ namespace MView
             get => _debugMode;
         }
 
-        private static LogRepeater _logBroker = new LogRepeater();
-
-        public static LogRepeater LogBroker
-        {
-            get => _logBroker;
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             InitializeLogger();
@@ -61,7 +54,6 @@ namespace MView
 
             var log = new LoggerConfiguration()
                 .Enrich.WithProperty("ThreadId", Thread.CurrentThread.ManagedThreadId)
-                .WriteTo.Sink(_logBroker)
                 .WriteTo.File(fileName, restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: outputTemplateString, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 100000)
                 .CreateLogger();
 
