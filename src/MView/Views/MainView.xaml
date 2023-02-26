@@ -151,7 +151,8 @@
                 <GridSplitter Grid.Column="1" Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
 
                 <!--Viewer-->
-                <TabControl Grid.Column="2" TabStripPlacement="Bottom">
+                <TabControl Grid.Column="2" TabStripPlacement="Bottom"
+                            materialDesign:ColorZoneAssist.Mode="PrimaryDark">
                     <TabControl.Resources>
                         <Style TargetType="TabItem" BasedOn="{StaticResource MaterialDesignTabItem}">
                             <Setter Property="Height" Value="39"/>
@@ -223,7 +224,7 @@
             
             <!--Options-->
             <StackPanel Grid.Column="0" Margin="20 10 20 10" VerticalAlignment="Center">
-                <Grid>
+                <Grid Cursor="">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -258,7 +259,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
                     <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="TYPE" />
                     <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MV(*.rpgmvp, *.rpgmvo, etc.)" />
-                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MZ(*.png__, *.ogg, etc.)" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MZ(*.png__, *.ogg__, etc.)" />
                 </StackPanel>
 
                 <WrapPanel Margin="0 4 0 0">
@@ -301,7 +302,7 @@
                             Content="DECRYPT"/>
                     </Grid>
 
-                    <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                    <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                             Margin="0 4 0 0"
                             materialDesign:ElevationAssist.Elevation="Dp0"
                             Content="STOP"/>
