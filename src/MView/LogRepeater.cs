@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MView
 {
-    public class LogBroker : ILogEventSink
+    public class LogRepeater : ILogEventSink
     {
         public delegate void LogEmittedEventHandler(string log);
 

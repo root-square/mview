@@ -31,9 +31,9 @@ namespace MView
             get => _debugMode;
         }
 
-        private static LogBroker _logBroker = new LogBroker();
+        private static LogRepeater _logBroker = new LogRepeater();
 
-        public static LogBroker LogBroker
+        public static LogRepeater LogBroker
         {
             get => _logBroker;
         }
