@@ -224,7 +224,7 @@
             
             <!--Options-->
             <StackPanel Grid.Column="0" Margin="20 10 20 10" VerticalAlignment="Center">
-                <Grid Cursor="">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
