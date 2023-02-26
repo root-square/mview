@@ -15,201 +15,154 @@
         Foreground="{DynamicResource PickUiForeground}"
         WindowStartupLocation="CenterScreen"
         Title="MView" Height="700" Width="1000" MinWidth="300" MinHeight="300">
-    <materialDesign:DialogHost IsOpen="{Binding IsWorking}" DialogTheme="Inherit">
-        <materialDesign:DialogHost.DialogContent>
-            <StackPanel Margin="50 30 50 30" VerticalAlignment="Center">
-                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
-                             HorizontalAlignment="Center" Margin="16" IsIndeterminate="True" Value="0" />
-                <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" HorizontalAlignment="Center" Text="Now working on..." />
-            </StackPanel>
-        </materialDesign:DialogHost.DialogContent>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="35"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
+        </Grid.RowDefinitions>
 
-            <!--Menu Bar-->
-            <Grid Grid.Row="0">
+        <!--Title Bar-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="135"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" Width="20" Height="20" Source="/Assets/mview_favicon_32.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+
+            <TextBlock Grid.Column="1" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" Text="MView"/>
+        </Grid>
+
+        <!--Menu Bar-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="135"/>
+            </Grid.ColumnDefinitions>
+            
+            <Menu Grid.Column="0" IsMainMenu="True" FontSize="13" materialDesign:MenuAssist.TopLevelMenuItemHeight="35">
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="File">
+                    <MenuItem Header="Open" Icon="{materialDesign:PackIcon Kind=FolderOpenOutline}">
+                        <MenuItem Header="Files" Icon="{materialDesign:PackIcon Kind=FileOutline}" caliburn:Message.Attach="OpenFiles()"/>
+                        <MenuItem Header="Folders" Icon="{materialDesign:PackIcon Kind=FolderOutline}" caliburn:Message.Attach="OpenFolders()"/>
+                    </MenuItem>
+                    <MenuItem Header="Clear" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="ClearFiles()"/>
+                    <Separator />
+                    <MenuItem Header="Exit" InputGestureText="Alt+F4" Icon="{materialDesign:PackIcon Kind=ExitToApp}" caliburn:Message.Attach="Exit()"/>
+                </MenuItem>
+
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="List">
+                    <MenuItem Header="Select" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="Select()"/>
+                    <MenuItem Header="Select All" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAll()"/>
+                    <MenuItem Header="Deselect" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="Deselect()"/>
+                    <MenuItem Header="Deselect All" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAll()"/>
+                    <Separator />
+                    <MenuItem Header="Reverse" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="Reverse()"/>
+                    <Separator />
+                    <MenuItem Header="Delete" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="Delete()"/>
+                    <MenuItem Header="Delete All" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
+                </MenuItem>
+
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Settings"/>
+
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Help">
+                    <MenuItem Header="GitHub Repository" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="OpenInformation()"/>
+                    <MenuItem Header="Guide" Icon="{materialDesign:PackIcon Kind=BookOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                    <Separator />
+                    <MenuItem Header="Information" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                </MenuItem>
+            </Menu>
+        </Grid>
+
+        <!--Content Area-->
+        <Border Grid.Row="2" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 1 0 1">
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition Width="300" MinWidth="300" MaxWidth="500"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="135"/>
                 </Grid.ColumnDefinitions>
 
-                <Image Width="20" Height="20" Source="/Assets/mview_favicon_32.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-
-                <Menu Grid.Column="1" IsMainMenu="True" FontSize="13" materialDesign:MenuAssist.TopLevelMenuItemHeight="35">
-                    <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="File">
-                        <MenuItem Header="Open" Icon="{materialDesign:PackIcon Kind=FolderOpenOutline}">
-                            <MenuItem Header="Files" Icon="{materialDesign:PackIcon Kind=FileOutline}" caliburn:Message.Attach="OpenFiles()"/>
-                            <MenuItem Header="Folders" Icon="{materialDesign:PackIcon Kind=FolderOutline}" caliburn:Message.Attach="OpenFolders()"/>
-                        </MenuItem>
-                        <MenuItem Header="Clear" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="ClearFiles()"/>
-                        <Separator />
-                        <MenuItem Header="Exit" InputGestureText="Alt+F4" Icon="{materialDesign:PackIcon Kind=ExitToApp}" caliburn:Message.Attach="Exit()"/>
-                    </MenuItem>
-
-                    <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="List">
-                        <MenuItem Header="Select" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="Select()"/>
-                        <MenuItem Header="Select All" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAll()"/>
-                        <MenuItem Header="Deselect" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="Deselect()"/>
-                        <MenuItem Header="Deselect All" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAll()"/>
-                        <Separator />
-                        <MenuItem Header="Reverse" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="Reverse()"/>
-                        <Separator />
-                        <MenuItem Header="Delete" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="Delete()"/>
-                        <MenuItem Header="Delete All" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
-                    </MenuItem>
-
-                    <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Task">
-                        <MenuItem Header="Encrypt" Icon="{materialDesign:PackIcon Kind=EncryptionOutline}" caliburn:Message.Attach="Encrypt()"/>
-                        <MenuItem Header="Decrypt" Icon="{materialDesign:PackIcon Kind=DecryptedVariantOutline}" caliburn:Message.Attach="Decrypt()"/>
-                        <Separator />
-                        <MenuItem Header="Estimate Key" Icon="{materialDesign:PackIcon Kind=FileFindOutline}" caliburn:Message.Attach="Estimate()"/>
-                        <MenuItem Header="Restore" Icon="{materialDesign:PackIcon Kind=Restore}" caliburn:Message.Attach="Restore()"/>
-                    </MenuItem>
-
-                    <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="App">
-                        <MenuItem Header="Dark Theme" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
-                        <Separator />
-                        <MenuItem Header="Use Back Filler" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
-                        <Separator />
-                        <MenuItem Header="Use Multi-threading" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
-                        <MenuItem Header="Number of Threads" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>
-                        <Separator />
-                        <MenuItem Header="Information" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>
-                    </MenuItem>
-                </Menu>
-            </Grid>
-
-            <!--Content Area-->
-            <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 1 0 1">
-                <Grid Background="{DynamicResource PickUiSecondBackground}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
 
                     <!--Explorer-->
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Border Grid.Row="0" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 0 0 1">
-                            <Grid>
-                                <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="6 0 0 0" Text="Explorer" Opacity=".80" />
-                            </Grid>
-                        </Border>
-
-                        <Grid Grid.Row="1">
-                            <ListView Padding="0,0,0,10"
-                                  materialDesign:DataGridAssist.ColumnHeaderPadding="10 6 10 6"
-                                  VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                  ItemsSource="{Binding ItemCollectionViewSource.View, IsAsync=True}"
-                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:ListViewMultiSelectionBehavior SelectedItems="{Binding SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </i:Interaction.Behaviors>
-
-                                <ListView.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.ContainerStyle>
-                                            <Style TargetType="{x:Type GroupItem}">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                            <Expander Margin="0 0 0 1" materialDesign:ExpanderAssist.HorizontalHeaderPadding="20,10,20,10" IsExpanded="True">
-                                                                <Expander.Header>
-                                                                    <DockPanel>
-                                                                        <TextBlock FontWeight="Bold" Text="("/>
-                                                                        <TextBlock FontWeight="Bold" Text="{Binding ItemCount}"/>
-                                                                        <TextBlock FontWeight="Bold" Text=") "/>
-                                                                        <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
-                                                                    </DockPanel>
-                                                                </Expander.Header>
-
-                                                                <Expander.Content>
-                                                                    <Grid Background="{DynamicResource PickUiSecondBackground}">
-                                                                        <ItemsPresenter />
-                                                                    </Grid>
-                                                                </Expander.Content>
-                                                            </Expander>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </GroupStyle.ContainerStyle>
-                                    </GroupStyle>
-                                </ListView.GroupStyle>
-
-                                <ListView.View>
-                                    <GridView AllowsColumnReorder="False">
-                                        <GridViewColumn Width="32" Header="Selection">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-
-                                        <GridViewColumn Width="150" Header="Name" DisplayMemberBinding="{Binding Path=FileName}"/>
-
-                                        <GridViewColumn Width="150" Header="Size" DisplayMemberBinding="{Binding Path=SizeString}"/>
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </Grid>
+                    <Grid Grid.Row="0" Background="{DynamicResource PickUiSecondBackground}">
+                        <TreeView>
+                            <TreeView.ItemTemplate>
+                                <DataTemplate/>
+                            </TreeView.ItemTemplate>
+                            <TreeViewItem Header="Test">
+                                <TreeViewItem Header="Test"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                            <TreeViewItem Header="Test"/>
+                        </TreeView>
                     </Grid>
 
-                    <!--Splitter-->
-                    <GridSplitter Grid.Column="1" Background="{DynamicResource PickUiDivider}" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                    <!--Explorer Controller-->
+                    <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 1 0 0">
+                        <StackPanel Orientation="Horizontal" Margin="6 0 6 0" HorizontalAlignment="Center">
+                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24"
+                                    ToolTip="Add">
+                                <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Add" />
+                            </Button>
 
-                    <!--Viewer-->
-                    <Grid Grid.Column="2" >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
+                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
+                                    ToolTip="Delete All">
+                                <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Remove" />
+                            </Button>
 
-                        <!--Preview-->
-                        <Grid Grid.Row="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="24"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
+                                    ToolTip="Select All">
+                                <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectAll" />
+                            </Button>
 
-                            <Border Grid.Row="0" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 0 0 1">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="100"/>
-                                    </Grid.ColumnDefinitions>
+                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
+                                    ToolTip="Deselect All">
+                                <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectOff" />
+                            </Button>
 
-                                    <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="6 0 0 0" Text="Preview" Opacity=".80" />
+                            <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
+                                    ToolTip="Reverse Selection">
+                                <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Exchange" />
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
 
-                                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 6 0">
-                                        <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="6 0 4 0" VerticalAlignment="Center" Text="Metadata :" Opacity=".80" />
-                                        <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}"
-                                                  Background="{DynamicResource PickUiDivider}"
-                                                  Width="18" Height="18"
-                                                  IsChecked="{Binding ShowMetadata, Mode=TwoWay}">
-                                            <materialDesign:PackIcon Kind="Pin" Height="10" Width="10" RenderTransformOrigin=".5,.5">
-                                                <materialDesign:PackIcon.RenderTransform>
-                                                    <RotateTransform Angle="45" />
-                                                </materialDesign:PackIcon.RenderTransform>
-                                            </materialDesign:PackIcon>
-                                        </ToggleButton>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                <GridSplitter Grid.Column="1" Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
 
-                            <Grid Grid.Row="1">
+                <!--Viewer-->
+                <TabControl Grid.Column="2" TabStripPlacement="Bottom">
+                    <TabControl.Resources>
+                        <Style TargetType="TabItem" BasedOn="{StaticResource MaterialDesignTabItem}">
+                            <Setter Property="Height" Value="39"/>
+                            <Setter Property="Padding" Value="0 0 0 0"/>
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </TabControl.Resources>
+
+                    <TabItem Header="PREVIEW">
+                        <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
+                            <Grid>
                                 <Grid.Background>
                                     <DrawingBrush TileMode="Tile" Viewport="0, 0, 10, 10" ViewportUnits="Absolute">
                                         <DrawingBrush.Drawing>
@@ -217,131 +170,143 @@
                                                 <GeometryDrawing.Geometry>
                                                     <RectangleGeometry Rect="0,0,50,50"/>
                                                 </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Brush>
+                                                    <SolidColorBrush Color="{DynamicResource PickUiSecondBackgroundColor}"/>
+                                                </GeometryDrawing.Brush>
                                                 <GeometryDrawing.Pen>
-                                                    <Pen Brush="{DynamicResource PickUiDivider}" Thickness="1"/>
+                                                    <Pen Brush="{DynamicResource PickUiGridLine}" Thickness="1"/>
                                                 </GeometryDrawing.Pen>
                                             </GeometryDrawing>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
                                 </Grid.Background>
-
-                                <!--Image-->
-                                <Grid Visibility="{Binding IsImageViewerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True" Background="{Binding ImageStream, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StreamToBackgroundBrushConverter}}">
-                                            <Image x:Name="ImageBox" SnapsToDevicePixels="True" Stretch="None"
-                                    RenderOptions.BitmapScalingMode="HighQuality"
-                                    Source="{Binding ImageStream, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StreamToBitmapSourceConverter}}">
-                                            </Image>
-                                        </Grid>
-                                    </ScrollViewer>
-                                </Grid>
-
-                                <!--Audio-->
-                                <Grid Visibility="{Binding IsAudioPlayerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <Border Background="{DynamicResource PickUiBackground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="1" CornerRadius="8"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" Padding="8"
-                                            Width="500" Height="Auto">
-                                            <Grid Margin="20 20 20 10">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="20"/>
-                                                    <RowDefinition Height="1*"/>
-                                                </Grid.RowDefinitions>
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                </Grid.ColumnDefinitions>
-
-                                                <Slider Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                                                        Margin="0 0 0 4" VerticalAlignment="Center"
-                                                        materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
-                                                        Minimum="0" Maximum="{Binding TotalTime, Converter={StaticResource TimeSpanToTotalSecondsConverter}}"
-                                                        Value="{Binding CurrentTime, Mode=TwoWay, Converter={StaticResource TimeSpanToTotalSecondsConverter}}" />
-
-                                                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding CurrentTime, Converter={StaticResource TimeSpanToStringConverter}}" />
-
-                                                <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding TotalTime, Converter={StaticResource TimeSpanToStringConverter}}" />
-
-                                                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Stop" caliburn:Message.Attach="StopAudio()">
-                                                        <materialDesign:PackIcon Kind="Stop" Opacity=".90" />
-                                                    </Button>
-                                                    <Button Style="{StaticResource MaterialDesignIconButton}" Margin="4 0 4 0" ToolTip="Play" caliburn:Message.Attach="PlayAudio()">
-                                                        <materialDesign:PackIcon Kind="Play" />
-                                                    </Button>
-                                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" ToolTip="Pause" caliburn:Message.Attach="PauseAudio()">
-                                                        <materialDesign:PackIcon Kind="Pause" Opacity=".90" />
-                                                    </Button>
-                                                </StackPanel>
-
-                                                <Grid Grid.Row="2" Grid.Column="2">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <materialDesign:PackIcon VerticalAlignment="Center" Margin="0 0 10 0" Kind="VolumeVibrate" />
-                                                    <Slider Grid.Column="1" VerticalAlignment="Center" Minimum="0.0" Maximum="1.0"
-                                                    materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"
-                                                    Value="{Binding AudioVolume, Mode=TwoWay}" />
-                                                </Grid>
-                                            </Grid>
-                                        </Border>
-                                    </ScrollViewer>
-                                </Grid>
-
-                                <!--Metadata-->
-                                <Border Background="{DynamicResource PickUiBackground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="1" CornerRadius="4"
-                                    VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" Opacity=".70" MaxWidth="800"
-                                    Visibility="{Binding ShowMetadata, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <TextBlock Foreground="{DynamicResource PickUiForegroundLight}" FontSize="14" FontWeight="Regular" FontFamily="Segoe UI" Margin="10" TextAlignment="Left" TextWrapping="WrapWithOverflow"
-                                       Text="{Binding Metadata}"/>
-                                </Border>
                             </Grid>
-                        </Grid>
+                        </Border>
+                    </TabItem>
 
-                        <!--Splitter-->
-                        <GridSplitter Grid.Row="1" Background="{DynamicResource PickUiDivider}" Height="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
-
-                        <Grid Grid.Row="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="24"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Border Grid.Row="0" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 0 0 1">
-                                <Grid>
-                                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="6 0 0 0" Text="HEX(RAW)" Opacity=".80" />
-                                </Grid>
-                            </Border>
-
-                            <Grid Grid.Row="1">
-                                <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
-                                       Focusable="False"
-                                       AllowContextMenu="True" ReadOnlyMode="True"
-                                       StatusBarVisibility="Hidden"
+                    <TabItem Header="HEX">
+                        <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
+                            <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
+                                       Focusable="False" AllowContextMenu="True" ReadOnlyMode="True" StatusBarVisibility="Hidden"
                                        Stream="{Binding SourceStream, UpdateSourceTrigger=PropertyChanged}">
-                                    <hexedit:HexEditor.Resources>
-                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                            <Setter Property="Foreground" Value="{DynamicResource PickUiForeground}"/>
-                                            <Setter Property="Margin" Value="0"/>
-                                        </Style>
-                                    </hexedit:HexEditor.Resources>
-                                </hexedit:HexEditor>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Border>
+                                <hexedit:HexEditor.Resources>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                        <Setter Property="Foreground" Value="{DynamicResource PickUiForeground}"/>
+                                        <Setter Property="Margin" Value="0"/>
+                                    </Style>
+                                </hexedit:HexEditor.Resources>
+                            </hexedit:HexEditor>
+                        </Border>
+                    </TabItem>
 
-            <!--Status Bar-->
-            <Grid Grid.Row="2">
-                <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" Margin="10 0 0 0" TextTrimming="CharacterEllipsis" Text="{Binding StatusText, UpdateSourceTrigger=PropertyChanged}" />
+                    <TabItem Header="METADATA">
+                        <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
+                            <Grid Background="{DynamicResource PickUiSecondBackground}">
+                                <TextBox BorderBrush="Transparent" FontFamily="Segoe UI" FontSize="14" FontWeight="SemiBold"
+                                         materialDesign:TextFieldAssist.TextBoxViewMargin="12 0 12 0"
+                                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden" materialDesign:TextFieldAssist.UnderlineBrush="Transparent"
+                                         AcceptsReturn="True" TextWrapping="Wrap" IsReadOnly="False" VerticalScrollBarVisibility="Auto"/>
+                            </Grid>
+                        </Border>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Border>
+        
+        <!--Control Panel-->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--Options-->
+            <StackPanel Grid.Column="0" Margin="20 10 20 10" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="30" Padding="8 4 8 4"
+                             Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
+                             materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
+                             materialDesign:HintAssist.Hint="Key"
+                             materialDesign:TextFieldAssist.HasClearButton="True">
+                    </TextBox>
+
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30" Content="..." caliburn:Message.Attach="ExploreEncryptionKey()"/>
+                </Grid>
+
+                <Grid Margin="0 6 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="30" Padding="8 4 8 4"
+                             Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
+                             materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
+                             materialDesign:HintAssist.Hint="Output Path"
+                             materialDesign:TextFieldAssist.HasClearButton="True">
+                    </TextBox>
+
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30" Content="..." caliburn:Message.Attach="ExploreEncryptionKey()"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="TYPE" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MV(*.rpgmvp, *.rpgmvo, etc.)" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MZ(*.png__, *.ogg, etc.)" />
+                </StackPanel>
+
+                <WrapPanel Margin="0 4 0 0">
+                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="OPTIONS" />
+                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Remember key" />
+                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Output to source directory" />
+                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Encrypt all files including unknown extensions" />
+                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Copy unencrypted files too" />
+                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Infer an extension of a file when the file is invalid" />
+                </WrapPanel>
+            </StackPanel>
+
+            <!--Divider-->
+            <Rectangle Grid.Column="1" Fill="{DynamicResource PickUiDividerLight}" Width="3" Height="100" RadiusX="2" RadiusY="2"/>
+            
+            <!--Progress/Start/Stop-->
+            <Grid Grid.Column="2" Margin="20 10 20 10">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Text="Completed"/>
+                    
+                    <Border Background="{DynamicResource PickUiBackground}" CornerRadius="4" Margin="0 4 0 0">
+                        <ProgressBar Background="{DynamicResource PickUiDividerLight}" BorderThickness="0"
+                                     ClipToBounds="True" Height="8" IsIndeterminate="False" />
+                    </Border>
+
+                    <Grid Margin="0 8 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button Grid.Column="0" Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            Margin="0 0 2 0"
+                            materialDesign:ElevationAssist.Elevation="Dp0"
+                            Content="ENCRYPT"/>
+
+                        <Button Grid.Column="1" Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            Margin="2 0 0 0"
+                            materialDesign:ElevationAssist.Elevation="Dp0"
+                            Content="DECRYPT"/>
+                    </Grid>
+
+                    <Button Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Margin="0 4 0 0"
+                            materialDesign:ElevationAssist.Elevation="Dp0"
+                            Content="STOP"/>
+                </StackPanel>
             </Grid>
         </Grid>
-    </materialDesign:DialogHost>
+    </Grid>
 </Window>

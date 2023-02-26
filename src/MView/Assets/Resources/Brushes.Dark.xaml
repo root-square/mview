@@ -30,6 +30,9 @@
     <Color x:Key="PickUiDividerLightColor">#FF303030</Color>
     <SolidColorBrush x:Key="PickUiDividerLight" Color="{DynamicResource PickUiDividerLightColor}" />
 
+    <Color x:Key="PickUiGridLineColor">#FF4F4F4F</Color>
+    <SolidColorBrush x:Key="PickUiGridLine" Color="{DynamicResource PickUiGridLineColor}" />
+
     <Color x:Key="PickUiPrimaryColor">#1976d2</Color>
     <SolidColorBrush x:Key="PickUiPrimary" Color="{DynamicResource PickUiPrimaryColor}" />
 
