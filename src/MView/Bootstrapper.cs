@@ -66,9 +66,8 @@ namespace MView
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs ex)
         {
-            MessageBox.Show(ex.Exception.Message, "An unknown error has occurred", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            Log.Fatal(ex.Exception, "An unknown error has occurred.");
+            Log.Fatal(ex.Exception, "An unhandled exception has occurred.");
+            MessageBox.Show("An unhandled exception has occurred.\r\n" + ex.Exception.Message, "MView", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
