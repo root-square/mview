@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <!--Common-->
+    <system:String x:Key="COMMON_EXPLORE">...</system:String>
+    <system:String x:Key="COMMON_BACK">Back</system:String>
+    <system:String x:Key="COMMON_CANCEL">Cancel</system:String>
+    <system:String x:Key="COMMON_CONFIRM">Confirm</system:String>
+    <system:String x:Key="COMMON_CLOSE">Close</system:String>
+    <system:String x:Key="COMMON_COMPLETE">Complete</system:String>
+
+    <!--Menu-->
+    <system:String x:Key="MENU_FILE">File</system:String>
+    <system:String x:Key="MENU_FILE_OPEN">Open</system:String>
+    <system:String x:Key="MENU_FILE_OPEN_FILES">Files</system:String>
+    <system:String x:Key="MENU_FILE_OPEN_FOLDERS">Folders</system:String>
+    <system:String x:Key="MENU_FILE_CLEAR">Clear</system:String>
+    <system:String x:Key="MENU_FILE_EXIT">Exit</system:String>
+
+    <system:String x:Key="MENU_LIST">List</system:String>
+    <system:String x:Key="MENU_LIST_SELECT">Select</system:String>
+    <system:String x:Key="MENU_LIST_SELECT_ALL">Select All</system:String>
+    <system:String x:Key="MENU_LIST_DESELECT">Deselect</system:String>
+    <system:String x:Key="MENU_LIST_DESELECT_ALL">Deselect All</system:String>
+    <system:String x:Key="MENU_LIST_REVERSE_SELECTION">Reverse Selection</system:String>
+    <system:String x:Key="MENU_LIST_DELETE">Delete</system:String>
+    <system:String x:Key="MENU_LIST_DELETE_ALL">Delete All</system:String>
+
+    <system:String x:Key="MENU_SETTINGS">Settings</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_DARK_THEME">Use Dark Theme</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_ADAPTIVE_BGC">Use Adaptive Background Color</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_MULTI_THDS">Use Multi-threading</system:String>
+    <system:String x:Key="MENU_SETTINGS_NUMBER_OF_THDS">Number of Threads</system:String>
+
+    <system:String x:Key="MENU_HELP">Help</system:String>
+    <system:String x:Key="MENU_HELP_GITHUB_REPO">GitHub Repository</system:String>
+    <system:String x:Key="MENU_HELP_GUIDE">Guide</system:String>
+    <system:String x:Key="MENU_HELP_INFO">Information</system:String>
+
+    <!--Explorer-->
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_ADD_FILE">Open Files</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE_ALL">Remove All</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">Select All</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_DESELECT_ALL">Deselect All</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REVERSE_SELECTION">Reverse Selection</system:String>
+
+    <!--Viewer-->
+    <system:String x:Key="VIEWER_PREVIEW">PREVIEW</system:String>
+    <system:String x:Key="VIEWER_HEX">HEX</system:String>
+    <system:String x:Key="VIEWER_METADATA">METADATA</system:String>
+
+    <!--Controller-->
+    <system:String x:Key="CONTROLLER_KEY">Key</system:String>
+    <system:String x:Key="CONTROLLER_OUTPUT_PATH">Output Path</system:String>
+    <system:String x:Key="CONTROLLER_TYPE">TYPE</system:String>
+    <system:String x:Key="CONTROLLER_TYPE_RMMV">RPG Maker MV(*.rpgmvp, *.rpgmvo, etc.)</system:String>
+    <system:String x:Key="CONTROLLER_TYPE_RMMZ">RPG Maker MZ(*.png__, *.ogg__, etc.)</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS">OPTIONS</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_REMINPUT">Remember inputs</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_TOSOURCE">Output to source path</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">Encrypt all files including unknown extensions</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_COPYUNENC">Copy unencrypted files too</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_INFEREXT">Infer an extension of a file when the file is invalid</system:String>
+
+    <system:String x:Key="CONTROLLER_STATUS_READY">Ready</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_PROGRESSED">{0}% progressed...</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_ERROR">Error</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_COMPLETED">Completed</system:String>
+
+    <system:String x:Key="CONTROLLER_ENCRYPT">ENCRYPT</system:String>
+    <system:String x:Key="CONTROLLER_DECRYPT">DECRYPT</system:String>
+    <system:String x:Key="CONTROLLER_STOP">STOP</system:String>
+</ResourceDictionary>

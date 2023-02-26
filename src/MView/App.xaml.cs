@@ -37,6 +37,8 @@ namespace MView
 
             ReadSettings(); // The theme is applied by the deep copy function.
 
+            ApplyLocalization();
+
             base.OnStartup(e);
         }
 
@@ -128,6 +130,29 @@ namespace MView
             ResourceDictionary icons = new ResourceDictionary();
             icons.Source = new Uri(@"../Assets/Resources/Icons.xaml", UriKind.Relative);
             App.Current.Resources.MergedDictionaries.Add(icons);
+        }
+
+        public static void ApplyLocalization()
+        {
+            ResourceDictionary dict = new ResourceDictionary();
+
+            switch (Thread.CurrentThread.CurrentCulture.Name)
+            {
+                case "en-US":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
+                    break;
+                case "ko-KR":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ko-KR.xaml", UriKind.Relative);
+                    break;
+                case "ja-JP":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ja-JP.xaml", UriKind.Relative);
+                    break;
+                default:
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
+                    break;
+            }
+
+            App.Current.Resources.MergedDictionaries.Add(dict);
         }
     }
 }

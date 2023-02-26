@@ -44,42 +44,42 @@
             </Grid.ColumnDefinitions>
             
             <Menu Grid.Column="0" IsMainMenu="True" FontSize="13" materialDesign:MenuAssist.TopLevelMenuItemHeight="35">
-                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="File">
-                    <MenuItem Header="Open" Icon="{materialDesign:PackIcon Kind=FolderOpenOutline}">
-                        <MenuItem Header="Files" Icon="{materialDesign:PackIcon Kind=FileOutline}" caliburn:Message.Attach="OpenFiles()"/>
-                        <MenuItem Header="Folders" Icon="{materialDesign:PackIcon Kind=FolderOutline}" caliburn:Message.Attach="OpenFolders()"/>
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_FILE}">
+                    <MenuItem Header="{DynamicResource MENU_FILE_OPEN}" Icon="{materialDesign:PackIcon Kind=FolderOpenOutline}">
+                        <MenuItem Header="{DynamicResource MENU_FILE_OPEN_FILES}" Icon="{materialDesign:PackIcon Kind=FileOutline}" caliburn:Message.Attach="OpenFiles()"/>
+                        <MenuItem Header="{DynamicResource MENU_FILE_OPEN_FOLDERS}" Icon="{materialDesign:PackIcon Kind=FolderOutline}" caliburn:Message.Attach="OpenFolders()"/>
                     </MenuItem>
-                    <MenuItem Header="Clear" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="ClearFiles()"/>
+                    <MenuItem Header="{DynamicResource MENU_FILE_CLEAR}" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="ClearFiles()"/>
                     <Separator />
-                    <MenuItem Header="Exit" InputGestureText="Alt+F4" Icon="{materialDesign:PackIcon Kind=ExitToApp}" caliburn:Message.Attach="Exit()"/>
+                    <MenuItem Header="{DynamicResource MENU_FILE_EXIT}" InputGestureText="Alt+F4" Icon="{materialDesign:PackIcon Kind=ExitToApp}" caliburn:Message.Attach="Exit()"/>
                 </MenuItem>
 
-                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="List">
-                    <MenuItem Header="Select" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="Select()"/>
-                    <MenuItem Header="Select All" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAll()"/>
-                    <MenuItem Header="Deselect" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="Deselect()"/>
-                    <MenuItem Header="Deselect All" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAll()"/>
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_LIST}">
+                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT}" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="Select()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAll()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="Deselect()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAll()"/>
                     <Separator />
-                    <MenuItem Header="Reverse" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="Reverse()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_REVERSE_SELECTION}" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="Reverse()"/>
                     <Separator />
-                    <MenuItem Header="Delete" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="Delete()"/>
-                    <MenuItem Header="Delete All" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE}" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="Delete()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE_ALL}" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
                 </MenuItem>
 
-                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Settings">
-                    <MenuItem Header="Dark Theme" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_SETTINGS}">
+                    <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_DARK_THEME}" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
                     <Separator />
-                    <MenuItem Header="Use Adaptive Background" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
+                    <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_ADAPTIVE_BGC}" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
                     <Separator />
-                    <MenuItem Header="Use Multi-threading" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
-                    <MenuItem Header="Number of Threads" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>
+                    <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_MULTI_THDS}" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
+                    <MenuItem Header="{DynamicResource MENU_SETTINGS_NUMBER_OF_THDS}" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>
                 </MenuItem>
 
-                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Help">
-                    <MenuItem Header="GitHub Repository" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="OpenInformation()"/>
-                    <MenuItem Header="Guide" Icon="{materialDesign:PackIcon Kind=BookOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_HELP}">
+                    <MenuItem Header="{DynamicResource MENU_HELP_GITHUB_REPO}" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="OpenInformation()"/>
+                    <MenuItem Header="{DynamicResource MENU_HELP_GUIDE}" Icon="{materialDesign:PackIcon Kind=BookOutline}" caliburn:Message.Attach="OpenInformation()"/>
                     <Separator />
-                    <MenuItem Header="Information" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                    <MenuItem Header="{DynamicResource MENU_HELP_INFO}" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>
                 </MenuItem>
             </Menu>
         </Grid>
@@ -158,27 +158,27 @@
                     <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 1 0 0">
                         <StackPanel Orientation="Horizontal" Margin="6 0 6 0" HorizontalAlignment="Center">
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24"
-                                    ToolTip="Add">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_ADD_FILE}">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Add" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="Delete All">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REMOVE_ALL}">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Remove" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="Select All">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_SELECT_ALL}">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectAll" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="Deselect All">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_DESELECT_ALL}">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectOff" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="Reverse Selection">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REVERSE}">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Exchange" />
                             </Button>
                         </StackPanel>
@@ -198,7 +198,7 @@
                         </Style>
                     </TabControl.Resources>
 
-                    <TabItem Header="PREVIEW">
+                    <TabItem Header="{DynamicResource VIEWER_PREVIEW}">
                         <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
                             <Grid>
                                 <Grid.Background>
@@ -222,7 +222,7 @@
                         </Border>
                     </TabItem>
 
-                    <TabItem Header="HEX">
+                    <TabItem Header="{DynamicResource VIEWER_HEX}">
                         <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
                             <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
                                        Focusable="False" AllowContextMenu="True" ReadOnlyMode="True" StatusBarVisibility="Hidden"
@@ -237,7 +237,7 @@
                         </Border>
                     </TabItem>
 
-                    <TabItem Header="METADATA">
+                    <TabItem Header="{DynamicResource VIEWER_METADATA}">
                         <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
                             <Grid Background="{DynamicResource PickUiSecondBackground}">
                                 <TextBox BorderBrush="Transparent" FontFamily="Segoe UI" FontSize="14" FontWeight="SemiBold"
@@ -270,11 +270,12 @@
                     <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="30" Padding="8 4 8 4"
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
-                             materialDesign:HintAssist.Hint="Key"
+                             materialDesign:HintAssist.Hint="{DynamicResource CONTROLLER_KEY}"
                              materialDesign:TextFieldAssist.HasClearButton="True">
                     </TextBox>
 
-                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30" Content="..." caliburn:Message.Attach="ExploreEncryptionKey()"/>
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30"
+                            Content="{DynamicResource COMMON_EXPLORE}" caliburn:Message.Attach="ExploreEncryptionKey()"/>
                 </Grid>
 
                 <Grid Margin="0 6 0 0">
@@ -286,26 +287,27 @@
                     <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignOutlinedTextBox}" Height="30" Padding="8 4 8 4"
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
-                             materialDesign:HintAssist.Hint="Output Path"
+                             materialDesign:HintAssist.Hint="{DynamicResource CONTROLLER_OUTPUT_PATH}"
                              materialDesign:TextFieldAssist.HasClearButton="True">
                     </TextBox>
 
-                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30" Content="..." caliburn:Message.Attach="ExploreEncryptionKey()"/>
+                    <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30"
+                            Content="{DynamicResource COMMON_EXPLORE}" caliburn:Message.Attach="ExploreEncryptionKey()"/>
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="TYPE" />
-                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MV(*.rpgmvp, *.rpgmvo, etc.)" />
-                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="RPG Maker MZ(*.png__, *.ogg__, etc.)" />
+                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="{DynamicResource CONTROLLER_TYPE}" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMV}" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMZ}" />
                 </StackPanel>
 
                 <WrapPanel Margin="0 4 0 0">
-                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="OPTIONS" />
-                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Remember key" />
-                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Output to source directory" />
-                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Encrypt all files including unknown extensions" />
-                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Copy unencrypted files too" />
-                    <CheckBox Style="{StaticResource MaterialDesignCheckBox}" Margin="0 0 8 0" Content="Infer an extension of a file when the file is invalid" />
+                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="{DynamicResource CONTROLLER_OPTIONS}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_REMINPUT}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_TOSOURCE}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_ENCALL}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_COPYUNENC}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_INFEREXT}" />
                 </WrapPanel>
             </StackPanel>
 
@@ -331,18 +333,18 @@
                         <Button Grid.Column="0" Style="{StaticResource MaterialDesignRaisedDarkButton}"
                             Margin="0 0 2 0"
                             materialDesign:ElevationAssist.Elevation="Dp0"
-                            Content="ENCRYPT"/>
+                            Content="{DynamicResource CONTROLLER_ENCRYPT}"/>
 
                         <Button Grid.Column="1" Style="{StaticResource MaterialDesignRaisedDarkButton}"
                             Margin="2 0 0 0"
                             materialDesign:ElevationAssist.Elevation="Dp0"
-                            Content="DECRYPT"/>
+                            Content="{DynamicResource CONTROLLER_DECRYPT}"/>
                     </Grid>
 
                     <Button Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                             Margin="0 4 0 0"
                             materialDesign:ElevationAssist.Elevation="Dp0"
-                            Content="STOP"/>
+                            Content="{DynamicResource CONTROLLER_STOP}"/>
                 </StackPanel>
             </Grid>
         </Grid>

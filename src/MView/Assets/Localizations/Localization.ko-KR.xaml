@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <!--Common-->
+    <system:String x:Key="COMMON_EXPLORE">...</system:String>
+    <system:String x:Key="COMMON_BACK">뒤로 가기</system:String>
+    <system:String x:Key="COMMON_CANCEL">취소</system:String>
+    <system:String x:Key="COMMON_CONFIRM">확인</system:String>
+    <system:String x:Key="COMMON_CLOSE">닫기</system:String>
+    <system:String x:Key="COMMON_COMPLETE">완료</system:String>
+
+    <!--Menu-->
+    <system:String x:Key="MENU_FILE">파일</system:String>
+    <system:String x:Key="MENU_FILE_OPEN">열기</system:String>
+    <system:String x:Key="MENU_FILE_OPEN_FILES">파일</system:String>
+    <system:String x:Key="MENU_FILE_OPEN_FOLDERS">폴더</system:String>
+    <system:String x:Key="MENU_FILE_CLEAR">비우기</system:String>
+    <system:String x:Key="MENU_FILE_EXIT">끝내기</system:String>
+
+    <system:String x:Key="MENU_LIST">목록</system:String>
+    <system:String x:Key="MENU_LIST_SELECT">선택</system:String>
+    <system:String x:Key="MENU_LIST_SELECT_ALL">모두 선택</system:String>
+    <system:String x:Key="MENU_LIST_DESELECT">선택 해제</system:String>
+    <system:String x:Key="MENU_LIST_DESELECT_ALL">모두 선택 해제</system:String>
+    <system:String x:Key="MENU_LIST_REVERSE_SELECTION">선택 반전</system:String>
+    <system:String x:Key="MENU_LIST_DELETE">삭제</system:String>
+    <system:String x:Key="MENU_LIST_DELETE_ALL">모두 삭제</system:String>
+
+    <system:String x:Key="MENU_SETTINGS">설정</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_DARK_THEME">어두운 테마 사용</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_ADAPTIVE_BGC">적응형 배경색 사용</system:String>
+    <system:String x:Key="MENU_SETTINGS_USE_MULTI_THDS">멀티 스레딩 사용</system:String>
+    <system:String x:Key="MENU_SETTINGS_NUMBER_OF_THDS">스레드 개수 설정</system:String>
+
+    <system:String x:Key="MENU_HELP">도움말</system:String>
+    <system:String x:Key="MENU_HELP_GITHUB_REPO">GitHub 저장소</system:String>
+    <system:String x:Key="MENU_HELP_GUIDE">가이드</system:String>
+    <system:String x:Key="MENU_HELP_INFO">정보</system:String>
+
+    <!--Explorer-->
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_ADD_FILE">파일 열기</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE_ALL">모두 삭제</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">모두 선택</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_DESELECT_ALL">모두 선택 해제</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REVERSE">선택 반전</system:String>
+
+    <!--Viewer-->
+    <system:String x:Key="VIEWER_PREVIEW">미리보기</system:String>
+    <system:String x:Key="VIEWER_HEX">HEX</system:String>
+    <system:String x:Key="VIEWER_METADATA">메타데이터</system:String>
+
+    <!--Controller-->
+    <system:String x:Key="CONTROLLER_KEY">암호화 키</system:String>
+    <system:String x:Key="CONTROLLER_OUTPUT_PATH">출력 경로</system:String>
+    <system:String x:Key="CONTROLLER_TYPE">형식</system:String>
+    <system:String x:Key="CONTROLLER_TYPE_RMMV">RPG 만들기 MV(*.rpgmvp, *.rpgmvo 등)</system:String>
+    <system:String x:Key="CONTROLLER_TYPE_RMMZ">RPG 만들기 MZ(*.png__, *.ogg__ 등)</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS">옵션</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_REMINPUT">입력 기억하기</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_TOSOURCE">원본 경로에 출력하기</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">알려지지 않은 확장자를 포함한 모든 파일 암호화하기</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_COPYUNENC">암호화되지 않은 파일도 복사하기</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_INFEREXT">파일이 유효하지 않을 경우 확장자 추론하기</system:String>
+
+    <system:String x:Key="CONTROLLER_STATUS_READY">대기 중</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_PROGRESSED">{0}% 처리됨</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_ERROR">오류 발생</system:String>
+    <system:String x:Key="CONTROLLER_STATUS_COMPLETED">완료</system:String>
+
+    <system:String x:Key="CONTROLLER_ENCRYPT">암호화</system:String>
+    <system:String x:Key="CONTROLLER_DECRYPT">복호화</system:String>
+    <system:String x:Key="CONTROLLER_STOP">작업 중지</system:String>
+</ResourceDictionary>
