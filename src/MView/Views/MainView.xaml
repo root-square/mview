@@ -66,7 +66,14 @@
                     <MenuItem Header="Delete All" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
                 </MenuItem>
 
-                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Settings"/>
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Settings">
+                    <MenuItem Header="Dark Theme" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
+                    <Separator />
+                    <MenuItem Header="Use Adaptive Background" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
+                    <Separator />
+                    <MenuItem Header="Use Multi-threading" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
+                    <MenuItem Header="Number of Threads" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>
+                </MenuItem>
 
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="Help">
                     <MenuItem Header="GitHub Repository" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="OpenInformation()"/>
