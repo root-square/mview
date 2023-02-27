@@ -13,18 +13,19 @@ namespace MView.Behaviors
         void OnFilesDropped(string[] files);
     }
 
-    public class DragAndDropBehavior
+    public class DragAndDropFilesBehavior
     {
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
-            "IsEnabled", typeof(bool), typeof(DragAndDropBehavior), new FrameworkPropertyMetadata(default(bool), OnPropChanged)
+            "IsEnabled", typeof(bool), typeof(DragAndDropFilesBehavior), new FrameworkPropertyMetadata(default(bool), OnIsEnabledChanged)
             {
                 BindsTwoWayByDefault = false,
             });
 
-        private static void OnPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is FrameworkElement fe))
                 throw new InvalidOperationException();
+
             if ((bool)e.NewValue)
             {
                 fe.AllowDrop = true;
@@ -50,6 +51,7 @@ namespace MView.Behaviors
         private static void OnDrop(object sender, DragEventArgs e)
         {
             var dataContext = ((FrameworkElement)sender).DataContext;
+
             if (!(dataContext is IFilesDropped filesDropped))
             {
                 if (dataContext != null)
