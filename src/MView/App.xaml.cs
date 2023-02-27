@@ -46,7 +46,7 @@ namespace MView
         private void InitializeLogger()
         {
             string fileName = Path.Combine(Environment.CurrentDirectory, @"data\logs\log-.log");
-            string outputTemplateString = "{Timestamp:HH:mm:ss.ms} ({ThreadId}) [{Level}] {Message}{NewLine}{Exception}";
+            string outputTemplateString = "{Timestamp:HH:mm:ss.ms} [{Level}] {Message}{NewLine}{Exception}";
 
             var log = new LoggerConfiguration()
                 .WriteTo.Async(a => a.File(fileName, restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: outputTemplateString, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 100000))
