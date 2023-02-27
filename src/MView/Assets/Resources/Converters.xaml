@@ -3,6 +3,7 @@
                     xmlns:converters="clr-namespace:MView.Converters">
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:ComparisonConverter x:Key="ComparisonConverter"/>
+    <converters:FileNameToIconConverter x:Key="FileNameToIconConverter"/>
     <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     <converters:StreamToBackgroundBrushConverter x:Key="StreamToBackgroundBrushConverter"/>
     <converters:StreamToBitmapSourceConverter x:Key="StreamToBitmapSourceConverter"/>

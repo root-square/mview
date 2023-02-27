@@ -104,53 +104,25 @@
                         <ListView VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
                                   ItemsSource="{Binding ItemCollectionViewSource.View, IsAsync=True}"
                                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="indexing:IndexedItem">
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" VerticalAlignment="Center"
+                                                  IsChecked="{Binding IsSelected}"/>
+                                        <Image Margin="4 0 0 0" Width="16" Height="16"
+                                               RenderOptions.BitmapScalingMode="HighQuality"
+                                               Source="{Binding FullPath, Converter={StaticResource FileNameToIconConverter}}"/>
+                                        <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="4 0 0 0" VerticalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   Text="{Binding FileName}" />
+                                        <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="4 0 0 0" VerticalAlignment="Center"
+                                                   Text="{Binding SizeString, StringFormat=({0})}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                             <i:Interaction.Behaviors>
                                 <behaviors:ListViewMultiSelectionBehavior SelectedItems="{Binding SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </i:Interaction.Behaviors>
-
-                            <ListView.GroupStyle>
-                                <GroupStyle>
-                                    <GroupStyle.ContainerStyle>
-                                        <Style TargetType="{x:Type GroupItem}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander Margin="0 0 0 1" Background="{DynamicResource PickUiDividerLight}" materialDesign:ExpanderAssist.HorizontalHeaderPadding="16,2,16,2" IsExpanded="True">
-                                                            <Expander.Header>
-                                                                <DockPanel>
-                                                                    <TextBlock FontWeight="Bold" Text="{Binding Name}"/>
-                                                                </DockPanel>
-                                                            </Expander.Header>
-
-                                                            <Expander.Content>
-                                                                <Grid Background="{DynamicResource PickUiSecondBackground}">
-                                                                    <ItemsPresenter />
-                                                                </Grid>
-                                                            </Expander.Content>
-                                                        </Expander>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </GroupStyle.ContainerStyle>
-                                </GroupStyle>
-                            </ListView.GroupStyle>
-
-                            <ListView.View>
-                                <GridView AllowsColumnReorder="False">
-                                    <GridViewColumn Width="32" Header="Selection">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <CheckBox Style="{DynamicResource MaterialDesignDarkCheckBox}" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                    <GridViewColumn Width="160" Header="Name" DisplayMemberBinding="{Binding Path=FileName}"/>
-
-                                    <GridViewColumn Width="100" Header="Size" DisplayMemberBinding="{Binding Path=SizeString}"/>
-                                </GridView>
-                            </ListView.View>
                         </ListView>
                     </Grid>
 
