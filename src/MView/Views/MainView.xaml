@@ -69,7 +69,7 @@
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_SETTINGS}">
                     <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_DARK_THEME}" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
                     <Separator />
-                    <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_ADAPTIVE_BGC}" IsCheckable="True" IsChecked="{Binding Settings.UseBackFiller}" />
+                    <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_ADAPTIVE_BGC}" IsCheckable="True" IsChecked="{Binding Settings.UseAdaptiveBackgroundColor}" />
                     <Separator />
                     <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_MULTI_THDS}" IsCheckable="True" IsChecked="{Binding Settings.UseMultiThreading}" />
                     <MenuItem Header="{DynamicResource MENU_SETTINGS_NUMBER_OF_THDS}" IsEnabled="{Binding Settings.UseMultiThreading}" Icon="{materialDesign:PackIcon Kind=Subtasks}" caliburn:Message.Attach="PickNoT()"/>

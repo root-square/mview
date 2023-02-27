@@ -26,12 +26,12 @@ namespace MView
             }
         }
 
-        private bool _useBackFiller = true;
+        private bool _useAdaptiveBackgroundColor = true;
 
-        public bool UseBackFiller
+        public bool UseAdaptiveBackgroundColor
         {
-            get => _useBackFiller;
-            set => Set(ref _useBackFiller, value);
+            get => _useAdaptiveBackgroundColor;
+            set => Set(ref _useAdaptiveBackgroundColor, value);
         }
 
         private bool _useMultiThreading = true;
@@ -63,7 +63,7 @@ namespace MView
         public void DeepCopyFrom(Settings settings)
         {
             UseDarkTheme = settings.UseDarkTheme;
-            UseBackFiller = settings.UseBackFiller;
+            UseAdaptiveBackgroundColor = settings.UseAdaptiveBackgroundColor;
             UseMultiThreading = settings.UseMultiThreading;
             NumberOfThreads = settings.NumberOfThreads;
             AudioVolume = settings.AudioVolume;
