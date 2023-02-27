@@ -13,6 +13,18 @@ namespace MView.Behaviors
 {
     public class ListViewMultiSelectionBehavior : Behavior<ListView>
     {
+        private bool _isUpdatingTarget;
+        private bool _isUpdatingSource;
+
+        public static readonly DependencyProperty SelectedItemsProperty =
+            DependencyProperty.Register("SelectedItems", typeof(IList), typeof(ListViewMultiSelectionBehavior), new UIPropertyMetadata(null, OnSelectedItemsChanged));
+
+        public IList SelectedItems
+        {
+            get { return (IList)GetValue(SelectedItemsProperty); }
+            set { SetValue(SelectedItemsProperty, value); }
+        }
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -27,17 +39,7 @@ namespace MView.Behaviors
                 }
             }
         }
-
-        public IList SelectedItems
-        {
-            get { return (IList)GetValue(SelectedItemsProperty); }
-            set { SetValue(SelectedItemsProperty, value); }
-        }
-
-        public static readonly DependencyProperty SelectedItemsProperty =
-            DependencyProperty.Register("SelectedItems", typeof(IList), typeof(ListViewMultiSelectionBehavior), new UIPropertyMetadata(null, SelectedItemsChanged));
-
-        private static void SelectedItemsChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnSelectedItemsChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var behavior = o as ListViewMultiSelectionBehavior;
 
@@ -49,8 +51,8 @@ namespace MView.Behaviors
 
             if (oldValue != null)
             {
-                oldValue.CollectionChanged -= behavior.SourceCollectionChanged;
-                behavior.AssociatedObject.SelectionChanged -= behavior.ListViewSelectionChanged;
+                oldValue.CollectionChanged -= behavior.OnSourceCollectionChanged;
+                behavior.AssociatedObject.SelectionChanged -= behavior.OnListViewSelectionChanged;
             }
 
             if (newValue != null)
@@ -62,15 +64,12 @@ namespace MView.Behaviors
                     behavior.AssociatedObject.SelectedItems.Add(item);
                 }
 
-                behavior.AssociatedObject.SelectionChanged += behavior.ListViewSelectionChanged;
-                newValue.CollectionChanged += behavior.SourceCollectionChanged;
+                behavior.AssociatedObject.SelectionChanged += behavior.OnListViewSelectionChanged;
+                newValue.CollectionChanged += behavior.OnSourceCollectionChanged;
             }
         }
 
-        private bool _isUpdatingTarget;
-        private bool _isUpdatingSource;
-
-        void SourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnSourceCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (_isUpdatingSource)
                 return;
@@ -104,9 +103,7 @@ namespace MView.Behaviors
             }
         }
 
-
-
-        private void ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnListViewSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             if (_isUpdatingTarget)
                 return;
