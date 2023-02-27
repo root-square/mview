@@ -10,9 +10,6 @@ namespace MView
 {
     public class Settings : PropertyChangedBase
     {
-        // Constants
-        public readonly static string SettingsPath = Path.Combine(Environment.CurrentDirectory, @"data\settings.json");
-
         // Variables
         private bool _useDarkTheme = false;
 
