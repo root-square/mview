@@ -1,33 +1,34 @@
 ﻿using Caliburn.Micro;
+using MView.Utilities;
 using MView.Utilities.Indexing;
-using MView.Utilities.Text;
 using Ookii.Dialogs.Wpf;
 using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
 namespace MView.ViewModels
 {
-    public partial class MainViewModel
+    public class ExplorerViewModel : PropertyChangedBase
     {
-        #region ::Variables::
-
         public BindableCollection<IndexedItem> IndexedItems { get; set; } = new BindableCollection<IndexedItem>();
 
-        public CollectionViewSource ItemCollectionViewSource { get; set; } = new CollectionViewSource();
+        private BindableCollection<IndexedItem> _selectedItems = new BindableCollection<IndexedItem>();
 
-        private IndexedItem _selectedItem = new IndexedItem();
+        public BindableCollection<IndexedItem> SelectedItems
+        {
+            get => _selectedItems;
+            set => Set(ref _selectedItems, value);
+        }
 
-        public IndexedItem SelectedItem
+        private IndexedItem? _selectedItem = null;
+
+        public IndexedItem? SelectedItem
         {
             get => _selectedItem;
             set
@@ -41,100 +42,108 @@ namespace MView.ViewModels
             }
         }
 
-        private BindableCollection<IndexedItem> _selectedItems = new BindableCollection<IndexedItem>();
-
-        public BindableCollection<IndexedItem> SelectedItems
+        private enum ConfirmDialogResult
         {
-            get => _selectedItems;
-            set => Set(ref _selectedItems, value);
+            None,
+            Canceled,
+            No,
+            Yes
         }
 
-        #endregion
+        private ConfirmDialogResult ShowConfirmDialog(string title, string desc, string footer, TaskDialogIcon footerIcon)
+        {
+            using (TaskDialog taskDialog = new TaskDialog())
+            {
+                taskDialog.WindowTitle = "MView";
+                taskDialog.MainInstruction = title;
+                taskDialog.Content = desc;
+                taskDialog.Footer = footer;
+                taskDialog.FooterIcon = footerIcon;
 
-        #region ::Workers::
+                TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text = LocalizationHelper.GetText("COMMON_YES") };
+                TaskDialogButton noButton = new TaskDialogButton(ButtonType.Custom) { Text = LocalizationHelper.GetText("COMMON_NO") };
+                taskDialog.Buttons.Add(yesButton);
+                taskDialog.Buttons.Add(noButton);
 
-        // File
+                TaskDialogButton button = taskDialog.ShowDialog();
+
+                if (button == yesButton)
+                {
+                    return ConfirmDialogResult.Yes;
+                }
+                else if (button == noButton)
+                {
+                    return ConfirmDialogResult.No;
+                }
+                else
+                {
+                    return ConfirmDialogResult.Canceled;
+                }
+            }
+        }
+
+        public void Open()
+        {
+
+        }
+
         public void OpenFiles()
         {
             VistaOpenFileDialog openFileDialog = new VistaOpenFileDialog();
             openFileDialog.Title = "Please select files.";
-            openFileDialog.Filter = "Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RPG MV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RPG MZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Original resources|*.png;*.ogg;*.m4a;*.wav|All files|*.*";
+            openFileDialog.Filter = "Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RMMV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RMMZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Resources|*.png;*.ogg;*.m4a;*.wav|All files|*.*";
             openFileDialog.Multiselect = true;
 
-            if (openFileDialog.ShowDialog() == true)
+            if (!openFileDialog.ShowDialog() == false)
             {
-                // Check whether to index all file extensions.
-                bool indexAllExtensions = false;
+                return;
+            }
 
-                using (TaskDialog taskDialog = new TaskDialog())
-                {
-                    taskDialog.WindowTitle = "MView";
-                    taskDialog.MainInstruction = "Do you want to index all file extensions?";
-                    taskDialog.Content = "If you click 'OK', MView indexes all file extensions, not just RPG MV/MZ resources file extensions.";
-                    taskDialog.Footer = "Some errors can occur if files that are not RPG MV/MZ resources are processed in MView.";
-                    taskDialog.FooterIcon = TaskDialogIcon.Warning;
+            // Get selected files.
+            string[] selectedFiles = openFileDialog.FileNames;
 
-                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text = "Yes" };
-                    TaskDialogButton noButton = new TaskDialogButton(ButtonType.Custom) { Text = "No" };
-                    taskDialog.Buttons.Add(yesButton);
-                    taskDialog.Buttons.Add(noButton);
+            if (selectedFiles.Length < 1)
+            {
+                Log.Warning("Plesae select some files.");
+                MessageBox.Show("Please select files at least 1.", "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
 
-                    TaskDialogButton button = taskDialog.ShowDialog();
+            ConfirmDialogResult loadingConfirm = ShowConfirmDialog(LocalizationHelper.GetText("EXPLORER_LOAD_DIALOG_TITLE"),
+                LocalizationHelper.GetText("EXPLORER_LOAD_DIALOG_DESC"),
+                LocalizationHelper.GetText("EXPLORER_LOAD_DIALOG_FOOTER"),
+                TaskDialogIcon.Warning);
 
-                    if (button == yesButton)
+            // Clear the collection.
+            IndexedItems.Clear();
+
+            // Process
+            using (ProgressDialog progressDialog = new ProgressDialog())
+            {
+                progressDialog.WindowTitle = "MView";
+                progressDialog.Text = "MView File Indexer";
+                progressDialog.Description = "Indexing selected files...";
+                progressDialog.ShowTimeRemaining = true;
+                progressDialog.ShowCancelButton = false;
+                progressDialog.ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar;
+
+                progressDialog.DoWork += (sender, e) => {
+                    List<string> extensions = Settings.KnownExtensions.ToList();
+
+                    for (int i = 0; i < selectedFiles.Length; i++)
                     {
-                        indexAllExtensions = true;
-                    }
-                    else if (button == noButton)
-                    {
-                        indexAllExtensions = false;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
+                        IndexedItem? item = IndexingManager.GetFile(new FileInfo(selectedFiles[i]), Path.GetDirectoryName(selectedFiles[i]), indexAllExtensions ? null : extensions);
 
-                // Clear the collection.
-                IndexedItems.Clear();
-
-                // Get selected files.
-                string[] selectedFiles = openFileDialog.FileNames;
-
-                if (selectedFiles.Length < 1)
-                {
-                    Log.Warning("Plesae select some files.");
-                    return;
-                }
-
-                // Process
-                using (ProgressDialog progressDialog = new ProgressDialog())
-                {
-                    progressDialog.WindowTitle = "MView";
-                    progressDialog.Text = "MView File Indexer";
-                    progressDialog.Description = "Indexing selected files...";
-                    progressDialog.ShowTimeRemaining = true;
-                    progressDialog.ShowCancelButton = false;
-                    progressDialog.ProgressBarStyle = ProgressBarStyle.MarqueeProgressBar;
-
-                    progressDialog.DoWork += (sender, e) => {
-                        List<string> extensions = Settings.KnownExtensions.ToList();
-
-                        for (int i = 0; i < selectedFiles.Length; i++)
+                        if (item != null)
                         {
-                            IndexedItem? item = IndexingManager.GetFile(new FileInfo(selectedFiles[i]), Path.GetDirectoryName(selectedFiles[i]), indexAllExtensions ? null : extensions);
-
-                            if (item != null)
-                            {
-                                IndexedItems.Add(item);
-                            }
+                            IndexedItems.Add(item);
                         }
+                    }
 
-                        Log.Information($"{IndexedItems.Count} items have been indexed.");
-                    };
+                    Log.Information($"{IndexedItems.Count} items have been indexed.");
+                };
 
-                    progressDialog.Show();
-                }
+                progressDialog.Show();
             }
         }
 
@@ -158,7 +167,7 @@ namespace MView.ViewModels
                     taskDialog.Footer = "Some errors can occur if files that are not RPG MV/MZ resources are processed in MView.";
                     taskDialog.FooterIcon = TaskDialogIcon.Warning;
 
-                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text= "Yes" };
+                    TaskDialogButton yesButton = new TaskDialogButton(ButtonType.Custom) { Text = "Yes" };
                     TaskDialogButton noButton = new TaskDialogButton(ButtonType.Custom) { Text = "No" };
                     taskDialog.Buttons.Add(yesButton);
                     taskDialog.Buttons.Add(noButton);
@@ -227,17 +236,6 @@ namespace MView.ViewModels
             }
         }
 
-        public void ClearFiles()
-        {
-            DeleteAll();
-        }
-
-        public void Exit()
-        {
-            Application.Current.Shutdown();
-        }
-
-        // List
         public void Select()
         {
             foreach (var item in SelectedItems)
@@ -270,7 +268,7 @@ namespace MView.ViewModels
             }
         }
 
-        public void Reverse()
+        public void ReverseSelection()
         {
             foreach (var item in IndexedItems)
             {
@@ -284,17 +282,17 @@ namespace MView.ViewModels
 
             foreach (var item in targetItems)
             {
+                SelectedItem = null;
+                SelectedItems.Remove(item);
                 IndexedItems.Remove(item);
             }
         }
 
         public void DeleteAll()
         {
+            SelectedItem = null;
+            SelectedItems.Clear();
             IndexedItems.Clear();
-            ResetViewer();
-            GC.Collect();
         }
-
-        #endregion
     }
 }

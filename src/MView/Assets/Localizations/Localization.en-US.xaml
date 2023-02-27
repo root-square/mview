@@ -6,6 +6,8 @@
     <system:String x:Key="COMMON_BACK">Back</system:String>
     <system:String x:Key="COMMON_CANCEL">Cancel</system:String>
     <system:String x:Key="COMMON_CONFIRM">Confirm</system:String>
+    <system:String x:Key="COMMON_NO">No</system:String>
+    <system:String x:Key="COMMON_YES">Yes</system:String>
     <system:String x:Key="COMMON_CLOSE">Close</system:String>
     <system:String x:Key="COMMON_COMPLETE">Complete</system:String>
 
@@ -38,6 +40,20 @@
     <system:String x:Key="MENU_HELP_INFO">Information</system:String>
 
     <!--Explorer-->
+    <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_TITLE">Please select files.</system:String>
+    <system:String x:Key="EXPLORER_OPEN_FOLDERS_DIALOG_TITLE">Please select folders.</system:String>
+    
+    <system:String x:Key="EXPLORER_LOAD_DIALOG_TITLE">Are you sure you want to load all files?</system:String>
+    <system:String x:Key="EXPLORER_LOAD_DIALOG_DESC">If you click 'Yes', files with non-recommended extensions will be loaded.</system:String>
+    <system:String x:Key="EXPLORER_LOAD_DIALOG_FOOTER">Be aware that errors may occur.</system:String>
+
+    <system:String x:Key="EXPLORER_CLEAR_DIALOG_TITLE">Are you sure you want to clear the current list?</system:String>
+    <system:String x:Key="EXPLORER_CLEAR_DIALOG_DESC">If you click 'Yes', the current file list will be cleared and the selected files will be loaded.</system:String>
+    <system:String x:Key="EXPLORER_CLEAR_DIALOG_FOOTER">Be aware that this action is irreversible.</system:String>
+
+    <system:String x:Key="EXPLORER_ALERT_NO_ITEM_SELECTED">Please select at least one file.</system:String>
+    <system:String x:Key="EXPLORER_ALERT_ROOT_DIR_SELECTED">The root directory cannot be loaded.</system:String>
+
     <system:String x:Key="EXPLORER_QUICK_BUTTON_ADD_FILE">Open Files</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE_ALL">Remove All</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">Select All</system:String>

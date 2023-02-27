@@ -11,12 +11,6 @@ namespace MView
     public class Settings : PropertyChangedBase
     {
         // Constants
-        public readonly static string[] KnownExtensions = new string[] { ".png", ".ogg", ".m4a", ".wav", ".rpgmvp", ".rpgmvo", ".rpgmvm", ".rpgmvw", ".png_", ".ogg_", ".m4a_", ".wav_" };
-
-        public readonly static string[] ImageExtensions = new string[] { ".png", ".rpgmvp", ".png_" };
-
-        public readonly static string[] AudioExtensions = new string[] { ".ogg", ".m4a", ".wav", ".rpgmvo", ".rpgmvm", ".rpgmvw", ".ogg_", ".m4a_", ".wav_" };
-
         public readonly static string SettingsPath = Path.Combine(Environment.CurrentDirectory, @"data\settings.json");
 
         // Variables

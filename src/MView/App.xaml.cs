@@ -24,26 +24,20 @@ namespace MView
     /// </summary>
     public partial class App : Application
     {
-        private readonly static bool _debugMode = true;
-
-        public static bool DebugMode
-        {
-            get => _debugMode;
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             InitializeLogger();
+            InitializeLocalization();
 
             ReadSettings(); // The theme is applied by the deep copy function.
-
-            ApplyLocalization();
 
             base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            Log.CloseAndFlush();
+
             WriteSettings();
 
             base.OnExit(e);
@@ -55,13 +49,35 @@ namespace MView
             string outputTemplateString = "{Timestamp:HH:mm:ss.ms} ({ThreadId}) [{Level}] {Message}{NewLine}{Exception}";
 
             var log = new LoggerConfiguration()
-                .Enrich.WithProperty("ThreadId", Thread.CurrentThread.ManagedThreadId)
-                .WriteTo.File(fileName, restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: outputTemplateString, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 100000)
+                .WriteTo.Async(a => a.File(fileName, restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: outputTemplateString, rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true, fileSizeLimitBytes: 100000))
                 .CreateLogger();
 
             Log.Logger = log;
 
             Log.Information("The logger has been initialized.");
+        }
+
+        public static void InitializeLocalization()
+        {
+            ResourceDictionary dict = new ResourceDictionary();
+
+            switch (Thread.CurrentThread.CurrentCulture.Name)
+            {
+                case "en-US":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
+                    break;
+                case "ko-KR":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ko-KR.xaml", UriKind.Relative);
+                    break;
+                case "ja-JP":
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ja-JP.xaml", UriKind.Relative);
+                    break;
+                default:
+                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
+                    break;
+            }
+
+            App.Current.Resources.MergedDictionaries.Add(dict);
         }
 
         public static void ReadSettings()
@@ -130,29 +146,6 @@ namespace MView
             ResourceDictionary icons = new ResourceDictionary();
             icons.Source = new Uri(@"../Assets/Resources/Icons.xaml", UriKind.Relative);
             App.Current.Resources.MergedDictionaries.Add(icons);
-        }
-
-        public static void ApplyLocalization()
-        {
-            ResourceDictionary dict = new ResourceDictionary();
-
-            switch (Thread.CurrentThread.CurrentCulture.Name)
-            {
-                case "en-US":
-                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
-                    break;
-                case "ko-KR":
-                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ko-KR.xaml", UriKind.Relative);
-                    break;
-                case "ja-JP":
-                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.ja-JP.xaml", UriKind.Relative);
-                    break;
-                default:
-                    dict.Source = new Uri(@"..\Assets\Localizations\Localization.en-US.xaml", UriKind.Relative);
-                    break;
-            }
-
-            App.Current.Resources.MergedDictionaries.Add(dict);
         }
     }
 }

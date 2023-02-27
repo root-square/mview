@@ -27,20 +27,16 @@ namespace MView
         {
             _container.Instance(_container);
 
-            // Singletons
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
-                .Singleton<Settings>();
-
-            // ViewModels
-            _container
+                .Singleton<Settings>()
                 .Singleton<MainViewModel>()
+                .Singleton<ControllerViewModel>()
+                .Singleton<ExplorerViewModel>()
+                .Singleton<ViewerViewModel>()
                 .PerRequest<NoTPickerViewModel>()
-                .Singleton<InformationViewModel>()
-                .PerRequest<EncryptorViewModel>()
-                .PerRequest<DecrypterViewModel>()
-                .PerRequest<RestorerViewModel>();
+                .PerRequest<InformationViewModel>();
         }
 
         protected override async void OnStartup(object sender, StartupEventArgs e)
@@ -67,7 +63,11 @@ namespace MView
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs ex)
         {
             Log.Fatal(ex.Exception, "An unhandled exception has occurred.");
+            Log.CloseAndFlush();
+
             MessageBox.Show("An unhandled exception has occurred.\r\n" + ex.Exception.Message, "MView", MessageBoxButton.OK, MessageBoxImage.Error);
+            
+            Environment.Exit(1);
         }
     }
 }
