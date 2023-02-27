@@ -16,7 +16,7 @@ namespace MView.Utilities.Indexing
         /// </summary>
         /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
         /// <returns>Indexed file item</returns>
-        public static IndexedItem? GetFile(FileInfo file, string? rootDirectory, List<string>? extensions)
+        public static IndexedItem? GetFile(FileInfo file, string rootDirectory, List<string>? extensions = null)
         {
             if (extensions == null)
             {
@@ -34,8 +34,8 @@ namespace MView.Utilities.Indexing
             item.IsSelected = true;
             item.FileName = file.Name;
             item.FullPath = file.FullName;
-            item.RootDirectory = rootDirectory ?? "NULL";
-            item.ParentDirectory = Path.GetDirectoryName(file.FullName) ?? "NULL";
+            item.RootDirectory = rootDirectory;
+            item.ParentDirectory = Path.GetDirectoryName(file.FullName)!;
             item.Size = file.Length;
             item.SizeString = UnitConverter.GetFileSizeString(file.Length);
 
@@ -48,7 +48,7 @@ namespace MView.Utilities.Indexing
         /// <param name="directory">Directory to index.</param>
         /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
         /// <returns>Indexed file list</returns>
-        public static List<IndexedItem> GetFiles(DirectoryInfo directory, string? rootDirectory, List<string>? extensions)
+        public static List<IndexedItem> GetFiles(DirectoryInfo directory, string rootDirectory, List<string>? extensions = null)
         {
             List<IndexedItem> items = new List<IndexedItem>();
 

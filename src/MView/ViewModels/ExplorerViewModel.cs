@@ -44,7 +44,7 @@ namespace MView.ViewModels
             }
         }
 
-        public async Task OpenAsync()
+        public async Task<bool> OpenAsync(string[] itemsToIndex, bool indexAllFiles = false)
         {
 
         }
@@ -148,6 +148,7 @@ namespace MView.ViewModels
                 SelectedItem = null;
                 SelectedItems.Clear();
                 IndexedItems.Clear();
+                TODO
             });
 
             await task.ConfigureAwait(false);
