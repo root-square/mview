@@ -9,6 +9,6 @@ namespace MView.ViewModels
 {
     public class ViewerViewModel : PropertyChangedBase
     {
-
+        private ExplorerViewModel Explorer { get; } = IoC.Get<ExplorerViewModel>();
     }
 }
