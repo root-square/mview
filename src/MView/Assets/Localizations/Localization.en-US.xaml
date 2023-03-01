@@ -60,6 +60,8 @@
     <system:String x:Key="EXPLORER_TASK_DIALOG_TITLE">Loading file datas...</system:String>
     <system:String x:Key="EXPLORER_TASK_DIALOG_DESC">Processing...</system:String>
 
+    <system:String x:Key="EXPLORER_DRAG_AND_DROP">Drag &amp; Drop</system:String>
+
     <system:String x:Key="EXPLORER_QUICK_BUTTON_OPEN">Open Files</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE">Remove</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">Select All</system:String>
@@ -80,7 +82,7 @@
     <system:String x:Key="CONTROLLER_OPTIONS">OPTIONS</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_REMINPUT">Remember inputs</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_TOSOURCE">Output to source path</system:String>
-    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">Encrypt all files including unknown extensions</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">Encrypt files including unknown extensions too</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_COPYUNENC">Copy unencrypted files too</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_INFEREXT">Infer an extension of a file when the file is invalid</system:String>
 

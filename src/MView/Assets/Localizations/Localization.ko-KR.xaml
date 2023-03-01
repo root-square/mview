@@ -60,8 +60,10 @@
     <system:String x:Key="EXPLORER_TASK_DIALOG_TITLE">파일을 불러오는 중입니다</system:String>
     <system:String x:Key="EXPLORER_TASK_DIALOG_DESC">처리 중...</system:String>
 
+    <system:String x:Key="EXPLORER_DRAG_AND_DROP">끌어서 놓기</system:String>
+
     <system:String x:Key="EXPLORER_QUICK_BUTTON_OPEN">파일 열기</system:String>
-    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE">모두 삭제</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE">삭제</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">모두 선택</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_DESELECT_ALL">모두 선택 해제</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_REVERSE">선택 반전</system:String>
@@ -80,7 +82,7 @@
     <system:String x:Key="CONTROLLER_OPTIONS">옵션</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_REMINPUT">입력 기억하기</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_TOSOURCE">원본 경로에 출력하기</system:String>
-    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">알려지지 않은 확장자를 포함한 모든 파일 암호화하기</system:String>
+    <system:String x:Key="CONTROLLER_OPTIONS_ENCALL">지원하지 않는 확장자를 포함한 파일도 암호화하기</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_COPYUNENC">암호화되지 않은 파일도 복사하기</system:String>
     <system:String x:Key="CONTROLLER_OPTIONS_INFEREXT">파일이 유효하지 않을 경우 확장자 추론하기</system:String>
 

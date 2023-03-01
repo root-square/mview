@@ -107,9 +107,18 @@
 
                     <!--Explorer-->
                     <Grid Grid.Row="0" Background="{DynamicResource PickUiSecondBackground}">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon Foreground="{DynamicResource PickUiDivider}"
+                                                     HorizontalAlignment="Center" Width="24" Height="24" Kind="CursorDefaultClickOutline"
+                                                     Visibility="{Binding IsEmpty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="{DynamicResource PickUiDivider}"
+                                       Margin="0 4 0 0"  HorizontalAlignment="Center" FontFamily="Segoe UI" FontSize="12" Text="{DynamicResource EXPLORER_DRAG_AND_DROP}"
+                                       Visibility="{Binding IsEmpty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </StackPanel>
                         <ListView VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                                  ItemsSource="{Binding ItemCollectionViewSource.View, IsAsync=True}"
-                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                  ItemsSource="{Binding IndexedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, IsAsync=True}"
+                                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  behaviors:DragAndDropFilesBehavior.IsEnabled="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="indexing:IndexedItem">
                                     <StackPanel Orientation="Horizontal">

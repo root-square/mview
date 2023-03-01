@@ -24,7 +24,23 @@ namespace MView.ViewModels
 {
     public partial class MainViewModel
     {
-        public BindableCollection<IndexedItem> IndexedItems { get; set; } = new BindableCollection<IndexedItem>();
+        private BindableCollection<IndexedItem> _indexedItems = new BindableCollection<IndexedItem>();
+
+        public BindableCollection<IndexedItem> IndexedItems
+        {
+            get => _indexedItems;
+            set
+            {
+                Set(ref _indexedItems, value);
+
+                NotifyOfPropertyChange("IsEmpty");
+            }
+        }
+
+        public bool IsEmpty
+        {
+            get => _indexedItems.Count == 0 ? true : false;
+        }
 
         private BindableCollection<IndexedItem> _selectedItems = new BindableCollection<IndexedItem>();
 
@@ -50,51 +66,68 @@ namespace MView.ViewModels
             }
         }
 
-        public void Open(string[] pathsToIndex, bool indexAllFiles = false)
+        public async Task OpenAsync(string[] pathsToIndex, bool indexAllFiles = false)
         {
-            List<IndexedItem> itemList = new List<IndexedItem>();
+            Exception? exception = null;
 
-            foreach (string path in pathsToIndex)
+            var task = Task.Run(() =>
             {
-                if (IndexingManager.IsDirectory(path))
+                List<IndexedItem> itemList = new List<IndexedItem>();
+
+                foreach (string path in pathsToIndex)
                 {
-                    if (!Directory.Exists(path))
+                    if (IndexingManager.IsDirectory(path))
                     {
-                        IndexedItems.Clear();
-                        throw new DirectoryNotFoundException("The directory does not found.");
-                    }
+                        if (!Directory.Exists(path))
+                        {
+                            IndexedItems.Clear();
+                            exception = new DirectoryNotFoundException("The directory does not found.");
+                            return;
+                        }
 
-                    if (Path.GetPathRoot(path) == Path.GetFullPath(path))
+                        if (Path.GetPathRoot(path) == Path.GetFullPath(path))
+                        {
+                            IndexedItems.Clear();
+                            exception = new InvalidOperationException("The root directory cannot be loaded.");
+                            return;
+                        }
+
+                        string rootDirectory = pathsToIndex.Length == 1 ? path : Path.GetDirectoryName(path)!;
+
+                        itemList.AddRange(IndexingManager.GetFiles(new DirectoryInfo(path), rootDirectory, indexAllFiles ? null : CryptographyProvider.EXTENSIONS.ToList()));
+                    }
+                    else
                     {
-                        IndexedItems.Clear();
-                        throw new InvalidOperationException("The root directory cannot be loaded.");
+                        if (!File.Exists(path))
+                        {
+                            IndexedItems.Clear();
+                            exception = new FileNotFoundException("The file does not found.");
+                            return;
+                        }
+
+                        IndexedItem? item = IndexingManager.GetFile(new FileInfo(path), Path.GetDirectoryName(path)!, indexAllFiles ? null : CryptographyProvider.EXTENSIONS.ToList());
+
+                        if (item != null)
+                        {
+                            itemList.Add(item);
+                        }
                     }
-
-                    string rootDirectory = pathsToIndex.Length == 1 ? path : Path.GetDirectoryName(path)!;
-
-                    itemList.AddRange(IndexingManager.GetFiles(new DirectoryInfo(path), rootDirectory, indexAllFiles ? null : CryptographyProvider.EXTENSIONS.ToList()));
                 }
-                else
-                {
-                    if (!File.Exists(path))
-                    {
-                        IndexedItems.Clear();
-                        throw new FileNotFoundException("The file does not found.");
-                    }
 
-                    IndexedItem? item = IndexingManager.GetFile(new FileInfo(path), Path.GetDirectoryName(path)!, indexAllFiles ? null : CryptographyProvider.EXTENSIONS.ToList());
+                itemList = itemList.Distinct().ToList();
 
-                    if (item != null)
-                    {
-                        itemList.Add(item);
-                    }
-                }
+                IndexedItems.Clear();
+                IndexedItems.AddRange(itemList);
+
+                NotifyOfPropertyChange("IsEmpty");
+            });
+
+            await task.ConfigureAwait(false);
+
+            if (exception != null)
+            {
+                throw exception;
             }
-
-            itemList = itemList.Distinct().ToList();
-
-            IndexedItems.Clear();
-            IndexedItems.AddRange(itemList);
         }
 
         public void OpenFiles()
@@ -145,6 +178,8 @@ namespace MView.ViewModels
                 }
             }
 
+            CancellationTokenSource cancellationtokenSource = new CancellationTokenSource();
+
             using (ProgressDialog progressDialog = new ProgressDialog())
             {
                 progressDialog.WindowTitle = "MView";
@@ -158,16 +193,17 @@ namespace MView.ViewModels
                 {
                     try
                     {
-                        Open(openFileDialog.FileNames, indexAllFiles);
+                        await OpenAsync(openFileDialog.FileNames, indexAllFiles);
                     }
                     catch (FileNotFoundException)
                     {
-                        e.Cancel = true;
+                        cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_FILE_NOT_FOUND"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 };
 
-                progressDialog.Show();
+                progressDialog.Show(cancellationtokenSource.Token);
             }
         }
 
@@ -234,16 +270,18 @@ namespace MView.ViewModels
                 {
                     try
                     {
-                        Open(folderBrowserDialog.SelectedPaths, indexAllFiles);
+                        await OpenAsync(folderBrowserDialog.SelectedPaths, indexAllFiles);
                     }
                     catch (DirectoryNotFoundException)
                     {
                         cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_DIR_NOT_FOUND"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     catch (InvalidOperationException)
                     {
                         cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_ROOT_DIR_SELECTED"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 };
@@ -285,6 +323,8 @@ namespace MView.ViewModels
                 }
             }
 
+            CancellationTokenSource cancellationtokenSource = new CancellationTokenSource();
+
             using (ProgressDialog progressDialog = new ProgressDialog())
             {
                 progressDialog.WindowTitle = "MView";
@@ -298,37 +338,42 @@ namespace MView.ViewModels
                 {
                     try
                     {
-                        Open(files, indexAllFiles);
+                        await OpenAsync(files, indexAllFiles);
                     }
                     catch (FileNotFoundException)
                     {
-                        e.Cancel = true;
+                        cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_FILE_NOT_FOUND"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     catch (DirectoryNotFoundException)
                     {
-                        e.Cancel = true;
+                        cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_DIR_NOT_FOUND"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     catch (InvalidOperationException)
                     {
-                        e.Cancel = true;
+                        cancellationtokenSource.Cancel();
+
                         MessageBox.Show(LocalizationHelper.GetText("EXPLORER_ALERT_ROOT_DIR_SELECTED"), "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 };
 
-                progressDialog.Show();
+                progressDialog.Show(cancellationtokenSource.Token);
             }
         }
 
         public async void SelectAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 foreach (var item in SelectedItems)
                 {
                     item.IsSelected = true;
                 }
+
+                NotifyOfPropertyChange("IndexedItems");
             });
 
             await task.ConfigureAwait(false);
@@ -336,12 +381,14 @@ namespace MView.ViewModels
 
         public async void SelectAllAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 foreach (var item in IndexedItems)
                 {
                     item.IsSelected = true;
                 }
+
+                NotifyOfPropertyChange("IndexedItems");
             });
 
             await task.ConfigureAwait(false);
@@ -349,12 +396,14 @@ namespace MView.ViewModels
 
         public async void DeselectAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 foreach (var item in SelectedItems)
                 {
                     item.IsSelected = false;
                 }
+
+                NotifyOfPropertyChange("IndexedItems");
             });
 
             await task.ConfigureAwait(false);
@@ -362,12 +411,14 @@ namespace MView.ViewModels
 
         public async void DeselectAllAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 foreach (var item in IndexedItems)
                 {
-                    item.IsSelected = true;
+                    item.IsSelected = false;
                 }
+
+                NotifyOfPropertyChange("IndexedItems");
             });
 
             await task.ConfigureAwait(false);
@@ -375,12 +426,14 @@ namespace MView.ViewModels
 
         public async void ReverseSelectionAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 foreach (var item in IndexedItems)
                 {
                     item.IsSelected = !item.IsSelected;
                 }
+
+                NotifyOfPropertyChange("IndexedItems");
             });
 
             await task.ConfigureAwait(false);
@@ -388,7 +441,7 @@ namespace MView.ViewModels
 
         public async void DeleteAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 List<IndexedItem> targetItems = SelectedItems.ToList();
 
@@ -406,6 +459,9 @@ namespace MView.ViewModels
                     IndexedItems.Remove(item);
                 }
 
+                NotifyOfPropertyChange("IndexedItems");
+                NotifyOfPropertyChange("IsEmpty");
+
                 if (isNeedRefresh)
                 {
                     RefreshAsync().ConfigureAwait(false);
@@ -417,11 +473,14 @@ namespace MView.ViewModels
 
         public async void DeleteAllAsync()
         {
-            var task = Task.Factory.StartNew(() =>
+            var task = Task.Run(() =>
             {
                 SelectedItem = null;
                 SelectedItems.Clear();
                 IndexedItems.Clear();
+
+                NotifyOfPropertyChange("IndexedItems");
+                NotifyOfPropertyChange("IsEmpty");
 
                 RefreshAsync().ConfigureAwait(false);
             });
