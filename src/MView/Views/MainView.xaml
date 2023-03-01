@@ -66,6 +66,12 @@
                     <MenuItem Header="{DynamicResource MENU_LIST_DELETE_ALL}" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
                 </MenuItem>
 
+                <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_TOOLS}">
+                    <MenuItem Header="{DynamicResource MENU_TOOLS_ESTIMATE_KEY}" Icon="{materialDesign:PackIcon Kind=CalculatorVariantOutline}" caliburn:Message.Attach="Delete()"/>
+                    <Separator />
+                    <MenuItem Header="{DynamicResource MENU_TOOLS_RESTORE}" Icon="{materialDesign:PackIcon Kind=FileRestoreOutline}" caliburn:Message.Attach="Delete()"/>
+                </MenuItem>
+
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_SETTINGS}">
                     <MenuItem Header="{DynamicResource MENU_SETTINGS_USE_DARK_THEME}" IsCheckable="True" IsChecked="{Binding Settings.UseDarkTheme}" />
                     <Separator />

@@ -28,6 +28,10 @@
     <system:String x:Key="MENU_LIST_DELETE">삭제</system:String>
     <system:String x:Key="MENU_LIST_DELETE_ALL">모두 삭제</system:String>
 
+    <system:String x:Key="MENU_TOOLS">도구</system:String>
+    <system:String x:Key="MENU_TOOLS_ESTIMATE_KEY">암호화 키 추정</system:String>
+    <system:String x:Key="MENU_TOOLS_RESTORE">파일 복구</system:String>
+
     <system:String x:Key="MENU_SETTINGS">설정</system:String>
     <system:String x:Key="MENU_SETTINGS_USE_DARK_THEME">어두운 테마 사용</system:String>
     <system:String x:Key="MENU_SETTINGS_USE_ADAPTIVE_BGC">적응형 배경색 사용</system:String>

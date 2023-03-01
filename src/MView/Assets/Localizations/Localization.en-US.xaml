@@ -28,6 +28,10 @@
     <system:String x:Key="MENU_LIST_DELETE">Delete</system:String>
     <system:String x:Key="MENU_LIST_DELETE_ALL">Delete All</system:String>
 
+    <system:String x:Key="MENU_TOOLS">Tools</system:String>
+    <system:String x:Key="MENU_TOOLS_ESTIMATE_KEY">Estimate Key</system:String>
+    <system:String x:Key="MENU_TOOLS_RESTORE">Restore Files</system:String>
+    
     <system:String x:Key="MENU_SETTINGS">Settings</system:String>
     <system:String x:Key="MENU_SETTINGS_USE_DARK_THEME">Use Dark Theme</system:String>
     <system:String x:Key="MENU_SETTINGS_USE_ADAPTIVE_BGC">Use Adaptive Background Color</system:String>
