@@ -49,21 +49,21 @@
                         <MenuItem Header="{DynamicResource MENU_FILE_OPEN_FILES}" Icon="{materialDesign:PackIcon Kind=FileOutline}" caliburn:Message.Attach="OpenFiles()"/>
                         <MenuItem Header="{DynamicResource MENU_FILE_OPEN_FOLDERS}" Icon="{materialDesign:PackIcon Kind=FolderOutline}" caliburn:Message.Attach="OpenFolders()"/>
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource MENU_FILE_CLEAR}" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="ClearFiles()"/>
+                    <MenuItem Header="{DynamicResource MENU_FILE_CLEAR}" Icon="{materialDesign:PackIcon Kind=DeleteOutline}" caliburn:Message.Attach="DeleteAllAsync()"/>
                     <Separator />
                     <MenuItem Header="{DynamicResource MENU_FILE_EXIT}" InputGestureText="Alt+F4" Icon="{materialDesign:PackIcon Kind=ExitToApp}" caliburn:Message.Attach="Exit()"/>
                 </MenuItem>
 
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_LIST}">
-                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT}" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="Select()"/>
-                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAll()"/>
-                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="Deselect()"/>
-                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAll()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT}" Icon="{materialDesign:PackIcon Kind=Select}" caliburn:Message.Attach="SelectAsync()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_SELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectAll}" caliburn:Message.Attach="SelectAllAsync()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAsync()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DESELECT_ALL}" Icon="{materialDesign:PackIcon Kind=SelectOff}" caliburn:Message.Attach="DeselectAllAsync()"/>
                     <Separator />
-                    <MenuItem Header="{DynamicResource MENU_LIST_REVERSE_SELECTION}" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="Reverse()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_REVERSE_SELECTION}" Icon="{materialDesign:PackIcon Kind=Exchange}" caliburn:Message.Attach="ReverseSelectionAsync()"/>
                     <Separator />
-                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE}" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="Delete()"/>
-                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE_ALL}" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAll()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE}" Icon="{materialDesign:PackIcon Kind=SelectRemove}" caliburn:Message.Attach="DeleteAsync()"/>
+                    <MenuItem Header="{DynamicResource MENU_LIST_DELETE_ALL}" Icon="{materialDesign:PackIcon Kind=Remove}" caliburn:Message.Attach="DeleteAllAsync()"/>
                 </MenuItem>
 
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_TOOLS}">
@@ -82,10 +82,10 @@
                 </MenuItem>
 
                 <MenuItem WindowChrome.IsHitTestVisibleInChrome="True" Header="{DynamicResource MENU_HELP}">
-                    <MenuItem Header="{DynamicResource MENU_HELP_GITHUB_REPO}" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="OpenInformation()"/>
-                    <MenuItem Header="{DynamicResource MENU_HELP_GUIDE}" Icon="{materialDesign:PackIcon Kind=BookOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                    <MenuItem Header="{DynamicResource MENU_HELP_GITHUB_REPO}" Icon="{materialDesign:PackIcon Kind=GitHub}" caliburn:Message.Attach="LaunchGitHub()"/>
+                    <MenuItem Header="{DynamicResource MENU_HELP_GUIDE}" Icon="{materialDesign:PackIcon Kind=BookOutline}" caliburn:Message.Attach="LaunchGuide()"/>
                     <Separator />
-                    <MenuItem Header="{DynamicResource MENU_HELP_INFO}" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="OpenInformation()"/>
+                    <MenuItem Header="{DynamicResource MENU_HELP_INFO}" Icon="{materialDesign:PackIcon Kind=InformationOutline}" caliburn:Message.Attach="LaunchInformation()"/>
                 </MenuItem>
             </Menu>
         </Grid>
@@ -136,27 +136,32 @@
                     <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 1 0 0">
                         <StackPanel Orientation="Horizontal" Margin="6 0 6 0" HorizontalAlignment="Center">
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24"
-                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_ADD_FILE}">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_OPEN}"
+                                    caliburn:Message.Attach="OpenFiles()">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Add" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REMOVE_ALL}">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REMOVE}"
+                                    caliburn:Message.Attach="DeleteAsync()">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Remove" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_SELECT_ALL}">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_SELECT_ALL}"
+                                    caliburn:Message.Attach="SelectAllAsync()">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectAll" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_DESELECT_ALL}">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_DESELECT_ALL}"
+                                    caliburn:Message.Attach="DeselectAllAsync()">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="SelectOff" />
                             </Button>
 
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24" Margin="4 0 0 0"
-                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REVERSE}">
+                                    ToolTip="{DynamicResource EXPLORER_QUICK_BUTTON_REVERSE}"
+                                    caliburn:Message.Attach="ReverseSelectionAsync()">
                                 <materialDesign:PackIcon Width="16" Height="16" Opacity=".80" Kind="Exchange" />
                             </Button>
                         </StackPanel>

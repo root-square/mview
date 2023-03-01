@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
+using MView.Utilities;
 using MView.Utilities.Text;
 using Serilog;
 using Serilog.Events;
@@ -82,9 +83,9 @@ namespace MView
 
         public static void ReadSettings()
         {
-            if (File.Exists(Settings.SettingsPath))
+            if (File.Exists(VariableBuilder.GetSettingsPath()))
             {
-                string json = TextManager.ReadTextFile(Settings.SettingsPath, Encoding.UTF8);
+                string json = TextManager.ReadTextFile(VariableBuilder.GetSettingsPath(), Encoding.UTF8);
 
                 using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
                 {
@@ -109,7 +110,7 @@ namespace MView
 
                 // Write a JSON string into the settings file.
                 string json = Encoding.UTF8.GetString(stream.ToArray());
-                TextManager.WriteTextFile(Settings.SettingsPath, json, Encoding.UTF8);
+                TextManager.WriteTextFile(VariableBuilder.GetSettingsPath(), json, Encoding.UTF8);
             }
         }
 

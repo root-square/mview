@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MView.ViewModels
 {
-    public class ControllerViewModel : PropertyChangedBase
+    public partial class MainViewModel
     {
     }
 }

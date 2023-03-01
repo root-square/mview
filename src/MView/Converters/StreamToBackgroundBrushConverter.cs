@@ -19,7 +19,7 @@ namespace MView.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!IoC.Get<Settings>().UseBackFiller)
+            if (!IoC.Get<Settings>().UseAdaptiveBackgroundColor)
             {
                 return new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
             }

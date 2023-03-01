@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MView.Behaviors;
 using MView.Utilities;
 using MView.Utilities.Indexing;
 using MView.Utilities.Text;
@@ -20,32 +21,8 @@ using System.Windows.Media;
 
 namespace MView.ViewModels
 {
-    public class MainViewModel : Screen
+    public partial class MainViewModel : Screen, IFilesDropped
     {
-        private ExplorerViewModel _explorer = IoC.Get<ExplorerViewModel>();
-
-        public ExplorerViewModel Explorer
-        {
-            get => _explorer;
-            set => Set(ref _explorer, value);
-        }
-
-        private ViewerViewModel _viewer = IoC.Get<ViewerViewModel>();
-
-        public ViewerViewModel Viewer
-        {
-            get => _viewer;
-            set => Set(ref _viewer, value);
-        }
-
-        private ControllerViewModel _controller = IoC.Get<ControllerViewModel>();
-
-        public ControllerViewModel Controller
-        {
-            get => _controller;
-            set => Set(ref _controller, value);
-        }
-
         private Settings _settings = IoC.Get<Settings>();
 
         public Settings Settings
@@ -61,12 +38,12 @@ namespace MView.ViewModels
 
         public void LaunchGitHub()
         {
-            Process.Start("https://github.com/handbros/mview");
+            UrlHelper.Open("https://github.com/handbros/mview");
         }
 
         public void LaunchGuide()
         {
-            Process.Start("https://github.com/handbros/mview/blob/main/docs/GUIDE.md");
+            UrlHelper.Open("https://github.com/handbros/mview/blob/main/docs/GUIDE.md");
         }
 
         public async void LaunchInformation()

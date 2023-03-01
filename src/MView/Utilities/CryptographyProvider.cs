@@ -603,11 +603,9 @@ namespace MView.Utilities
                 case ".rpgmvw":
                 case ".wav_":
                     return await RestoreInternalAsync(filePath);
-                    break;
                 case ".rpgmvo":
                 case ".ogg_":
                     return await RestoreOggInternalAsync(filePath);
-                    break;
                 default:
                     throw new NotSupportedException("An incompatible file is inputted.");
             }

@@ -32,9 +32,6 @@ namespace MView
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<Settings>()
                 .Singleton<MainViewModel>()
-                .Singleton<ControllerViewModel>()
-                .Singleton<ExplorerViewModel>()
-                .Singleton<ViewerViewModel>()
                 .PerRequest<NoTPickerViewModel>()
                 .PerRequest<InformationViewModel>();
         }

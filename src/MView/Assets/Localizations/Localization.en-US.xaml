@@ -44,22 +44,24 @@
     <system:String x:Key="MENU_HELP_INFO">Information</system:String>
 
     <!--Explorer-->
+    <system:String x:Key="EXPLORER_ALERT_NO_ITEM_SELECTED">Please select at least one file.</system:String>
+    <system:String x:Key="EXPLORER_ALERT_FILE_NOT_FOUND">The file does not found. Please try again.</system:String>
+    <system:String x:Key="EXPLORER_ALERT_DIR_NOT_FOUND">The directory does not found. Please try again.</system:String>
+    <system:String x:Key="EXPLORER_ALERT_ROOT_DIR_SELECTED">The root directory cannot be loaded.</system:String>
+
     <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_TITLE">Please select files.</system:String>
+    <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_FILTER">Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RMMV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RMMZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Source media|*.png;*.ogg;*.m4a;*.wav|All files|*.*</system:String>
     <system:String x:Key="EXPLORER_OPEN_FOLDERS_DIALOG_TITLE">Please select folders.</system:String>
-    
+
     <system:String x:Key="EXPLORER_LOAD_DIALOG_TITLE">Are you sure you want to load all files?</system:String>
     <system:String x:Key="EXPLORER_LOAD_DIALOG_DESC">If you click 'Yes', files with non-recommended extensions will be loaded.</system:String>
     <system:String x:Key="EXPLORER_LOAD_DIALOG_FOOTER">Be aware that errors may occur.</system:String>
 
-    <system:String x:Key="EXPLORER_CLEAR_DIALOG_TITLE">Are you sure you want to clear the current list?</system:String>
-    <system:String x:Key="EXPLORER_CLEAR_DIALOG_DESC">If you click 'Yes', the current file list will be cleared and the selected files will be loaded.</system:String>
-    <system:String x:Key="EXPLORER_CLEAR_DIALOG_FOOTER">Be aware that this action is irreversible.</system:String>
+    <system:String x:Key="EXPLORER_TASK_DIALOG_TITLE">Loading file datas...</system:String>
+    <system:String x:Key="EXPLORER_TASK_DIALOG_DESC">Processing...</system:String>
 
-    <system:String x:Key="EXPLORER_ALERT_NO_ITEM_SELECTED">Please select at least one file.</system:String>
-    <system:String x:Key="EXPLORER_ALERT_ROOT_DIR_SELECTED">The root directory cannot be loaded.</system:String>
-
-    <system:String x:Key="EXPLORER_QUICK_BUTTON_ADD_FILE">Open Files</system:String>
-    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE_ALL">Remove All</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_OPEN">Open Files</system:String>
+    <system:String x:Key="EXPLORER_QUICK_BUTTON_REMOVE">Remove</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_SELECT_ALL">Select All</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_DESELECT_ALL">Deselect All</system:String>
     <system:String x:Key="EXPLORER_QUICK_BUTTON_REVERSE_SELECTION">Reverse Selection</system:String>

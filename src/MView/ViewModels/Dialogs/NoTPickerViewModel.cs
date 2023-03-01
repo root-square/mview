@@ -33,13 +33,6 @@ namespace MView.ViewModels.Dialogs
                 return;
             }
 
-            if (!ValidationHelper.IsValid(window))
-            {
-                MessageBox.Show("Invalid value entered.", "MView", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                Log.Warning("Invalid value entered.");
-                return;
-            }
-
             await TryCloseAsync(true);
         }
     }

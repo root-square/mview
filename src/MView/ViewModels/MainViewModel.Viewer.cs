@@ -7,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace MView.ViewModels
 {
-    public class ViewerViewModel : PropertyChangedBase
+    public partial class MainViewModel
     {
-        private ExplorerViewModel Explorer { get; } = IoC.Get<ExplorerViewModel>();
+
+        public async Task RefreshAsync()
+        {
+
+        }
+
+        public async Task ClearAsync()
+        {
+
+        }
     }
 }
