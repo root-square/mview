@@ -11,42 +11,15 @@
         Style="{StaticResource PickUiFixedDialogWindow}"
         Foreground="{DynamicResource PickUiForeground}"
         WindowStartupLocation="CenterScreen"
-        Title="Information" Height="550" Width="800">
+        ShowInTaskbar="False"
+        Title=" " Height="300" Width="500">
     <Grid>
-        <Border BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0 1 0 0">
-            <TabControl Style="{StaticResource MaterialDesignFilledTabControl}" TabStripPlacement="Left"
-                    materialDesign:ColorZoneAssist.Mode="Standard" materialDesign:ColorZoneAssist.Background="{DynamicResource PickUiSecondBackground}"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                <TabItem Header="Application">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20 20 20 10">
-                            <Image Width="64" Height="64" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}" Margin="4 0 0 0" VerticalAlignment="Center" Text="MView" />
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="20 0 20 20">
-                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" HorizontalAlignment="Left" Text="A RPG Maker MV/MZ Resource Viewer" />
-                            <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 4 0 0" HorizontalAlignment="Left" Text="Copyright (c) 2020 June(aka handbros) all rights reserved." />
-                        </StackPanel>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="Opensources">
-                    <FlowDocumentScrollViewer x:Name="OssViewer">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Loaded">
-                                <caliburn:ActionMessage MethodName="OnViewerLoaded">
-                                    <caliburn:Parameter Value="{Binding ElementName=OssViewer}"/>
-                                </caliburn:ActionMessage>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="Unloaded">
-                                <caliburn:ActionMessage MethodName="OnViewerUnloaded">
-                                    <caliburn:Parameter Value="{Binding ElementName=OssViewer}"/>
-                                </caliburn:ActionMessage>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </FlowDocumentScrollViewer>
-                </TabItem>
-            </TabControl>
-        </Border>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 60">
+            <Image Width="32" Height="32" VerticalAlignment="Center" Source="/Assets/mview_favicon_64.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" Foreground="{DynamicResource PickUiForeground}" Margin="0 2 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="MView" />
+            <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Foreground="{DynamicResource PickUiForeground}" Margin="0 2 0 0" Padding="0" HorizontalAlignment="Center" Text="{Binding VersionString}" />
+            <TextBlock Style="{StaticResource MaterialDesignOverlineTextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 10 0 0" Padding="0" HorizontalAlignment="Center" Opacity=".50" Text="A RPG Maker MV/MZ Resource Editor" />
+            <TextBlock Style="{StaticResource MaterialDesignOverlineTextBlock}" Foreground="{DynamicResource PickUiForegroundUltraLight}" Margin="0 2 0 0" Padding="0" HorizontalAlignment="Center" Opacity=".50" Text="Copyright (c) 2023 MView Contributors all rights reserved." />
+        </StackPanel>
     </Grid>
 </Window>

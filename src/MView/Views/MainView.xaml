@@ -108,10 +108,10 @@
                     <!--Explorer-->
                     <Grid Grid.Row="0" Background="{DynamicResource PickUiSecondBackground}">
                         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Foreground="{DynamicResource PickUiDivider}"
+                            <materialDesign:PackIcon Foreground="{DynamicResource PickUiForegroundLight}"
                                                      HorizontalAlignment="Center" Width="24" Height="24" Kind="CursorDefaultClickOutline"
                                                      Visibility="{Binding IsEmpty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="{DynamicResource PickUiDivider}"
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Foreground="{DynamicResource PickUiForegroundLight}"
                                        Margin="0 4 0 0"  HorizontalAlignment="Center" FontFamily="Segoe UI" FontSize="12" Text="{DynamicResource EXPLORER_DRAG_AND_DROP}"
                                        Visibility="{Binding IsEmpty, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </StackPanel>

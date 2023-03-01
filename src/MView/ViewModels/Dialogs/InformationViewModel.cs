@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MView.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +12,6 @@ namespace MView.ViewModels.Dialogs
 {
     public class InformationViewModel : Screen
     {
-        public string VersionInformation { get; set; }
-
-        public InformationViewModel()
-        {
-            string text = string.Empty;
-            text += $"Application Version : 2.1\r\n";
-
-            VersionInformation = text;
-        }
-
-        public void OnViewerLoaded(FlowDocumentScrollViewer viewer)
-        {
-            if (viewer != null)
-            {
-                viewer.Document = (FlowDocument)App.Current.Resources["OpensourcesDocument"];
-            }
-        }
-
-        public void OnViewerUnloaded(FlowDocumentScrollViewer viewer)
-        {
-            if (viewer != null)
-            {
-                viewer.Document = null;
-            }
-        }
+        public string VersionString { get; set; } = $"{VariableBuilder.GetProductVersion()}({VariableBuilder.GetFileVersion() ?? "dev"})";
     }
 }

@@ -14,12 +14,14 @@ namespace MView.Utilities
 
         internal static string GetProductVersion()
         {
-            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
+            var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            return attribute != null ? attribute!.InformationalVersion : "dev";
         }
 
         internal static string GetFileVersion()
         {
-            return Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyVersionAttribute>()!.Version;
+            var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyVersionAttribute>();
+            return attribute != null ? attribute!.Version : "dev";
         }
 
         internal static string GetApplicationLocation()
