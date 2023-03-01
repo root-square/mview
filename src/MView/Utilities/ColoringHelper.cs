@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace MView.Utilities
 {
-    public static class ColoringHelper
+    internal static class ColoringHelper
     {
-        public static void GetAverageColor(Stream stream, out byte red, out byte green, out byte blue)
+        internal static void GetAverageColor(Stream stream, out byte red, out byte green, out byte blue)
         {
             Bitmap bm = (Bitmap)Image.FromStream(stream);
 
@@ -53,7 +53,7 @@ namespace MView.Utilities
             blue = (byte)(totals[2] / (width * height));
         }
 
-        public static void RGBToHSV(int red, int green, int blue, out double hue, out double saturation, out double value)
+        internal static void RGBToHSV(int red, int green, int blue, out double hue, out double saturation, out double value)
         {
             int max = Math.Max(red, Math.Max(green, blue));
             int min = Math.Min(red, Math.Min(green, blue));

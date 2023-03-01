@@ -9,14 +9,21 @@ using System.Threading.Tasks;
 
 namespace MView.Utilities.Indexing
 {
-    public static class IndexingManager
+    internal static class IndexingManager
     {
-        /// <summary>
-        /// Index a file.
-        /// </summary>
-        /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
-        /// <returns>Indexed file item</returns>
-        public static IndexedItem? GetFile(FileInfo file, string rootDirectory, List<string>? extensions = null)
+        internal static bool IsDirectory(string path)
+        {
+            FileAttributes attrributes = File.GetAttributes(path);
+
+            return (attrributes & FileAttributes.Directory) == FileAttributes.Directory ? true : false;
+        }
+
+        internal static bool IsExists(string path)
+        {
+            return File.Exists(path) || Directory.Exists(path);
+        }
+
+        internal static IndexedItem? GetFile(FileInfo file, string rootDirectory, List<string>? extensions = null)
         {
             if (extensions == null)
             {
@@ -42,13 +49,7 @@ namespace MView.Utilities.Indexing
             return item;
         }
 
-        /// <summary>
-        /// Index all files that exist within the directory.
-        /// </summary>
-        /// <param name="directory">Directory to index.</param>
-        /// <param name="extensions">The extensions of the files to index. If the value is null, index all files.</param>
-        /// <returns>Indexed file list</returns>
-        public static List<IndexedItem> GetFiles(DirectoryInfo directory, string rootDirectory, List<string>? extensions = null)
+        internal static List<IndexedItem> GetFiles(DirectoryInfo directory, string rootDirectory, List<string>? extensions = null)
         {
             List<IndexedItem> items = new List<IndexedItem>();
 
