@@ -99,6 +99,12 @@ namespace MView
         {
             var settings = IoC.Get<Settings>();
 
+            if (settings.RememberInputs == false)
+            {
+                settings.EncryptionKey = string.Empty;
+                settings.OutputPath = string.Empty;
+            }
+
             using (MemoryStream stream = new MemoryStream())
             {
                 // Serialize the settings.

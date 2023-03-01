@@ -50,7 +50,7 @@
     <system:String x:Key="EXPLORER_ALERT_ROOT_DIR_SELECTED">The root directory cannot be loaded.</system:String>
 
     <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_TITLE">Please select files.</system:String>
-    <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_FILTER">Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RMMV resources|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RMMZ resources|*.png_;*.ogg_;*.m4a_;*.wav_|Source media|*.png;*.ogg;*.m4a;*.wav|All files|*.*</system:String>
+    <system:String x:Key="EXPLORER_OPEN_FILES_DIALOG_FILTER">Supported Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw;*.png_;*.ogg_;*.m4a_;*.wav_;*.png;*.ogg;*.m4a;*.wav|RMMV Resource Files|*.rpgmvp;*.rpgmvo;*.rpgmvm;*.rpgmvw|RMMZ Resource Files|*.png_;*.ogg_;*.m4a_;*.wav_|Media Files|*.png;*.ogg;*.m4a;*.wav|All files|*.*</system:String>
     <system:String x:Key="EXPLORER_OPEN_FOLDERS_DIALOG_TITLE">Please select folders.</system:String>
 
     <system:String x:Key="EXPLORER_LOAD_DIALOG_TITLE">Are you sure you want to load all files?</system:String>
@@ -74,6 +74,13 @@
     <system:String x:Key="VIEWER_METADATA">METADATA</system:String>
 
     <!--Controller-->
+    <system:String x:Key="CONTROLLER_ALERT_ENCKEY_NOT_FOUND">The encryption key does not found.</system:String>
+    <system:String x:Key="CONTROLLER_ALERT_CANNOT_OPEN_SYSTEM_JSON">Unable to load the file. It seems to be an invalid JSON file.</system:String>
+    
+    <system:String x:Key="CONTROLLER_EXPLORE_ENCKEY_DIALOG_TITLE">Please select a system.json file</system:String>
+    <system:String x:Key="CONTROLLER_EXPLORE_ENCKEY_DIALOG_FILTER">RMMV/RMMZ System Data File|system.json</system:String>
+    <system:String x:Key="CONTROLLER_EXPLORE_OUTPATH_DIALOG_TITLE">Please select a folder.</system:String>
+
     <system:String x:Key="CONTROLLER_KEY">Key</system:String>
     <system:String x:Key="CONTROLLER_OUTPUT_PATH">Output Path</system:String>
     <system:String x:Key="CONTROLLER_TYPE">TYPE</system:String>

@@ -141,7 +141,7 @@
                         </ListView>
                     </Grid>
 
-                    <!--Explorer Controller-->
+                    <!--Explorer Quick Buttons-->
                     <Border Grid.Row="1" BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 1 0 0">
                         <StackPanel Orientation="Horizontal" Margin="6 0 6 0" HorizontalAlignment="Center">
                             <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="24" Height="24"
@@ -242,8 +242,8 @@
                 </TabControl>
             </Grid>
         </Border>
-        
-        <!--Control Panel-->
+
+        <!--Controller-->
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -263,7 +263,8 @@
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
                              materialDesign:HintAssist.Hint="{DynamicResource CONTROLLER_KEY}"
-                             materialDesign:TextFieldAssist.HasClearButton="True">
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             Text="{Binding Settings.EncryptionKey, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
 
                     <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30"
@@ -280,26 +281,34 @@
                              Background="Transparent" BorderBrush="{DynamicResource PickUiDivider}"
                              materialDesign:HintAssist.Foreground="{DynamicResource PickUiForegroundLight}"
                              materialDesign:HintAssist.Hint="{DynamicResource CONTROLLER_OUTPUT_PATH}"
-                             materialDesign:TextFieldAssist.HasClearButton="True">
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             Text="{Binding Settings.OutputPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
 
                     <Button Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Margin="6 0 0 0" Width="50" Height="30"
-                            Content="{DynamicResource COMMON_EXPLORE}" caliburn:Message.Attach="ExploreEncryptionKey()"/>
+                            Content="{DynamicResource COMMON_EXPLORE}" caliburn:Message.Attach="ExploreOutputPath()"/>
                 </Grid>
 
                 <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
                     <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="{DynamicResource CONTROLLER_TYPE}" />
-                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMV}" />
-                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMZ}" />
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMV}"
+                                 IsChecked="{Binding Settings.UseRMMV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <RadioButton Style="{StaticResource MaterialDesignDarkRadioButton}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_TYPE_RMMZ}"
+                                 IsChecked="{Binding Settings.UseRMMV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanConverter}}"/>
                 </StackPanel>
 
                 <WrapPanel Margin="0 4 0 0">
                     <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}" Margin="0 0 8 0" FontWeight="Bold" Text="{DynamicResource CONTROLLER_OPTIONS}" />
-                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_REMINPUT}" />
-                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_TOSOURCE}" />
-                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_ENCALL}" />
-                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_COPYUNENC}" />
-                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_INFEREXT}" />
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_REMINPUT}"
+                              IsChecked="{Binding Settings.RememberInputs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_TOSOURCE}"
+                              IsChecked="{Binding Settings.OutputToSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_ENCALL}"
+                              IsChecked="{Binding Settings.EncryptAllFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_COPYUNENC}"
+                              IsChecked="{Binding Settings.CopyUnencryptedFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_INFEREXT}"
+                              IsChecked="{Binding Settings.InferExtension, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </WrapPanel>
             </StackPanel>
 
