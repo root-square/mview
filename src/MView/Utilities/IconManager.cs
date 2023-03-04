@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -280,7 +281,7 @@ namespace MView.Utilities
         internal const uint FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
         internal const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
 
-        [DllImport("Shell32.dll")]
+        [DllImport("Shell32.dll", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern IntPtr SHGetFileInfo(
                       string pszPath,
                       uint dwFileAttributes,
