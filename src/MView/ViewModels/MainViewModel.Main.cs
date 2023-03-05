@@ -45,12 +45,12 @@ namespace MView.ViewModels
 
         public void LaunchGitHub()
         {
-            UrlHelper.Open("https://github.com/handbros/mview");
+            UrlHelper.Open("https://github.com/aurumest/mview");
         }
 
         public void LaunchGuide()
         {
-            UrlHelper.Open("https://github.com/handbros/mview/blob/main/docs/GUIDE.md");
+            UrlHelper.Open("https://github.com/aurumest/mview/blob/main/docs/GUIDE.md");
         }
 
         public async void LaunchInformation()
