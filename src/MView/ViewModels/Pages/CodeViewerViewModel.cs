@@ -70,7 +70,7 @@ namespace MView.ViewModels.Pages
             await task;
         }
 
-        public async Task SetDocumentAsync(IndexedItem? item)
+        public async Task SetContentAsync(IndexedItem? item)
         {
             // Note: If the file is too large, it will not be loaded.
             var lineCount = File.ReadLines(item?.FullPath!).Count();

@@ -22,22 +22,6 @@ namespace MView.ViewModels
     {
         private INavigationService? _viewerNavigationService;
 
-        private MemoryStream _sourceFileStream = new MemoryStream();
-
-        public MemoryStream SourceFileStream
-        {
-            get => _sourceFileStream;
-            set => Set(ref _sourceFileStream, value);
-        }
-
-        private MemoryStream _restoredFileStream = new MemoryStream();
-
-        public MemoryStream RestoredFileStream
-        {
-            get => _restoredFileStream;
-            set => Set(ref _restoredFileStream, value);
-        }
-
         public void RegisterFrame(Frame frame)
         {
             _viewerNavigationService = new FrameAdapter(frame);
@@ -85,7 +69,7 @@ namespace MView.ViewModels
             {
                 try
                 {
-                    await IoC.Get<CodeViewerViewModel>().SetDocumentAsync(_selectedItem);
+                    await IoC.Get<CodeViewerViewModel>().SetContentAsync(_selectedItem);
                     _viewerNavigationService?.NavigateToViewModel(typeof(CodeViewerViewModel));
                 }
                 catch (Exception ex)
@@ -108,7 +92,7 @@ namespace MView.ViewModels
             {
                 try
                 {
-                    IoC.Get<ImageViewerViewModel>().Set(_selectedItem);
+                    await IoC.Get<ImageViewerViewModel>().SetContentAsync(_selectedItem);
                     _viewerNavigationService?.NavigateToViewModel(typeof(ImageViewerViewModel));
                 }
                 catch (Exception ex)
@@ -135,17 +119,11 @@ namespace MView.ViewModels
                         return;
                     }
 
+                    // Check and distribute the file.
                     string extension = Path.GetExtension(_selectedItem.FullPath).ToLower();
 
                     switch (extension)
                     {
-                        case ".jpg":
-                        case ".gif":
-                        case ".png":
-                        case ".rpgmvp":
-                        case ".png_":
-                            await ShowImageViewerAsync();
-                            break;
                         case ".ogg":
                         case ".rpgmvo":
                         case ".ogg_":
@@ -170,26 +148,43 @@ namespace MView.ViewModels
                         case ".json":
                             await ShowCodeViewerAsync();
                             break;
+                        case ".jpg":
+                        case ".gif":
+                        case ".png":
+                        case ".rpgmvp":
+                        case ".png_":
+                            await ShowImageViewerAsync();
+                            break;
                         default:
+                            Log.Warning("This format does not support preview.");
                             await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_PREVIEW_UNSUPPORTED"));
                             break;
                     }
-                }
-                catch (InvalidOperationException ex)
-                {
-                    Log.Warning(ex, "The file is too large to load.");
-                    await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_FILE_IS_TOO_LARGE"));
-                    return;
+
+                    await RefreshMetadataAsync();
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning(ex, "An unknown exception has occurred.");
-                    await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_UNKNOWN_EXCEPTION"));
-                    return;
+                    switch (ex)
+                    {
+                        case InvalidOperationException invalidOpsEx:
+                            Log.Warning(invalidOpsEx, "The file is too large to load.");
+                            await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_FILE_IS_TOO_LARGE"));
+                            break;
+                        default:
+                            Log.Warning(ex, "An unknown exception has occurred.");
+                            await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_UNKNOWN_EXCEPTION"));
+                            break;
+                    }
                 }
             });
 
             await task;
+        }
+
+        public async Task RefreshMetadataAsync()
+        {
+
         }
     }
 }

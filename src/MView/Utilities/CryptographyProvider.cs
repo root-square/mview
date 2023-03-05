@@ -393,7 +393,7 @@ namespace MView.Utilities
         /// <param name="filePath">A absolute or relative path for the source file.</param>
         /// <returns>A memory stream containing the restored file.</returns>
         /// <exception cref="NotSupportedException">An incompatible file is inputted.</exception>
-        private static async Task<Stream> RestoreInternalAsync(string filePath)
+        private static async Task<MemoryStream> RestoreInternalAsync(string filePath)
         {
             MemoryStream outputStream = new MemoryStream();
 
@@ -449,7 +449,7 @@ namespace MView.Utilities
         /// <param name="filePath">A absolute or relative path for the source file.</param>
         /// <returns>A memory stream containing the restored file.</returns>
         /// <exception cref="FileFormatException">Failed to parse the OGG header.</exception>
-        private static async Task<Stream> RestoreOggInternalAsync(string filePath)
+        private static async Task<MemoryStream> RestoreOggInternalAsync(string filePath)
         {
             MemoryStream outputStream = new MemoryStream();
 
@@ -590,7 +590,7 @@ namespace MView.Utilities
             }
         }
 
-        internal static async Task<Stream> RestoreAndGetAsync(string filePath)
+        internal static async Task<MemoryStream> RestoreAndGetAsync(string filePath)
         {
             string extension = Path.GetExtension(filePath).ToLower();
 

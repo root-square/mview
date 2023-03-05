@@ -198,16 +198,12 @@
 
                     <TabItem Header="{DynamicResource VIEWER_HEX}">
                         <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
-                            <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" Foreground="{DynamicResource PickUiForeground}" BorderBrush="{DynamicResource PickUiDivider}" BorderThickness="0"
-                                       Focusable="False" AllowContextMenu="True" ReadOnlyMode="True" StatusBarVisibility="Hidden"
-                                       Stream="{Binding SourceStream, UpdateSourceTrigger=PropertyChanged}">
-                                <hexedit:HexEditor.Resources>
-                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
-                                        <Setter Property="Foreground" Value="{DynamicResource PickUiForeground}"/>
-                                        <Setter Property="Margin" Value="0"/>
-                                    </Style>
-                                </hexedit:HexEditor.Resources>
-                            </hexedit:HexEditor>
+                            <hexedit:HexEditor Background="{DynamicResource PickUiSecondBackground}" BorderThickness="0"
+                                               Foreground="{DynamicResource PickUiForeground}" ForegroundSecondColor="{DynamicResource PickUiForegroundUltraLight}"
+                                               ForegroundContrast="{DynamicResource PickUiContrastForeground}" ForegroundHighLightOffSetHeaderColor="{DynamicResource PickUiAccent}"
+                                               ForegroundOffSetHeaderColor="{DynamicResource PickUiForegroundUltraLight}" SelectionFirstColor="{DynamicResource PickUiAccent}" SelectionSecondColor="{DynamicResource PickUiAccent}"
+                                               Focusable="False" AllowContextMenu="False" ReadOnlyMode="True" StatusBarVisibility="Hidden"
+                                               FileName="{Binding SelectedItem.FullPath, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </TabItem>
 

@@ -9,6 +9,6 @@
       Title="ImageViewerView">
 
     <Grid>
-        
+        <Image Width="100" Height="100" Source="{Binding Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Page>

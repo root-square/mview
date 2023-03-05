@@ -25,6 +25,9 @@
     <Color x:Key="PickUiForegroundColor">#DDFFFFFF</Color>
     <SolidColorBrush x:Key="PickUiForeground" Color="{DynamicResource PickUiForegroundColor}" />
 
+    <Color x:Key="PickUiContrastForegroundColor">#CC000000</Color>
+    <SolidColorBrush x:Key="PickUiContrastForeground" Color="{DynamicResource PickUiContrastForegroundColor}" />
+
     <Color x:Key="PickUiDividerColor">#FF343434</Color>
     <SolidColorBrush x:Key="PickUiDivider" Color="{DynamicResource PickUiDividerColor}" />
     <Color x:Key="PickUiDividerLightColor">#FF303030</Color>

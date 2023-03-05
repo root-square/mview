@@ -463,7 +463,7 @@ namespace MView.ViewModels
 
                 if (isRefreshNeeded)
                 {
-                    await RefreshViewerAsync().ConfigureAwait(false);
+                    await RefreshViewerAsync();
                 }
             });
 
@@ -481,7 +481,7 @@ namespace MView.ViewModels
                 NotifyOfPropertyChange("IndexedItems");
                 NotifyOfPropertyChange("IsEmpty");
 
-                await RefreshViewerAsync().ConfigureAwait(false);
+                await RefreshViewerAsync();
             });
 
             await task.ConfigureAwait(false);
