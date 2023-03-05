@@ -191,26 +191,8 @@
                     </TabControl.Resources>
 
                     <TabItem Header="{DynamicResource VIEWER_PREVIEW}">
-                        <Border BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
-                            <Grid>
-                                <Grid.Background>
-                                    <DrawingBrush TileMode="Tile" Viewport="0, 0, 10, 10" ViewportUnits="Absolute">
-                                        <DrawingBrush.Drawing>
-                                            <GeometryDrawing>
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="0,0,50,50"/>
-                                                </GeometryDrawing.Geometry>
-                                                <GeometryDrawing.Brush>
-                                                    <SolidColorBrush Color="{DynamicResource PickUiSecondBackgroundColor}"/>
-                                                </GeometryDrawing.Brush>
-                                                <GeometryDrawing.Pen>
-                                                    <Pen Brush="{DynamicResource PickUiGridLine}" Thickness="1"/>
-                                                </GeometryDrawing.Pen>
-                                            </GeometryDrawing>
-                                        </DrawingBrush.Drawing>
-                                    </DrawingBrush>
-                                </Grid.Background>
-                            </Grid>
+                        <Border Background="{DynamicResource PickUiSecondBackground}" BorderBrush="{DynamicResource PickUiDividerLight}" BorderThickness="0 0 0 1">
+                            <Frame NavigationUIVisibility="Hidden" caliburn:Message.Attach="RegisterFrame($source)"/>
                         </Border>
                     </TabItem>
 

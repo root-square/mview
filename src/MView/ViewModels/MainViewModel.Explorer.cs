@@ -60,8 +60,7 @@ namespace MView.ViewModels
                 if (value != null)
                 {
                     Set(ref _selectedItem, value);
-
-                    RefreshAsync().ConfigureAwait(false);
+                    RefreshViewerAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -441,15 +440,15 @@ namespace MView.ViewModels
 
         public async void DeleteAsync()
         {
-            var task = Task.Run(() =>
+            var task = Task.Run(async () =>
             {
                 List<IndexedItem> targetItems = SelectedItems.ToList();
 
-                bool isNeedRefresh = false;
+                bool isRefreshNeeded = false;
 
                 if (targetItems.Contains(SelectedItem!))
                 {
-                    isNeedRefresh = true;
+                    isRefreshNeeded = true;
                 }
 
                 foreach (var item in targetItems)
@@ -462,9 +461,9 @@ namespace MView.ViewModels
                 NotifyOfPropertyChange("IndexedItems");
                 NotifyOfPropertyChange("IsEmpty");
 
-                if (isNeedRefresh)
+                if (isRefreshNeeded)
                 {
-                    RefreshAsync().ConfigureAwait(false);
+                    await RefreshViewerAsync().ConfigureAwait(false);
                 }
             });
 
@@ -473,7 +472,7 @@ namespace MView.ViewModels
 
         public async void DeleteAllAsync()
         {
-            var task = Task.Run(() =>
+            var task = Task.Run(async () =>
             {
                 SelectedItem = null;
                 SelectedItems.Clear();
@@ -482,7 +481,7 @@ namespace MView.ViewModels
                 NotifyOfPropertyChange("IndexedItems");
                 NotifyOfPropertyChange("IsEmpty");
 
-                RefreshAsync().ConfigureAwait(false);
+                await RefreshViewerAsync().ConfigureAwait(false);
             });
 
             await task.ConfigureAwait(false);

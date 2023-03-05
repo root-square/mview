@@ -3,6 +3,7 @@ using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using MView.Utilities;
 using MView.Utilities.Text;
+using MView.ViewModels.Pages;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -153,6 +154,9 @@ namespace MView
             ResourceDictionary icons = new ResourceDictionary();
             icons.Source = new Uri(@"../Assets/Resources/Icons.xaml", UriKind.Relative);
             App.Current.Resources.MergedDictionaries.Add(icons);
+
+            // Refresh the code viewer theme.
+            IoC.Get<CodeViewerViewModel>().RefreshThemeAsync().ConfigureAwait(false);
         }
     }
 }

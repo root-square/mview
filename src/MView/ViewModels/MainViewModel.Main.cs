@@ -23,12 +23,19 @@ namespace MView.ViewModels
 {
     public partial class MainViewModel : Screen, IFilesDropped
     {
+        private readonly SimpleContainer _container;
+
         private Settings _settings = IoC.Get<Settings>();
 
         public Settings Settings
         {
             get => _settings;
             set => Set(ref _settings, value);
+        }
+
+        public MainViewModel(SimpleContainer container)
+        {
+            _container = container;
         }
 
         public void Exit()

@@ -69,6 +69,11 @@
     <system:String x:Key="EXPLORER_QUICK_BUTTON_REVERSE_SELECTION">Reverse Selection</system:String>
 
     <!--Viewer-->
+    <system:String x:Key="VIEWER_ALERT_FILE_NOT_FOUND">The file does not found.</system:String>
+    <system:String x:Key="VIEWER_ALERT_UNKNOWN_EXCEPTION">An unknown exception has occurred. If the problem persists, please contact the developer.</system:String>
+    <system:String x:Key="VIEWER_ALERT_PREVIEW_UNSUPPORTED">This format does not support preview.</system:String>
+    <system:String x:Key="VIEWER_ALERT_FILE_IS_TOO_LARGE">The file is too large to load.</system:String>
+
     <system:String x:Key="VIEWER_PREVIEW">PREVIEW</system:String>
     <system:String x:Key="VIEWER_HEX">HEX</system:String>
     <system:String x:Key="VIEWER_METADATA">METADATA</system:String>
@@ -76,7 +81,7 @@
     <!--Controller-->
     <system:String x:Key="CONTROLLER_ALERT_ENCKEY_NOT_FOUND">The encryption key does not found.</system:String>
     <system:String x:Key="CONTROLLER_ALERT_CANNOT_OPEN_SYSTEM_JSON">Unable to load the file. It seems to be an invalid JSON file.</system:String>
-    
+
     <system:String x:Key="CONTROLLER_EXPLORE_ENCKEY_DIALOG_TITLE">Please select a system.json file</system:String>
     <system:String x:Key="CONTROLLER_EXPLORE_ENCKEY_DIALOG_FILTER">RMMV/RMMZ System Data File|system.json</system:String>
     <system:String x:Key="CONTROLLER_EXPLORE_OUTPATH_DIALOG_TITLE">Please select a folder.</system:String>

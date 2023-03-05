@@ -22,7 +22,7 @@ namespace MView.Utilities.Text
         {
             if (!Directory.Exists(Path.GetDirectoryName(filePath)))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
             }
 
             using (Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
@@ -35,6 +35,28 @@ namespace MView.Utilities.Text
         }
 
         /// <summary>
+        /// Writes a text file in the specified path.
+        /// </summary>
+        /// <param name="filePath">Path where the text file will be saved.</param>
+        /// <param name="text">Text to be writed.</param>
+        /// <param name="encoding">The text encoding to use.</param>
+        public static async Task WriteTextFileAsync(string filePath, string text, Encoding encoding)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+            }
+
+            using (Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                using (StreamWriter writer = new StreamWriter(stream, encoding))
+                {
+                    await writer.WriteAsync(text);
+                }
+            }
+        }
+
+        /// <summary>
         /// Reads a text file in the specified path.
         /// </summary>
         /// <param name="filePath">Path where the text file will be read.</param>
@@ -42,14 +64,32 @@ namespace MView.Utilities.Text
         /// <returns>Text</returns>
         public static string ReadTextFile(string filePath, Encoding encoding)
         {
-            string temp = string.Empty;
+            string text = string.Empty;
 
             using (StreamReader reader = new StreamReader(filePath, encoding))
             {
-                temp = reader.ReadToEnd();
+                text = reader.ReadToEnd();
             }
 
-            return temp;
+            return text;
+        }
+
+        /// <summary>
+        /// Reads a text file in the specified path.
+        /// </summary>
+        /// <param name="filePath">Path where the text file will be read.</param>
+        /// <param name="encoding">The text encoding to use.</param>
+        /// <returns>Text</returns>
+        public static async Task<string> ReadTextFileAsync(string filePath, Encoding encoding)
+        {
+            string text = string.Empty;
+
+            using (StreamReader reader = new StreamReader(filePath, encoding))
+            {
+                text = await reader.ReadToEndAsync();
+            }
+
+            return text;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using MView.ViewModels;
 using MView.ViewModels.Dialogs;
+using MView.ViewModels.Pages;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -32,6 +33,10 @@ namespace MView
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<Settings>()
                 .Singleton<MainViewModel>()
+                .Singleton<AlertViewModel>()
+                .Singleton<AudioPlayerViewModel>()
+                .Singleton<CodeViewerViewModel>()
+                .Singleton<ImageViewerViewModel>()
                 .PerRequest<NoTPickerViewModel>()
                 .PerRequest<InformationViewModel>();
         }
