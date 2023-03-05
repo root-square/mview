@@ -203,7 +203,7 @@
                                                ForegroundContrast="{DynamicResource PickUiContrastForeground}" ForegroundHighLightOffSetHeaderColor="{DynamicResource PickUiAccent}"
                                                ForegroundOffSetHeaderColor="{DynamicResource PickUiForegroundUltraLight}" SelectionFirstColor="{DynamicResource PickUiAccent}" SelectionSecondColor="{DynamicResource PickUiAccent}"
                                                Focusable="False" AllowContextMenu="False" ReadOnlyMode="True" StatusBarVisibility="Hidden"
-                                               FileName="{Binding SelectedItem.FullPath, UpdateSourceTrigger=PropertyChanged}"/>
+                                               Stream="{Binding HexViewerStream, UpdateSourceTrigger=PropertyChanged}"/>
                         </Border>
                     </TabItem>
 

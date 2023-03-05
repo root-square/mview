@@ -15,12 +15,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using TagLib.IFD;
 
 namespace MView.ViewModels
 {
     public partial class MainViewModel
     {
         private INavigationService? _viewerNavigationService;
+
+        private FileStream? _hexViewerStream = null;
+
+        public FileStream? HexViewerStream
+        {
+            get => _hexViewerStream;
+            set => Set(ref _hexViewerStream, value);
+        }
 
         public void RegisterFrame(Frame frame)
         {
@@ -161,6 +170,7 @@ namespace MView.ViewModels
                             break;
                     }
 
+                    await RefreshHexViewerAsync();
                     await RefreshMetadataAsync();
                 }
                 catch (Exception ex)
@@ -180,6 +190,17 @@ namespace MView.ViewModels
             });
 
             await task;
+        }
+
+        public async Task RefreshHexViewerAsync()
+        {
+            // Dispose the old stream.
+            if (_hexViewerStream != null && _hexViewerStream?.CanRead == true)
+            {
+                await _hexViewerStream.DisposeAsync();
+            }
+
+            HexViewerStream = new FileStream(_selectedItem?.FullPath!, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public async Task RefreshMetadataAsync()

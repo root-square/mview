@@ -9,6 +9,28 @@
       Title="ImageViewerView">
 
     <Grid>
-        <Image Width="100" Height="100" Source="{Binding Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid.Background>
+            <DrawingBrush TileMode="Tile" Viewport="0 0 10 10" ViewportUnits="Absolute">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry Rect="0 0 50 50"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="{DynamicResource PickUiDivider}" Thickness="2"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <Grid Width="{Binding GridWidth, UpdateSourceTrigger=PropertyChanged}" Height="{Binding GridHeight, UpdateSourceTrigger=PropertyChanged}">
+                <Image VerticalAlignment="Center" HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
+                       Width="{Binding ScaledWidth, UpdateSourceTrigger=PropertyChanged}" Height="{Binding ScaledHeight, UpdateSourceTrigger=PropertyChanged}"
+                       Source="{Binding Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
