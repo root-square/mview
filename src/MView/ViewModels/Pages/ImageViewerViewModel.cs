@@ -81,8 +81,21 @@ namespace MView.ViewModels.Pages
             ScaledWidth = _image.PixelWidth * _scale;
             ScaledHeight = _image.PixelHeight * _scale;
 
-            GridWidth = ScaledWidth * 1.6;
-            GridHeight = ScaledHeight * 1.6;
+            var gridWidth = ScaledWidth * 1.6;
+            var gridHeight = ScaledHeight * 1.6;
+
+            if (GridWidth == gridWidth)
+            {
+                gridWidth += 2;
+            }
+
+            if (GridHeight == gridHeight)
+            {
+                gridHeight += 2;
+            }
+
+            GridWidth = gridWidth;
+            GridHeight = gridHeight;
         }
 
         public async Task SetContentAsync(IndexedItem? item)
