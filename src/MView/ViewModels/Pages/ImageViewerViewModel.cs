@@ -37,7 +37,11 @@ namespace MView.ViewModels.Pages
         public double Scale
         {
             get => _scale;
-            set => Set(ref _scale, value);
+            set
+            {
+                Set(ref _scale, value);
+                ScaleSizes();
+            }
         }
 
         private double _gridWidth = 0;
@@ -123,6 +127,39 @@ namespace MView.ViewModels.Pages
             }
 
             ScaleSizes();
+        }
+
+        public void DownSize()
+        {
+            double step = 0.1;
+
+            if (_scale - step >= 0.1)
+            {
+                Scale -= step;
+            }
+            else
+            {
+                Scale = 0.1;
+            }
+        }
+
+        public void UpSize()
+        {
+            double step = 0.1;
+
+            if (_scale + step <= 2.0)
+            {
+                Scale += step;
+            }
+            else
+            {
+                Scale = 2.0;
+            }
+        }
+
+        public void RestoreSize()
+        {
+            Scale = 1.0;
         }
     }
 }

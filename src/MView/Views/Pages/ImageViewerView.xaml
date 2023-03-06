@@ -4,6 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MView.Views.Pages"
+      xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:caliburn="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImageViewerView">
@@ -23,8 +26,14 @@
                 </DrawingBrush.Drawing>
             </DrawingBrush>
         </Grid.Background>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <!--Viewer-->
+        <ScrollViewer Grid.Row="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
             <Grid Width="{Binding GridWidth, UpdateSourceTrigger=PropertyChanged}" Height="{Binding GridHeight, UpdateSourceTrigger=PropertyChanged}">
                 <Image VerticalAlignment="Center" HorizontalAlignment="Center"
                        RenderOptions.BitmapScalingMode="HighQuality" RenderOptions.EdgeMode="Aliased"
@@ -32,5 +41,43 @@
                        Source="{Binding Image, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </ScrollViewer>
+        
+        <!--Controller-->
+        <materialDesign:Card Grid.Row="1" Background="{DynamicResource PickUiBackground}"
+                             VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Width="160" Height="40" UniformCornerRadius="20" materialDesign:ElevationAssist.Elevation="Dp2">
+            <Grid Margin="8 0 8 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Margin="0 0 2 0" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           Text="{Binding Scale, StringFormat={}{0:P0}}" />
+
+                <Button Grid.Column="1" Style="{StaticResource MaterialDesignIconForegroundButton}"
+                        Width="28" Height="28" VerticalAlignment="Center" Margin="2 0 2 0"
+                        caliburn:Message.Attach="DownSize()">
+                    <materialDesign:PackIcon Foreground="{DynamicResource PickUiForegroundUltraLight}" Width="16" Height="16" Kind="Minus" />
+                </Button>
+
+                <Button Grid.Column="2" Style="{StaticResource MaterialDesignIconForegroundButton}"
+                        Width="28" Height="28" VerticalAlignment="Center" Margin="2 0 2 0"
+                        caliburn:Message.Attach="UpSize()">
+                    <materialDesign:PackIcon Foreground="{DynamicResource PickUiForegroundUltraLight}" Width="16" Height="16" Kind="Plus" />
+                </Button>
+
+                <Button Grid.Column="3" Style="{StaticResource MaterialDesignIconForegroundButton}"
+                        Width="28" Height="28" VerticalAlignment="Center" Margin="2 0 0 0"
+                        caliburn:Message.Attach="RestoreSize()">
+                    <materialDesign:PackIcon Foreground="{DynamicResource PickUiForegroundUltraLight}" Width="16" Height="16" Kind="Restore" />
+                </Button>
+
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </Page>

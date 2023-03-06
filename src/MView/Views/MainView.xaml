@@ -280,7 +280,7 @@
                     <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_REMINPUT}"
                               IsChecked="{Binding Settings.RememberInputs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_TOSOURCE}"
-                              IsChecked="{Binding Settings.OutputToSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                              IsChecked="{Binding Settings.OutputToSourcePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_ENCALL}"
                               IsChecked="{Binding Settings.EncryptAllFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <CheckBox Style="{StaticResource MaterialDesignDarkCheckBox}" Margin="0 0 8 0" Content="{DynamicResource CONTROLLER_OPTIONS_COPYUNENC}"
