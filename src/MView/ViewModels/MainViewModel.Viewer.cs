@@ -116,6 +116,13 @@ namespace MView.ViewModels
             }
         }
 
+        public async Task RefreshAsync()
+        {
+            await RefreshViewerAsync();
+            await RefreshHexViewerAsync();
+            await RefreshMetadataAsync();
+        }
+
         public async Task RefreshViewerAsync()
         {
             var task = Task.Run(async () =>
@@ -169,9 +176,6 @@ namespace MView.ViewModels
                             await ShowAlertAsync(PackIconKind.Alert, LocalizationHelper.GetText("VIEWER_ALERT_PREVIEW_UNSUPPORTED"));
                             break;
                     }
-
-                    await RefreshHexViewerAsync();
-                    await RefreshMetadataAsync();
                 }
                 catch (Exception ex)
                 {
@@ -200,7 +204,21 @@ namespace MView.ViewModels
                 await _hexViewerStream.DisposeAsync();
             }
 
-            HexViewerStream = new FileStream(_selectedItem?.FullPath!, FileMode.Open, FileAccess.Read, FileShare.Read);
+            if (_selectedItem == null)
+            {
+                var stream = new FileStream(Path.Combine(VariableBuilder.GetBaseDirectory(), @"data\temp.dat"), FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+                
+                byte[] readyBytes = Encoding.UTF8.GetBytes("MVIEW HEX VIEWER");
+                stream.SetLength(readyBytes.Length);
+                stream.Write(readyBytes, 0, readyBytes.Length);
+                stream.Flush();
+
+                HexViewerStream = stream;
+            }
+            else
+            {
+                HexViewerStream = new FileStream(_selectedItem?.FullPath!, FileMode.Open, FileAccess.Read, FileShare.Read);
+            }
         }
 
         public async Task RefreshMetadataAsync()

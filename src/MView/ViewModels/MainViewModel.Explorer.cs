@@ -57,11 +57,8 @@ namespace MView.ViewModels
             get => _selectedItem;
             set
             {
-                if (value != null)
-                {
-                    Set(ref _selectedItem, value);
-                    RefreshViewerAsync().ConfigureAwait(false);
-                }
+                Set(ref _selectedItem, value);
+                RefreshAsync().ConfigureAwait(false);
             }
         }
 
@@ -453,7 +450,6 @@ namespace MView.ViewModels
 
                 foreach (var item in targetItems)
                 {
-                    SelectedItem = null;
                     SelectedItems.Remove(item);
                     IndexedItems.Remove(item);
                 }
@@ -463,7 +459,8 @@ namespace MView.ViewModels
 
                 if (isRefreshNeeded)
                 {
-                    await RefreshViewerAsync();
+                    SelectedItem = null;
+                    await RefreshAsync();
                 }
             });
 
@@ -481,7 +478,7 @@ namespace MView.ViewModels
                 NotifyOfPropertyChange("IndexedItems");
                 NotifyOfPropertyChange("IsEmpty");
 
-                await RefreshViewerAsync();
+                await RefreshAsync();
             });
 
             await task.ConfigureAwait(false);

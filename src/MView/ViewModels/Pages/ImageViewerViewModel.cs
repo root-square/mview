@@ -160,13 +160,13 @@ namespace MView.ViewModels.Pages
         {
             double step = 0.1;
 
-            if (_scale + step <= 2.0)
+            if (_scale + step <= 3.0)
             {
                 Scale += step;
             }
             else
             {
-                Scale = 2.0;
+                Scale = 3.0;
             }
         }
 
